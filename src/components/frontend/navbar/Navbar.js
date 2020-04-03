@@ -1,0 +1,82 @@
+import React from 'react'
+
+import {NavLink} from 'react-router-dom'
+
+import Grid from '@material-ui/core/Grid'
+import Box from '@material-ui/core/Box'
+import Typography from '@material-ui/core/Typography'
+
+import makeStyles from '@material-ui/core/styles/makeStyles'
+
+const useStyles = makeStyles(theme => ({
+    fixedContainer: {
+        position: 'fixed',
+        width: '100%',
+        top: 0
+    },
+    container: {
+        backgroundColor: theme.palette.primaryColor,
+        margin: theme.spacing(0, 3),
+        padding: theme.spacing(2, 0),
+        borderBottom: `2px solid ${theme.palette.tertiaryColor}`
+    },
+    menuItems: {
+        textAlign: 'right'
+    },
+    menuItem: {
+        paddingLeft: theme.spacing(1)
+    }
+}))
+
+export default (theme) => {
+    const classes = useStyles(theme)
+    return (
+        <div className={classes.fixedContainer}>
+            <Box display="flex" className={classes.container}>
+                <Box>
+                    <Typography
+                        variant="h4"
+                        component={NavLink}
+                        to="/"
+                    >
+                        acplv
+                    </Typography>
+                </Box>
+                <Box flexGrow={1} className={classes.menuItems}>
+                    <Typography
+                        variant="h4"
+                        component={NavLink}
+                        to="/"
+                        className={classes.menuItem}
+                    >
+                        home
+                    </Typography>
+                    <Typography
+                        variant="h4"
+                        component={NavLink}
+                        to="/about"
+                        className={classes.menuItem}
+                    >
+                        à propos
+                    </Typography>
+                    <Typography
+                        variant="h4"
+                        component={NavLink}
+                        to="/projects"
+                        className={classes.menuItem}
+                    >
+                        projects
+                    </Typography>
+                    <Typography
+                        variant="h4"
+                        component={NavLink}
+                        to="/contact"
+                        className={classes.menuItem}
+                    >
+                        contact
+                    </Typography>
+                </Box>
+            </Box>
+        </div>
+    )
+}
