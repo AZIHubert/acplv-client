@@ -1,8 +1,7 @@
 import React from 'react'
 
-import {NavLink} from 'react-router-dom'
+import {NavLink, Link} from 'react-router-dom'
 
-import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 
@@ -11,6 +10,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 const useStyles = makeStyles(theme => ({
     fixedContainer: {
         position: 'fixed',
+        zIndex: 100,
         width: '100%',
         top: 0
     },
@@ -24,7 +24,22 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'right'
     },
     menuItem: {
-        paddingLeft: theme.spacing(1)
+        paddingLeft: theme.spacing(1),
+        transition: theme.transitions.create('color', {
+            easing: theme.transitions.easing.easeIn,
+            duration: theme.transitions.duration.shortest
+        }),
+        '&:hover::selection': {
+            backgroundColor: theme.palette.tertiaryColor,
+            color: theme.palette.primaryColor
+        },
+        '&.active': {
+            color: theme.palette.tertiaryColor,
+            '&::selection': {
+                backgroundColor: theme.palette.tertiaryColor,
+                color: theme.palette.primaryColor
+            },
+        }
     }
 }))
 
@@ -36,7 +51,7 @@ export default (theme) => {
                 <Box>
                     <Typography
                         variant="h4"
-                        component={NavLink}
+                        component={Link}
                         to="/"
                     >
                         acplv
@@ -47,6 +62,7 @@ export default (theme) => {
                         variant="h4"
                         component={NavLink}
                         to="/"
+                        exact
                         className={classes.menuItem}
                     >
                         home

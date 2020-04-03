@@ -13,10 +13,10 @@ export default () => {
         <div>
             <Navbar />
             <Switch>
-                <Route exact path={'/'} component={Home} />
                 <Route path={'/about'} component={About} />
                 <Route path={'/projects'} component={Project} />
                 <Route path={'/contact'} component={Contact} />
+                <Route exact path={'/'} component={Home} />
             </Switch>
         </div>
     )
