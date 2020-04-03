@@ -10,7 +10,8 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 const useStyles = makeStyles(theme => ({
     container: {
         minHeight: '100vh',
-        position: 'relative'
+        position: 'relative',
+        paddingBottom: theme.spacing(7)
     },
     wrapper: {
         margin: theme.spacing(0, 3)

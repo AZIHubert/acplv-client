@@ -1,6 +1,7 @@
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme'
 
 import TypographyOverride from './typographyOverride'
+import TextfieldOverride from './textfieldOverride'
 
 export default () => {
 
@@ -14,6 +15,7 @@ export default () => {
   });
 
   const typography = TypographyOverride(defaultTheme)
+  const textfield = TextfieldOverride(defaultTheme)
 
   return createMuiTheme({
     palette: {
@@ -30,7 +32,8 @@ export default () => {
           }
         }
       },
-      ...typography
+      ...typography,
+      ...textfield
     },
     custom: {
       clientsAnimationSpeed: 35
