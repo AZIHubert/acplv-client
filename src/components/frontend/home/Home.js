@@ -18,8 +18,8 @@ export default () => {
                 <Service />
                 <Project />
                 <Clients />
+                <Footer />
             </ComponentWrapper>
-            <Footer />
         </Fragment>
     )
 }

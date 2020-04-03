@@ -9,6 +9,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 const useStyles = makeStyles(theme => ({
     container: {
         height: '100vh',
+        position: 'relative'
     },
     contactContainer: {
         margin: theme.spacing(0, 3)
@@ -25,27 +26,6 @@ const useStyles = makeStyles(theme => ({
             color: 'transparent',
             textStrokeColor: theme.palette.tertiaryColor,
         }
-    },
-    footerTextContainer: {
-        borderTop: `1px solid ${theme.palette.secondaryColor}`
-    },
-    footerText: {
-        padding: theme.spacing(2, 0),
-        fontSize: '0.7rem'
-    },
-    copyright: {
-        paddingRight: theme.spacing(3),
-        paddingLeft: theme.spacing(3),
-        borderRight: `1px solid ${theme.palette.secondaryColor}`
-    },
-    socialMediaContainer: {
-        paddingLeft: theme.spacing(10)
-    },
-    socialMedia: {
-        '&:after': {
-            content: "','"
-        },
-        paddingRight: theme.spacing(1)
     }
 }))
 
@@ -81,59 +61,6 @@ export default ({theme}) => {
                         </Link>
                     </Typography>
                 </div>
-            </Box>
-            <Box
-                display="flex"
-                className={classes.footerTextContainer}
-            >
-                <Typography
-                    variant="body1"
-                    className={`${classes.footerText} ${classes.copyright}`}
-                    
-                >
-                    all right reserved 2020
-                </Typography>
-                <Box
-                    display="flex"
-                    className={classes.socialMediaContainer}
-                >
-                    <Typography
-                        variant="body1"
-                        className={`${classes.footerText} ${classes.socialMedia}`}
-                    >
-                        <Link
-                            href="https://www.facebook.com/AcPlvCommunicationDeProximite"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            facebook
-                        </Link>
-                    </Typography>
-                    <Typography
-                        variant="body1"
-                        className={`${classes.footerText} ${classes.socialMedia}`}
-                    >
-                        <Link
-                            href="https://www.linkedin.com/in/meesook-souryadhay-1b660240/"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            linkedin
-                        </Link>
-                    </Typography>
-                    <Typography
-                        variant="body1"
-                        className={classes.footerText}
-                    >
-                        <Link
-                            href="https://www.instagram.com/"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            instagram
-                        </Link>
-                    </Typography>
-                </Box>
             </Box>
         </Box>
     )

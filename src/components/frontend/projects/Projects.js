@@ -1,9 +1,12 @@
 import React from 'react'
 
+import ComponentWrapper from '../util/ComponentWrapper'
+
 export default () => {
     return (
-        <div>
-            <h1>Projects Page</h1>
-        </div>
+        <ComponentWrapper
+            title="projets"
+        >
+        </ComponentWrapper>
     )
 }
