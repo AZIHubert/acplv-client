@@ -124,7 +124,6 @@ export default ({theme}) => {
                     className={classes.paddingRight}
                 >
                     <TextField
-                        autoFocus
                         name='firstName'
                         fullWidth
                         value={message.firstName}
@@ -140,7 +139,6 @@ export default ({theme}) => {
                     className={classes.paddingLeft}
                 >
                     <TextField
-                        autoFocus
                         name='lastName'
                         fullWidth
                         value={message.lastName}
@@ -152,7 +150,6 @@ export default ({theme}) => {
                 </Grid>
             </Grid>
             <TextField
-                autoFocus
                 name='phone'
                 fullWidth
                 value={message.phone}

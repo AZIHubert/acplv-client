@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ServiceItem from './ServicesItem'
+import AboutServicesItem from './AboutServicesItem'
 
 import Typography from '@material-ui/core/Typography'
 
@@ -27,7 +27,7 @@ export default (props) => {
                 {service.title}
             </Typography>
             {service.items.map((item, i) => (
-                <ServiceItem
+                <AboutServicesItem
                     title={item.title}
                     key={item.index}
                     isLast={i === service.items.length - 1}

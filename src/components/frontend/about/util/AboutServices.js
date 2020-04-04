@@ -1,8 +1,23 @@
 import React, {useState} from 'react'
 
-import SubHeaderWrapper from '../SubHeaderWrapper'
+import AboutServicesList from './AboutServicesList'
 
-export default () => {
+import Box from '@material-ui/core/Box'
+import Typography from '@material-ui/core/Typography'
+
+import makeStyles from '@material-ui/core/styles/makeStyles'
+
+const useStyles = makeStyles(theme => ({
+    container: {
+        paddingBottom: theme.spacing(20)
+    },
+    titleContainer: {
+        paddingBottom: theme.spacing(5)
+    }
+}))
+
+export default ({theme}) => {
+    const classes = useStyles(theme)
     const [services] = useState([{
         title: 'SIGNALÉTIQUE EXTÉRIEUR',
         index: 0,
@@ -68,9 +83,25 @@ export default () => {
         }]
     }])
     return (
-        <SubHeaderWrapper
-            title="nos services"
+        <div
+            className={classes.container}
         >
-        </SubHeaderWrapper>
+            <Box
+                className={classes.titleContainer}
+            >
+                <Typography
+                    variant="h1"
+                >
+                    nos services
+                </Typography>
+            </Box>
+            {services.map((service, i) => (
+                <AboutServicesList
+                    service={service}
+                    key={service.index}
+                    isLast={i === services.length - 1}
+                />
+            ))}
+        </div>
     )
 }

@@ -3,6 +3,7 @@ export default (theme) => ({
         h1: {
             textTransform: 'uppercase',
             fontSize: '4.4rem',
+            
             lineHeight: 1,
             '&::selection': {
                 backgroundColor: theme.palette.secondaryColor,
