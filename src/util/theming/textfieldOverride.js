@@ -6,13 +6,16 @@ export default (theme) => ({
             duration: theme.transitions.duration.standard
           }),
           '&:hover .MuiInputLabel-shrink:not(.Mui-disabled)': {
-            color: theme.palette.secondaryColor
+            color: theme.palette.tertiaryColor
           },
           '&:hover .MuiFormLabel-root:not(.Mui-disabled)': {
-            color: theme.palette.secondaryColor
+            color: theme.palette.tertiaryColor
           },
           '&:hover .MuiInputBase-root:not(.Mui-disabled)': {
-            color: theme.palette.secondaryColor
+          color: theme.palette.tertiaryColor
+          },
+          '&:hover .MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.tertiaryColor
           }
         }
       },
@@ -23,10 +26,10 @@ export default (theme) => ({
       },
       MuiOutlinedInput: {
         root: {
-          background: theme.palette.secondaryColor,
+          background: theme.palette.primaryColor,
           borderRadius: 0,
           '&$focused $notchedOutline': {
-            borderColor: theme.palette.secondaryColor
+            borderColor: theme.palette.tertiaryColor
           },
           "&$disabled $notchedOutline": {
             borderColor: theme.palette.tertiaryColor
@@ -40,7 +43,7 @@ export default (theme) => ({
       MuiInputLabel: {
         root: {
           '&$focused': {
-            color: theme.palette.secondaryColor
+            color: theme.palette.tertiaryColor
           },
         },
         shrink: {
@@ -53,20 +56,15 @@ export default (theme) => ({
         formControl: {
           '&::selection': {
             background: theme.palette.tertiaryColor,
-            color: theme.palette.primaryColor
-          },
-          '&.Mui-disabled': {
-            opacity: 0.333,
-            color: theme.palette.tertiaryColor
+            color: theme.palette.secondaryColor
           }
         }
       },
       MuiInputBase: {
         root: {
           color: theme.palette.tertiaryColor,
-          fontFamily: 'FedraSansStdBold',
           '&$focused': {
-            color: theme.palette.secondaryColor
+            color: theme.palette.tertiaryColor
           }
         },
         input: {
