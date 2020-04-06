@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 
-import SubHeaderWrapper from '../SubHeaderWrapper'
 import SubComponentWrapper from '../../../util/SubComponentWrapper'
 
 
