@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     container: {
         minHeight: '100vh',
         position: 'relative',
-        paddingBottom: theme.spacing(7)
+        paddingBottom: props => props.doublePaddingBottom ? theme.spacing(14) : theme.spacing(7)
     },
     wrapper: {
         margin: theme.spacing(0, 3)
@@ -21,8 +21,9 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default ({children, title, theme}) => {
-    const classes = useStyles(theme)
+export default (props) => {
+    const {children, title} = props
+    const classes = useStyles(props)
     return (
         <div
             className={classes.container}

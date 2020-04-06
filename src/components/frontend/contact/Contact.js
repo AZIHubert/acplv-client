@@ -30,6 +30,7 @@ export default ({theme}) => {
     return (
         <ComponentWrapper
             title="contact"
+            doublePaddingBottom
         >
             <SubComponentWrapper>
                 <Grid
