@@ -14,3 +14,11 @@ function App() {
 }
 
 export default App;
+
+
+// TODO
+
+// with ref, get height of padding to add this in ComponentWrapper
+// Add padding in contact page
+// Change order grid in contact page
+// Create own textarea styling in contact page
