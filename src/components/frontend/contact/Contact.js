@@ -11,16 +11,23 @@ import Typography from '@material-ui/core/Typography'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
+    container: {
+        padding: theme.spacing(0, 10)
+    },
     paddingLeft: {
-        paddingLeft: theme.spacing(2)
+        paddingLeft: theme.spacing(3)
     },
     paddingRight: {
-        paddingRight: theme.spacing(2)
+        paddingRight: theme.spacing(3),
+        paddingTop: theme.spacing(8)
     },
     contactContainer: {
-        paddingBottom: theme.spacing(2),
-        marginBottom: theme.spacing(2),
-        borderBottom: `1px solid ${theme.palette.tertiaryColor}`
+        paddingBottom: theme.spacing(4),
+        // marginBottom: theme.spacing(1),
+        // borderBottom: `1px solid ${theme.palette.tertiaryColor}`
+    },
+    contactInfo: {
+        // paddingLeft: theme.spacing(2)
     }
 }))
 
@@ -34,29 +41,24 @@ export default ({theme}) => {
             <SubComponentWrapper>
                 <Grid
                     container
+                    className={classes.container}
                 >
                     <Grid
                         item
-                        xs={5}
+                        xs={6}
                         className={classes.paddingRight}
-                    >
-                        <ContactForm />
-                    </Grid>
-                    <Grid
-                        item
-                        xs={7}
-                        className={classes.paddingLeft}
                     >
                         <Box
                             className={classes.contactContainer}
                         >
                             <Typography
-                                variant='h2'
+                                variant='body2'
                             >
                                 téléphone
                             </Typography>
                             <Typography
-                                variant='h3'
+                                variant='body1'
+                                className={classes.contactInfo}
                             >
                                 +33.08.11.11.11.11
                             </Typography>
@@ -65,33 +67,43 @@ export default ({theme}) => {
                             className={classes.contactContainer}
                         >
                             <Typography
-                                variant='h2'
+                                variant='body2'
                             >
                                 Email
                             </Typography>
                             <Typography
-                                variant='h3'
+                                variant='body1'
+                                className={classes.contactInfo}
                             >
                                 CONTACT@ACPLV.COM
                             </Typography>
                         </Box>
                         <Box>
                             <Typography
-                                variant='h2'
+                                variant='body2'
                             >
                                 adresse
                             </Typography>
                             <Typography
-                                variant='h3'
+                                variant='body1'
+                                className={classes.contactInfo}
                             >
                                 11 rue de Besançon
                             </Typography>
                             <Typography
-                                variant='h3'
+                                variant='body1'
+                                className={classes.contactInfo}
                             >
                                 75000, Paris
                             </Typography>
                         </Box>
+                    </Grid>
+                    <Grid
+                        item
+                        xs={6}
+                        className={classes.paddingLeft}
+                    >
+                        <ContactForm />
                     </Grid>
                 </Grid>
             </SubComponentWrapper>
