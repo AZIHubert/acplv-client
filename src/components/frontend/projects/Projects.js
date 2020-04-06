@@ -132,6 +132,7 @@ export default ({theme}) => {
     return (
         <ComponentWrapper
             title="projets"
+            doublePaddingBottom
         >
             <Grid
                 container

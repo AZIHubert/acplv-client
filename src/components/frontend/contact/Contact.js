@@ -10,9 +10,6 @@ import Typography from '@material-ui/core/Typography'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
-    container: {
-        paddingBottom: theme.spacing(20)
-    },
     paddingLeft: {
         paddingLeft: theme.spacing(1)
     },
@@ -32,6 +29,7 @@ export default ({theme}) => {
     return (
         <ComponentWrapper
             title="contact"
+            doublePaddingBottom
         >
             <Grid
                 container
