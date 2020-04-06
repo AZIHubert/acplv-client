@@ -1,5 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react'
 
+import SubComponentWrapper from '../util/SubComponentWrapper'
 import ComponentWrapper from '../util/ComponentWrapper'
 import ProjectThumb from './util/ProjectThumb'
 
@@ -133,75 +134,77 @@ export default ({theme}) => {
         <ComponentWrapper
             title="projets"
         >
-            <Grid
-                container
-                className={classes.typeItemsContainer}
-            >
+            <SubComponentWrapper>
                 <Grid
-                    item
-                    xs={10}
+                    container
+                    className={classes.typeItemsContainer}
                 >
-                    <Box
-                        display="flex"
-                        flexWrap="wrap"
-                        ref={typesContainerRef}
+                    <Grid
+                        item
+                        xs={10}
                     >
-                        <Typography
-                            variant="h3"
-                            className={`${classes.firstTypesItem} ${classes.typeItem} active`}
-                            onClick={reseFilter}
+                        <Box
+                            display="flex"
+                            flexWrap="wrap"
+                            ref={typesContainerRef}
                         >
-                            All
-                        </Typography>
-                        {types.map((type, i) => (
                             <Typography
                                 variant="h3"
-                                key={type}
-                                className={
-                                    `${i !== types.length -1 ? classes.firstTypesItem : classes.lastTypesItem}
-                                    ${classes.typeItem}`
-                                }
-                                onClick={(e) => handleFilter(type, e)}
+                                className={`${classes.firstTypesItem} ${classes.typeItem} active`}
+                                onClick={reseFilter}
                             >
-                                {type}
+                                All
                             </Typography>
+                            {types.map((type, i) => (
+                                <Typography
+                                    variant="h3"
+                                    key={type}
+                                    className={
+                                        `${i !== types.length -1 ? classes.firstTypesItem : classes.lastTypesItem}
+                                        ${classes.typeItem}`
+                                    }
+                                    onClick={(e) => handleFilter(type, e)}
+                                >
+                                    {type}
+                                </Typography>
+                            ))}
+                        </Box>
+                    </Grid>
+                </Grid>
+                <Grid
+                    container
+                    className={classes.projectsContainer}
+                >
+                    <Grid
+                        item
+                        xs={6}
+                        className={classes.evenGrid}
+                    >
+                        {displayProjects.filter((project, i) => {
+                            return (i % 2 === 0);
+                        }).map(project => (
+                            <ProjectThumb
+                                project={project}
+                                key={project.index}
+                            />
                         ))}
-                    </Box>
+                    </Grid>
+                    <Grid
+                        item
+                        xs={6}
+                        className={classes.oddGrid}
+                    >
+                        {displayProjects.filter((project, i) => {
+                            return (i % 2 !== 0);
+                        }).map(project => (
+                            <ProjectThumb
+                                project={project}
+                                key={project.index}
+                            />
+                        ))}
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Grid
-                container
-                className={classes.projectsContainer}
-            >
-                <Grid
-                    item
-                    xs={6}
-                    className={classes.evenGrid}
-                >
-                    {displayProjects.filter((project, i) => {
-                        return (i % 2 === 0);
-                    }).map(project => (
-                        <ProjectThumb
-                            project={project}
-                            key={project.index}
-                        />
-                    ))}
-                </Grid>
-                <Grid
-                    item
-                    xs={6}
-                    className={classes.oddGrid}
-                >
-                    {displayProjects.filter((project, i) => {
-                        return (i % 2 !== 0);
-                    }).map(project => (
-                        <ProjectThumb
-                            project={project}
-                            key={project.index}
-                        />
-                    ))}
-                </Grid>
-            </Grid>
+            </SubComponentWrapper>
         </ComponentWrapper>
     )
 }

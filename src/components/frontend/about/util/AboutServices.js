@@ -2,15 +2,14 @@ import React, {useState} from 'react'
 
 import AboutServicesList from './AboutServicesList'
 
+import SubComponentWrapper from '../../util/SubComponentWrapper'
+
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
-    container: {
-        paddingBottom: theme.spacing(20)
-    },
     titleContainer: {
         paddingBottom: theme.spacing(5)
     }
@@ -83,8 +82,8 @@ export default ({theme}) => {
         }]
     }])
     return (
-        <div
-            className={classes.container}
+        <SubComponentWrapper
+            hasBorder
         >
             <Box
                 className={classes.titleContainer}
@@ -102,6 +101,6 @@ export default ({theme}) => {
                     isLast={i === services.length - 1}
                 />
             ))}
-        </div>
+        </SubComponentWrapper>
     )
 }

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-import SubHeaderWrapper from '../SubHeaderWrapper'
+import SubComponentWrapper from '../../../util/SubComponentWrapper'
 
 export default () => {
     const [services] = useState([{
@@ -68,9 +68,10 @@ export default () => {
         }]
     }])
     return (
-        <SubHeaderWrapper
+        <SubComponentWrapper
             title="nos services"
+            hasBorder
         >
-        </SubHeaderWrapper>
+        </SubComponentWrapper>
     )
 }

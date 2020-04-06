@@ -9,7 +9,8 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 const useStyles = makeStyles(theme => ({
     container: {
         height: '100vh',
-        position: 'relative'
+        position: 'relative',
+        borderTop: `1px solid ${theme.palette.secondaryColor}`
     },
     contactContainer: {
         margin: theme.spacing(0, 3)

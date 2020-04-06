@@ -1,6 +1,6 @@
 import React, {Fragment, useState} from 'react'
 
-import SubHeaderWrapper from '../SubHeaderWrapper'
+import SubComponentWrapper from '../../../util/SubComponentWrapper'
 
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -12,7 +12,10 @@ const useStyles = makeStyles(theme => ({
         overflowX: 'hidden',
         padding: theme.spacing(2, 0),
         borderTop: `1px solid ${theme.palette.secondaryColor}`,
-        borderBottom: `1px solid ${theme.palette.secondaryColor}`
+        borderBottom: `1px solid ${theme.palette.secondaryColor}`,
+        // '&:hover .text': {
+        //     animationDuration: `${theme.custom.clientsAnimationSpeed * 2}s`
+        // }
     },
     separator: {
         padding: theme.spacing(0, 1)
@@ -86,8 +89,9 @@ export default ({theme}) => {
     }
     ])
     return (
-        <SubHeaderWrapper
+        <SubComponentWrapper
             title="clients"
+            hasBorder
         >
             <Box
                 display="flex"
@@ -95,7 +99,7 @@ export default ({theme}) => {
             >
                 <Box
                     display="flex"
-                    className={classes.textOne}
+                    className={`text ${classes.textOne}`}
                 >
                     {clients.map(client => (
                         <Fragment key={client.index}>
@@ -115,7 +119,7 @@ export default ({theme}) => {
                 </Box>
                 <Box
                     display="flex"
-                    className={classes.textTwo}
+                    className={`text ${classes.textTwo}`}
                 >
                     {clients.map(client => (
                         <Fragment key={client.index}>
@@ -134,6 +138,6 @@ export default ({theme}) => {
                     ))}
                 </Box>
             </Box>
-        </SubHeaderWrapper>
+        </SubComponentWrapper>
     )
 }

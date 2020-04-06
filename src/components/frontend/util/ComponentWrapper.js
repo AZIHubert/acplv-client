@@ -16,9 +16,6 @@ const useStyles = makeStyles(theme => ({
     wrapper: {
         margin: theme.spacing(0, 3)
     },
-    titleContainer: {
-        paddingBottom: theme.spacing(10)
-    },
     title: {
         fontSize: '6rem'
     }
@@ -34,7 +31,6 @@ export default ({children, title, theme}) => {
                 {title && (
                     <Box
                         textAlign="center"
-                        className={classes.titleContainer}
                     >
                         <Typography
                             variant="h1"

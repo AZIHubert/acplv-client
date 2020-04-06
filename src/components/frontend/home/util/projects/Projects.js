@@ -1,6 +1,9 @@
 import React, {useState} from 'react'
 
 import SubHeaderWrapper from '../SubHeaderWrapper'
+import SubComponentWrapper from '../../../util/SubComponentWrapper'
+
+
 import ProjectThumb from './util/ProjectThumb'
 
 import Grid from '@material-ui/core/Grid'
@@ -55,7 +58,8 @@ export default ({theme}) => {
         type: [types[(Math.random() * types.length) | 0]]
     }])
     return (
-        <SubHeaderWrapper
+        <SubComponentWrapper
+            hasBorder
             title="projects"
         >
             <Grid
@@ -90,6 +94,6 @@ export default ({theme}) => {
                     ))}
                 </Grid>
             </Grid>
-        </SubHeaderWrapper>
+        </SubComponentWrapper>
     )
 }

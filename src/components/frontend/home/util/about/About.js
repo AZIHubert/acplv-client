@@ -1,6 +1,8 @@
 import React from 'react'
 
-import SubHeaderWrapper from '../SubHeaderWrapper'
+// import SubHeaderWrapper from '../SubHeaderWrapper'
+
+import SubComponentWrapper from '../../../util/SubComponentWrapper'
 
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
@@ -16,8 +18,9 @@ const useStyles = makeStyles(theme => ({
 export default ({theme}) => {
     const classes = useStyles(theme)
     return (
-        <SubHeaderWrapper
+        <SubComponentWrapper
             title="à propos"
+            hasBorder
         >
             <Grid container>
                 <Grid item xs={9}>
@@ -45,6 +48,6 @@ export default ({theme}) => {
                 </Grid>
             </Grid>
             
-        </SubHeaderWrapper>
+        </SubComponentWrapper>
     )
 }

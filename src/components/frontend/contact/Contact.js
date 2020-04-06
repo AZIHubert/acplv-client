@@ -1,5 +1,6 @@
 import React from 'react'
 
+import SubComponentWrapper from '../util/SubComponentWrapper'
 import ComponentWrapper from '../util/ComponentWrapper'
 import ContactForm from './util/ContactForm'
 
@@ -10,14 +11,11 @@ import Typography from '@material-ui/core/Typography'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
-    container: {
-        paddingBottom: theme.spacing(20)
-    },
     paddingLeft: {
-        paddingLeft: theme.spacing(1)
+        paddingLeft: theme.spacing(2)
     },
     paddingRight: {
-        paddingRight: theme.spacing(1)
+        paddingRight: theme.spacing(2)
     },
     contactContainer: {
         paddingBottom: theme.spacing(2),
@@ -33,70 +31,70 @@ export default ({theme}) => {
         <ComponentWrapper
             title="contact"
         >
-            <Grid
-                container
-                className={classes.container}
-            >
+            <SubComponentWrapper>
                 <Grid
-                    item
-                    xs={6}
-                    className={classes.paddingRight}
+                    container
                 >
-                    <ContactForm />
-                </Grid>
-                <Grid
-                    item
-                    xs={6}
-                    className={classes.paddingLeft}
-                >
-                    <Box
-                        className={classes.contactContainer}
+                    <Grid
+                        item
+                        xs={5}
+                        className={classes.paddingRight}
                     >
-                        <Typography
-                            variant='h2'
-                        >
-                            téléphone
-                        </Typography>
-                        <Typography
-                            variant='h3'
-                        >
-                            +33.08.11.11.11.11
-                        </Typography>
-                    </Box>
-                    <Box
-                        className={classes.contactContainer}
+                        <ContactForm />
+                    </Grid>
+                    <Grid
+                        item
+                        xs={7}
+                        className={classes.paddingLeft}
                     >
-                        <Typography
-                            variant='h2'
+                        <Box
+                            className={classes.contactContainer}
                         >
-                            Email
-                        </Typography>
-                        <Typography
-                            variant='h3'
+                            <Typography
+                                variant='h2'
+                            >
+                                téléphone
+                            </Typography>
+                            <Typography
+                                variant='h3'
+                            >
+                                +33.08.11.11.11.11
+                            </Typography>
+                        </Box>
+                        <Box
+                            className={classes.contactContainer}
                         >
-                            CONTACT@ACPLV.COM
-                        </Typography>
-                    </Box>
-                    <Box>
-                        <Typography
-                            variant='h2'
-                        >
-                            adresse
-                        </Typography>
-                        <Typography
-                            variant='h3'
-                        >
-                            11 rue de Besançon
-                        </Typography>
-                        <Typography
-                            variant='h3'
-                        >
-                            75000, Paris
-                        </Typography>
-                    </Box>
+                            <Typography
+                                variant='h2'
+                            >
+                                Email
+                            </Typography>
+                            <Typography
+                                variant='h3'
+                            >
+                                CONTACT@ACPLV.COM
+                            </Typography>
+                        </Box>
+                        <Box>
+                            <Typography
+                                variant='h2'
+                            >
+                                adresse
+                            </Typography>
+                            <Typography
+                                variant='h3'
+                            >
+                                11 rue de Besançon
+                            </Typography>
+                            <Typography
+                                variant='h3'
+                            >
+                                75000, Paris
+                            </Typography>
+                        </Box>
+                    </Grid>
                 </Grid>
-            </Grid>
-
+            </SubComponentWrapper>
         </ComponentWrapper>
     )
 }
