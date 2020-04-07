@@ -10,7 +10,6 @@ export default ({theme}) => {
     return (
         <ComponentWrapper
             title="à propos"
-            doublePaddingBottom
         >
             <AboutText />
             <AboutServices />
