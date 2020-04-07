@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, createRef, useEffect} from 'react'
 
 import Footer from '../footer/Footer'
 
@@ -11,7 +11,6 @@ const useStyles = makeStyles(theme => ({
     container: {
         minHeight: '100vh',
         position: 'relative',
-        paddingBottom: theme.spacing(8)
     },
     wrapper: {
         margin: theme.spacing(0, 3)
@@ -23,9 +22,24 @@ const useStyles = makeStyles(theme => ({
 
 export default ({children, title, theme}) => {
     const classes = useStyles(theme)
+    const footerRef = createRef()
+    const [footerHeight, setFooterHeight] = useState()
+    useEffect(() => {
+        const getFooterHeight = () => {
+            if(footerRef.current !== null)
+                setFooterHeight(footerRef.current.offsetHeight)
+            else setFooterHeight(50)
+        };
+        getFooterHeight()
+        window.addEventListener('resize', getFooterHeight)
+        return () => {
+            window.removeEventListener('resize', getFooterHeight);
+        }
+    }, [footerRef])
     return (
         <div
             className={classes.container}
+            style={{paddingBottom: footerHeight}}
         >
             <div className={classes.wrapper}>
                 {title && (
@@ -42,7 +56,7 @@ export default ({children, title, theme}) => {
                 )}
                 {children}
             </div>
-            <Footer />
+            <Footer ref={footerRef} />
         </div>
     )
 }

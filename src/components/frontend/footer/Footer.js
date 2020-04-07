@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {forwardRef} from 'react'
 
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -33,12 +33,13 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default ({theme}) => {
-    const classes = useStyles(theme)
+export default forwardRef((props, ref) => {
+    const classes = useStyles(props)
     return (
         <Box
             display="flex"
             className={classes.container}
+            ref={ref}
         >
             <Typography
                 variant="body1"
@@ -90,4 +91,4 @@ export default ({theme}) => {
             </Box>
         </Box>
     )
-}
+})

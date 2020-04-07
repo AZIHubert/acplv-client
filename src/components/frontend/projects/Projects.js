@@ -53,7 +53,7 @@ export default ({theme}) => {
         'KAKÉMONOS', 'STICKERS', 'PLAQUES PLEXIGLASS', 'BORNES TACTILES D’EXTÉRIEUR',
         'RELOOKING VITRINES'
     ])
-    const [projects, setProjects] = useState([{
+    const [projects] = useState([{
         title: 'project 1',
         index: 0,
         thumbnail: 'https://dummyimage.com/400x450/757575/000000&text=project+1',
