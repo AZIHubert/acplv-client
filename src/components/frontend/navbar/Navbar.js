@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'right'
     },
     menuItem: {
-        paddingLeft: theme.spacing(1),
+        paddingLeft: theme.spacing(2),
         transition: theme.transitions.create('color', {
             easing: theme.transitions.easing.easeIn,
             duration: theme.transitions.duration.shortest
