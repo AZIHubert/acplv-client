@@ -19,6 +19,17 @@ export default App;
 // TODO
 
 // with ref, get height of padding to add this in ComponentWrapper
-// Add padding in contact page
-// Change order grid in contact page
-// Create own textarea styling in contact page
+// ANd for the Header
+
+// Media Queries
+// Add Gill
+// Font Mail 100 vw
+// Home Services add service
+// Qui sommes nous
+// Change header image size
+// Filter selector disable stroke
+
+// Set nav and footer a fixed height and use it to defined top and bottom padding
+
+
+

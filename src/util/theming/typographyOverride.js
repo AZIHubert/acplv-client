@@ -3,7 +3,9 @@ export default (theme) => ({
         h1: {
             textTransform: 'uppercase',
             fontSize: '4.4rem',
-            
+            [theme.breakpoints.up('xl')]: {
+                fontSize: '6.4rem',
+            },
             lineHeight: 1,
             '&::selection': {
                 backgroundColor: theme.palette.secondaryColor,
@@ -21,7 +23,7 @@ export default (theme) => ({
         },
         h3: {
             textTransform: 'uppercase',
-            fontSize: '1.7rem',
+            fontSize: '2.4rem',
             '&::selection': {
                 backgroundColor: theme.palette.secondaryColor,
                 color: theme.palette.primaryColor

@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, Fragment} from 'react'
 
 import SubComponentWrapper from '../util/SubComponentWrapper'
 import ComponentWrapper from '../util/ComponentWrapper'
@@ -16,23 +16,20 @@ const useStyles = makeStyles(theme => ({
         borderBottom: `1px solid ${theme.palette.secondaryColor}`
     },
     typeItem: {
+        textStrokeWidth: 0.4,
+        textStrokeColor: theme.palette.secondaryColor,
+        color: 'transparent',
         paddingRight: theme.spacing(1),
         cursor: 'pointer',
         '&:hover, &.active': {
             color: theme.palette.tertiaryColor
         }
     },
-    firstTypesItem: {
-        '&:after': {
-            content: '","',
-            color: theme.palette.secondaryColor
-        }
-    },
-    lastTypesItem: {
-        '&:after': {
-            content: '"."',
-            color: theme.palette.secondaryColor
-        },
+    separator: {
+        textStrokeWidth: 0.5,
+        textStrokeColor: theme.palette.secondaryColor,
+        color: 'transparent',
+        padding: theme.spacing(0, 1)
     },
     projectsContainer: {
         paddingTop: theme.spacing(10)
@@ -141,7 +138,7 @@ export default ({theme}) => {
                 >
                     <Grid
                         item
-                        xs={10}
+                        xs={12}
                     >
                         <Box
                             display="flex"
@@ -155,18 +152,29 @@ export default ({theme}) => {
                             >
                                 All
                             </Typography>
+                            <Typography
+                                variant="h3"
+                                className={classes.separator}
+                            >
+                                * 
+                            </Typography>
                             {types.map((type, i) => (
-                                <Typography
-                                    variant="h3"
-                                    key={type}
-                                    className={
-                                        `${i !== types.length -1 ? classes.firstTypesItem : classes.lastTypesItem}
-                                        ${classes.typeItem}`
-                                    }
-                                    onClick={(e) => handleFilter(type, e)}
-                                >
-                                    {type}
-                                </Typography>
+                                <Fragment>
+                                    <Typography
+                                        variant="h3"
+                                        key={type}
+                                        className={classes.typeItem}
+                                        onClick={(e) => handleFilter(type, e)}
+                                    >
+                                        {type}
+                                    </Typography>
+                                    {i !== types.length -1 ? <Typography
+                                        variant="h3"
+                                        className={classes.separator}
+                                    >
+                                        * 
+                                    </Typography> : null}
+                                </Fragment>
                             ))}
                         </Box>
                     </Grid>

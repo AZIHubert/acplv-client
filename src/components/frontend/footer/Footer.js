@@ -1,4 +1,4 @@
-import React, {forwardRef} from 'react'
+import React from 'react'
 
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -20,7 +20,6 @@ const useStyles = makeStyles(theme => ({
     copyright: {
         paddingRight: theme.spacing(3),
         paddingLeft: theme.spacing(3),
-        borderRight: `1px solid ${theme.palette.secondaryColor}`
     },
     socialMediaContainer: {
         paddingLeft: theme.spacing(10)
@@ -33,13 +32,12 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default forwardRef((props, ref) => {
-    const classes = useStyles(props)
+export default ({theme}) => {
+    const classes = useStyles(theme)
     return (
         <Box
             display="flex"
             className={classes.container}
-            ref={ref}
         >
             <Typography
                 variant="body1"
@@ -91,4 +89,4 @@ export default forwardRef((props, ref) => {
             </Box>
         </Box>
     )
-})
+}

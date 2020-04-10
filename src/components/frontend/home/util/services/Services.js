@@ -71,6 +71,7 @@ export default () => {
         <SubComponentWrapper
             title="nos services"
             hasBorder
+            paddingTop
         >
         </SubComponentWrapper>
     )

@@ -28,7 +28,6 @@ export default () => {
           body: {
             backgroundColor: defaultTheme.palette.primaryColor,
             color: defaultTheme.palette.secondaryColor,
-            margin: defaultTheme.spacing(10, 0, 0, 0)
           }
         }
       },

@@ -92,6 +92,7 @@ export default ({theme}) => {
         <SubComponentWrapper
             title="clients"
             hasBorder
+            paddingTop
         >
             <Box
                 display="flex"

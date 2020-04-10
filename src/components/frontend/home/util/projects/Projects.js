@@ -57,9 +57,12 @@ export default ({theme}) => {
         type: [types[(Math.random() * types.length) | 0]]
     }])
     return (
+        
         <SubComponentWrapper
             hasBorder
-            title="projects"
+            paddingTop
+            title="projets"
+            subTitle="récents"
         >
             <Grid
                 container
@@ -69,7 +72,7 @@ export default ({theme}) => {
                     xs={6}
                     className={classes.evenGrid}
                 >
-                    {projects.filter((project, i) => {
+                    {projects.filter((_, i) => {
                         return (i % 2 === 0);
                     }).map(project => (
                         <ProjectThumb
@@ -83,7 +86,7 @@ export default ({theme}) => {
                     xs={6}
                     className={classes.oddGrid}
                 >
-                    {projects.filter((project, i) => {
+                    {projects.filter((_, i) => {
                         return (i % 2 !== 0);
                     }).map(project => (
                         <ProjectThumb

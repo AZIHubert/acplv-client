@@ -51,6 +51,23 @@ export default ({theme}) => {
                     based in paris
                 </Typography>
             </div>
+            <div>
+                <Typography
+                    variant="h1"
+                >
+                    qui
+                </Typography>
+                <Typography
+                    variant="h1"
+                >
+                    sommes
+                </Typography>
+                <Typography
+                    variant="h1"
+                >
+                    nous
+                </Typography>
+            </div>
         </div>
     )
 }

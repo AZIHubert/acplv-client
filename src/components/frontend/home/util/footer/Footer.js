@@ -10,13 +10,13 @@ const useStyles = makeStyles(theme => ({
     container: {
         height: '100vh',
         position: 'relative',
-        borderTop: `1px solid ${theme.palette.secondaryColor}`
     },
     contactContainer: {
         margin: theme.spacing(0, 3)
     },
     contactLink: {
-        textStrokeWidth: 2,
+        textStrokeWidth: 0.5,
+        fontSize: '5rem',
         textStrokeColor: theme.palette.secondaryColor,
         color: 'transparent',
         transition: theme.transitions.create('text-stroke-color', {
@@ -27,6 +27,9 @@ const useStyles = makeStyles(theme => ({
             color: 'transparent',
             textStrokeColor: theme.palette.tertiaryColor,
         }
+    },
+    letsChatText: {
+        paddingBottom: theme.spacing(3)
     }
 }))
 
@@ -45,11 +48,12 @@ export default ({theme}) => {
                 flexDirection="column"
                 justifyContent="center"
             >
-                <div>
+                <Box textAlign="center">
                     <Typography
                         variant="h1"
+                        className={classes.letsChatText}
                     >
-                        let's chat
+                        let's chat!
                     </Typography>
                     <Typography
                         variant="h1"
@@ -61,7 +65,7 @@ export default ({theme}) => {
                             contact@acplv.com
                         </Link>
                     </Typography>
-                </div>
+                </Box>
             </Box>
         </Box>
     )

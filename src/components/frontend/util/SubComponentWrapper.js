@@ -6,7 +6,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
     container: {
-        padding: theme.spacing(10, 0),
+        padding: props => props.paddingTop ? theme.spacing(10, 0) : theme.spacing(0, 0, 10, 0),
         borderTop: props => props.hasBorder ? `1px solid ${theme.palette.secondaryColor}` : ''
     },
     titleContainer: {
@@ -15,19 +15,29 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default (props) => {
-    const {title, children} = props
+    // title sur deux lignes
+    const {title, subTitle, children} = props
     const classes = useStyles(props)
     return (
         <div
             className={classes.container}
         >
             {title && <div
-                className={classes.titleContainer}
+                className={subTitle ? '' : classes.titleContainer}
             >
                 <Typography
                     variant="h1"
                 >
                     {title}
+                </Typography>
+            </div>}
+            {subTitle && <div
+                className={classes.titleContainer}
+            >
+                <Typography
+                    variant="h1"
+                >
+                    {subTitle}
                 </Typography>
             </div>}
 

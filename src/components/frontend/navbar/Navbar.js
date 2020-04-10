@@ -16,15 +16,15 @@ const useStyles = makeStyles(theme => ({
     },
     container: {
         backgroundColor: theme.palette.primaryColor,
-        margin: theme.spacing(0, 3),
-        padding: theme.spacing(2, 0),
+        margin: theme.spacing(0, 6),
+        padding: theme.spacing(2.5, 0),
         borderBottom: `2px solid ${theme.palette.tertiaryColor}`
     },
     menuItems: {
         textAlign: 'right'
     },
     menuItem: {
-        paddingLeft: theme.spacing(2),
+        paddingLeft: theme.spacing(3),
         transition: theme.transitions.create('color', {
             easing: theme.transitions.easing.easeIn,
             duration: theme.transitions.duration.shortest
