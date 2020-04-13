@@ -25,4 +25,3 @@ export default App;
 // Remove border between telephone, email and address in contact page
 
 
-

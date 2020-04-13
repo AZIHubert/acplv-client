@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 
 import SubComponentWrapper from '../../../util/SubComponentWrapper'
 
+import Service from './util/Service'
+
 export default () => {
     const [services] = useState([{
         title: 'SIGNALÉTIQUE EXTÉRIEUR',
@@ -74,6 +76,12 @@ export default () => {
             paddingTop
             paddingBottom
         >
+            {services.map((service, i) => (
+                <Service
+                    service={service}
+                    isFirst={!i}
+                />
+            ))}
         </SubComponentWrapper>
     )
 }
