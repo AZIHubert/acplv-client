@@ -25,7 +25,6 @@ const useStyles = makeStyles(theme => ({
 export default (props) => {
     const classes = useStyles(props)
     const {project} = props
-    console.log(project.title, props.isLast)
     const thumbRef = useRef(null)
     const [thumbHeight, setThumbHeight] = useState()
     useEffect(() => {

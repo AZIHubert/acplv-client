@@ -165,14 +165,15 @@ export default ({theme}) => {
                                 * 
                             </Typography>
                             {types.map((type, i) => (
-                                <Fragment>
+                                <Fragment
+                                    key={i}
+                                >
                                     <Typography
                                         variant="h3"
-                                        key={type}
                                         className={classes.typeItem}
                                         onClick={(e) => handleFilter(type, e)}
                                     >
-                                        {type}
+                                        {type} {i}
                                     </Typography>
                                     {i !== types.length -1 ? <Typography
                                         variant="h3"

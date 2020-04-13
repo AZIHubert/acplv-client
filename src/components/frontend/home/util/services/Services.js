@@ -79,6 +79,7 @@ export default () => {
             {services.map((service, i) => (
                 <Service
                     service={service}
+                    key={i}
                     isFirst={!i}
                 />
             ))}
