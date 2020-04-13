@@ -173,7 +173,7 @@ export default ({theme}) => {
                                         className={classes.typeItem}
                                         onClick={(e) => handleFilter(type, e)}
                                     >
-                                        {type} {i}
+                                        {type}
                                     </Typography>
                                     {i !== types.length -1 ? <Typography
                                         variant="h3"
