@@ -32,7 +32,10 @@ export default ({theme}) => {
         <ComponentWrapper
             title="contact"
         >
-            <SubComponentWrapper>
+            <SubComponentWrapper
+                paddingTop
+                paddingBottom
+            >
                 <Grid
                     container
                     className={classes.container}
@@ -42,52 +45,7 @@ export default ({theme}) => {
                         xs={6}
                         className={classes.paddingRight}
                     >
-                        <Box
-                className={classes.contactContainer}
-            >
-                <Typography
-                    variant='body2'
-                >
-                    téléphone
-                </Typography>
-                <Typography
-                    variant='body1'
-                >
-                    +33.08.11.11.11.11
-                </Typography>
-            </Box>
-            <Box
-                className={classes.contactContainer}
-            >
-                <Typography
-                    variant='body2'
-                >
-                    Email
-                </Typography>
-                <Typography
-                    variant='body1'
-                >
-                    CONTACT@ACPLV.COM
-                </Typography>
-            </Box>
-            <Box>
-                <Typography
-                    variant='body2'
-                >
-                    adresse
-                </Typography>
-                <Typography
-                    variant='body1'
-                >
-                    11 rue de Besançon
-                </Typography>
-                <Typography
-                    variant='body1'
-                >
-                    75000, Paris
-                </Typography>
-            </Box>
-                        {/* <ContactInfo /> */}
+                        <ContactInfo />
                     </Grid>
                     <Grid
                         item

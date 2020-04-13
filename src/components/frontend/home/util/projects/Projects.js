@@ -61,6 +61,7 @@ export default ({theme}) => {
         <SubComponentWrapper
             hasBorder
             paddingTop
+            paddingBottom
             title="projets"
             subTitle="récents"
         >
@@ -74,10 +75,11 @@ export default ({theme}) => {
                 >
                     {projects.filter((_, i) => {
                         return (i % 2 === 0);
-                    }).map(project => (
+                    }).map((project, i) => (
                         <ProjectThumb
                             project={project}
                             key={project.index}
+                            isLast={Math.floor(projects.length/2) === i+1}
                         />
                     ))}
                 </Grid>
@@ -88,10 +90,11 @@ export default ({theme}) => {
                 >
                     {projects.filter((_, i) => {
                         return (i % 2 !== 0);
-                    }).map(project => (
+                    }).map((project, i) => (
                         <ProjectThumb
                             project={project}
                             key={project.index}
+                            isLast={Math.floor(projects.length/2) === i+1}
                         />
                     ))}
                 </Grid>

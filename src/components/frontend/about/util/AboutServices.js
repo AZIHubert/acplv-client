@@ -85,6 +85,7 @@ export default ({theme}) => {
         <SubComponentWrapper
             hasBorder
             paddingTop
+            paddingBottom
         >
             <Box
                 className={classes.titleContainer}

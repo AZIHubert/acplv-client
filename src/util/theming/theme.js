@@ -35,7 +35,9 @@ export default () => {
       ...textfield
     },
     custom: {
-      clientsAnimationSpeed: 35
+      clientsAnimationSpeed: 35,
+      navbarHeight: 70,
+      footerHeight: 50
     }
   });
 };

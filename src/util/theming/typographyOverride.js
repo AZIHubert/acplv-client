@@ -2,9 +2,9 @@ export default (theme) => ({
     MuiTypography: {
         h1: {
             textTransform: 'uppercase',
-            fontSize: '4.4rem',
+            fontSize: '5.5rem',
             [theme.breakpoints.up('xl')]: {
-                fontSize: '6.4rem',
+                fontSize: '6.8rem',
             },
             lineHeight: 1,
             '&::selection': {

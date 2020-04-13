@@ -12,16 +12,14 @@ const useStyles = makeStyles(theme => ({
         position: 'fixed',
         zIndex: 100,
         width: '100%',
-        top: 0
+        top: 0,
+        height: theme.custom.navbarHeight
     },
     container: {
         backgroundColor: theme.palette.primaryColor,
         margin: theme.spacing(0, 6),
-        padding: theme.spacing(2.5, 0),
+        height: '100%',
         borderBottom: `2px solid ${theme.palette.tertiaryColor}`
-    },
-    menuItems: {
-        textAlign: 'right'
     },
     menuItem: {
         paddingLeft: theme.spacing(3),
@@ -48,7 +46,11 @@ export default (theme) => {
     return (
         <div className={classes.fixedContainer}>
             <Box display="flex" className={classes.container}>
-                <Box>
+                <Box
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="center"
+                >
                     <Typography
                         variant="h4"
                         component={Link}
@@ -57,40 +59,52 @@ export default (theme) => {
                         acplv
                     </Typography>
                 </Box>
-                <Box flexGrow={1} className={classes.menuItems}>
-                    <Typography
-                        variant="h4"
-                        component={NavLink}
-                        to="/"
-                        exact
-                        className={classes.menuItem}
+                <Box
+                    display="flex"
+                    flexGrow={1}
+                    justifyContent="flex-end"
+                >
+                    <Box
+                        display="flex"
+                        flexDirection="column"
+                        justifyContent="center"
                     >
-                        home
-                    </Typography>
-                    <Typography
-                        variant="h4"
-                        component={NavLink}
-                        to="/about"
-                        className={classes.menuItem}
-                    >
-                        à propos
-                    </Typography>
-                    <Typography
-                        variant="h4"
-                        component={NavLink}
-                        to="/projects"
-                        className={classes.menuItem}
-                    >
-                        projects
-                    </Typography>
-                    <Typography
-                        variant="h4"
-                        component={NavLink}
-                        to="/contact"
-                        className={classes.menuItem}
-                    >
-                        contact
-                    </Typography>
+                        <Box>
+                            <Typography
+                                variant="h4"
+                                component={NavLink}
+                                to="/"
+                                exact
+                                className={classes.menuItem}
+                            >
+                                home
+                            </Typography>
+                            <Typography
+                                variant="h4"
+                                component={NavLink}
+                                to="/about"
+                                className={classes.menuItem}
+                            >
+                                à propos
+                            </Typography>
+                            <Typography
+                                variant="h4"
+                                component={NavLink}
+                                to="/projects"
+                                className={classes.menuItem}
+                            >
+                                projects
+                            </Typography>
+                            <Typography
+                                variant="h4"
+                                component={NavLink}
+                                to="/contact"
+                                className={classes.menuItem}
+                            >
+                                contact
+                            </Typography>
+                        </Box>
+                    </Box>
                 </Box>
             </Box>
         </div>

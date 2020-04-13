@@ -6,6 +6,8 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
     container: {
+        marginTop: theme.custom.navbarHeight,
+        paddingBottom: theme.custom.footerHeight,
         minHeight: '100vh',
         position: 'relative',
     },

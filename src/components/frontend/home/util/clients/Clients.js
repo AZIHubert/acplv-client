@@ -13,9 +13,6 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2, 0),
         borderTop: `1px solid ${theme.palette.secondaryColor}`,
         borderBottom: `1px solid ${theme.palette.secondaryColor}`,
-        // '&:hover .text': {
-        //     animationDuration: `${theme.custom.clientsAnimationSpeed * 2}s`
-        // }
     },
     separator: {
         padding: theme.spacing(0, 1)
@@ -93,6 +90,7 @@ export default ({theme}) => {
             title="clients"
             hasBorder
             paddingTop
+            paddingBottom
         >
             <Box
                 display="flex"

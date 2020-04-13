@@ -22,7 +22,8 @@ const useStyles = makeStyles(theme => ({
         paddingRight: theme.spacing(1),
         cursor: 'pointer',
         '&:hover, &.active': {
-            color: theme.palette.tertiaryColor
+            color: theme.palette.tertiaryColor,
+            textStrokeColor: 'transparent'
         }
     },
     separator: {
@@ -110,12 +111,14 @@ export default ({theme}) => {
         index: 11,
         thumbnail: 'https://dummyimage.com/400x450/757575/000000&text=project+12',
         type: types[(Math.random() * types.length) | 0]
-    }, {
+    },
+    {
         title: 'project 13',
         index: 12,
         thumbnail: 'https://dummyimage.com/400x450/757575/000000&text=project+13',
         type: types[(Math.random() * types.length) | 0]
-    }])
+    }
+    ])
     const [displayProjects, setDisplayProjects] = useState([...projects])
     const reseFilter = e => {
         typesContainerRef.current.childNodes.forEach(e => e.classList.remove('active'))
@@ -131,7 +134,10 @@ export default ({theme}) => {
         <ComponentWrapper
             title="projets"
         >
-            <SubComponentWrapper>
+            <SubComponentWrapper
+                paddingTop
+                paddingBottom
+            >
                 <Grid
                     container
                     className={classes.typeItemsContainer}
@@ -188,12 +194,17 @@ export default ({theme}) => {
                         xs={6}
                         className={classes.evenGrid}
                     >
-                        {displayProjects.filter((project, i) => {
+                        {displayProjects.filter((_, i) => {
                             return (i % 2 === 0);
-                        }).map(project => (
+                        }).map((project, i) => (
                             <ProjectThumb
                                 project={project}
                                 key={project.index}
+                                isLast={
+                                    projects.length % 2 ?
+                                        Math.floor(projects.length/2) + 1 === i+1
+                                    : Math.floor(projects.length/2) === i+1
+                                }
                             />
                         ))}
                     </Grid>
@@ -202,12 +213,13 @@ export default ({theme}) => {
                         xs={6}
                         className={classes.oddGrid}
                     >
-                        {displayProjects.filter((project, i) => {
+                        {displayProjects.filter((_, i) => {
                             return (i % 2 !== 0);
-                        }).map(project => (
+                        }).map((project, i) => (
                             <ProjectThumb
                                 project={project}
                                 key={project.index}
+                                isLast={Math.floor(projects.length/2) === i+1}
                             />
                         ))}
                     </Grid>

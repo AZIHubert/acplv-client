@@ -18,7 +18,10 @@ const useStyles = makeStyles(theme => ({
 export default ({theme}) => {
     const classes = useStyles(theme)
     return (
-        <SubComponentWrapper>
+        <SubComponentWrapper
+            paddingTop
+            paddingBottom
+        >
             <Grid container>
                 <Grid item xs={9}>
                     <Typography

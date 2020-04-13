@@ -7,7 +7,17 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
     contactContainer: {
-        paddingBottom: theme.spacing(4),
+        paddingBottom: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+        borderBottom: `1px solid ${theme.palette.tertiaryColor}`,
+    },
+    socialMediaContainer: {
+        paddingTop: theme.spacing(4)
+    },
+    socialMedia: {
+        borderBottom: `1px solid ${theme.palette.tertiaryColor}`,
+        paddingBottom: theme.spacing(1),
+        marginBottom: theme.spacing(1)
     }
 }))
 
@@ -43,7 +53,9 @@ export default ({theme}) => {
                     CONTACT@ACPLV.COM
                 </Typography>
             </Box>
-            <Box>
+            <Box
+                // className={classes.contactContainer}
+            >
                 <Typography
                     variant='body2'
                 >
@@ -58,6 +70,29 @@ export default ({theme}) => {
                     variant='body1'
                 >
                     75000, Paris
+                </Typography>
+            </Box>
+            <Box
+                textAlign='right'
+                className={classes.socialMediaContainer}
+            >
+                <Typography
+                    variant='body2'
+                    className={classes.socialMedia}
+                >
+                    Facebook
+                </Typography>
+                <Typography
+                    variant='body2'
+                    className={classes.socialMedia}
+                >
+                    Linkedin
+                </Typography>
+                <Typography
+                    variant='body2'
+                    // className={classes.socialMedia}
+                >
+                    Instagram
                 </Typography>
             </Box>
         </Fragment>

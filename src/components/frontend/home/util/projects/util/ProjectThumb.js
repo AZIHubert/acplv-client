@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     container: {
         borderBottom: `1px solid ${theme.palette.secondaryColor}`,
         paddingBottom: theme.spacing(1),
-        marginBottom: theme.spacing(8)
+        marginBottom: props => props.isLast ? '0' : theme.spacing(8)
     },
     thumbnailContainer: {
         width: '100%',

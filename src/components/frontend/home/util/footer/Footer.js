@@ -8,7 +8,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
     container: {
-        height: '100vh',
+        height: `calc(100vh - ${theme.custom.navbarHeight}px - ${theme.custom.footerHeight}px)`,
         position: 'relative',
     },
     contactContainer: {
@@ -16,7 +16,6 @@ const useStyles = makeStyles(theme => ({
     },
     contactLink: {
         textStrokeWidth: 0.5,
-        fontSize: '5rem',
         textStrokeColor: theme.palette.secondaryColor,
         color: 'transparent',
         transition: theme.transitions.create('text-stroke-color', {
@@ -29,7 +28,21 @@ const useStyles = makeStyles(theme => ({
         }
     },
     letsChatText: {
-        paddingBottom: theme.spacing(3)
+        fontSize: '4.5rem',
+        paddingBottom: theme.spacing(3),
+        marginBottom: theme.spacing(4),
+        position: 'relative',
+        '&:after': {
+            content: "''",
+            backgroundColor: theme.palette.secondaryColor,
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            width: 200,
+            height: 1,
+            bottom: 0,
+            margin: '0 auto'
+        }
     }
 }))
 
