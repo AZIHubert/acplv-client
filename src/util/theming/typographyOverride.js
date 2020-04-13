@@ -2,9 +2,12 @@ export default (theme) => ({
     MuiTypography: {
         h1: {
             textTransform: 'uppercase',
-            fontSize: '5.5rem',
             [theme.breakpoints.up('xl')]: {
                 fontSize: '6.8rem',
+            },
+            fontSize: '5.5rem',
+            [theme.breakpoints.down('xs')]: {
+                fontSize: '1.8rem',
             },
             lineHeight: 1,
             '&::selection': {
@@ -24,6 +27,9 @@ export default (theme) => ({
         h3: {
             textTransform: 'uppercase',
             fontSize: '2.4rem',
+            [theme.breakpoints.down('xs')]: {
+                fontSize: '1.1rem',
+            },
             '&::selection': {
                 backgroundColor: theme.palette.secondaryColor,
                 color: theme.palette.primaryColor
@@ -43,6 +49,9 @@ export default (theme) => ({
         },
         body1: {
             fontSize: '1.2rem',
+            [theme.breakpoints.down('xs')]: {
+                fontSize: '1rem',
+            },
             textTransform: 'uppercase',
             '&::selection': {
                 backgroundColor: theme.palette.secondaryColor,
@@ -51,6 +60,9 @@ export default (theme) => ({
         },
         body2: {
             fontSize: '1.2rem',
+            [theme.breakpoints.down('xs')]: {
+                fontSize: '1rem',
+            },
             color: theme.palette.tertiaryColor,
             textTransform: 'uppercase',
             '&::selection': {

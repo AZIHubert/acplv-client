@@ -11,13 +11,23 @@ const useStyles = makeStyles(theme => ({
             0,
             props.paddingBottom ? 10 : 0
         ),
+        [theme.breakpoints.down('xs')]: {
+            padding: props => theme.spacing(
+                props.paddingTop ? 5 : 0,
+                0,
+                props.paddingBottom ? 5 : 0
+            ),
+        },
         borderTop: props => props.hasBorder ? `1px solid ${theme.palette.secondaryColor}` : ''
     },
     titleContainer: {
         paddingBottom: theme.spacing(5)
     },
     subTitle: {
-        paddingLeft: theme.spacing(15)
+        paddingLeft: theme.spacing(15),
+        [theme.breakpoints.down('xs')]: {
+            paddingLeft: theme.spacing(2),
+        }
     }
 }))
 

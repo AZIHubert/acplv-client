@@ -1,10 +1,14 @@
 import React from 'react'
 
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
-import Link from '@material-ui/core/Link'
+import {
+    Box,
+    Typography,
+    Link
+} from '@material-ui/core'
 
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import useWindowSize from '../../../hooks/useWindowSize'
+
+import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
     absoluteContainer: {
@@ -34,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 
 export default ({theme}) => {
     const classes = useStyles(theme)
+    const {width} = useWindowSize()
     return (
         <Box
             display="flex"
@@ -74,7 +79,7 @@ export default ({theme}) => {
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                facebook
+                                {width >= 600 ? 'facebook' : 'Fa'}
                             </Link>
                         </Typography>
                         <Typography
@@ -86,7 +91,7 @@ export default ({theme}) => {
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                linkedin
+                                {width >= 600 ? 'linkedin' : 'Li'}
                             </Link>
                         </Typography>
                         <Typography
@@ -98,7 +103,7 @@ export default ({theme}) => {
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                instagram
+                                {width >= 600 ? 'Instagram' : 'In'}
                             </Link>
                         </Typography>
                     </Box>

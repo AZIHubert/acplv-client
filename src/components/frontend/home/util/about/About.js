@@ -1,13 +1,13 @@
 import React from 'react'
 
-// import SubHeaderWrapper from '../SubHeaderWrapper'
-
 import SubComponentWrapper from '../../../util/SubComponentWrapper'
 
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
+import {
+    Grid,
+    Typography
+} from '@material-ui/core'
 
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
     text: {
@@ -19,11 +19,10 @@ export default ({theme}) => {
     const classes = useStyles(theme)
     return (
         <SubComponentWrapper
-            paddingTop
             paddingBottom
         >
             <Grid container>
-                <Grid item xs={9}>
+                <Grid item xs={12} sm={9}>
                     <Typography
                         variant="body2"
                         className={classes.text}

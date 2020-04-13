@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState, Fragment} from 'react'
 
 import SubComponentWrapper from '../../../util/SubComponentWrapper'
-
-
 import ProjectThumb from './util/ProjectThumb'
+
+import useWindowSize from '../../../../../hooks/useWindowSize'
 
 import Grid from '@material-ui/core/Grid'
 
@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default ({theme}) => {
+    const {width} = useWindowSize()
     const classes = useStyles(theme)
     const [types] = useState([
         'KAKÉMONOS', 'STICKERS', 'PLAQUES PLEXIGLASS', 'BORNES TACTILES D’EXTÉRIEUR',
@@ -68,36 +69,53 @@ export default ({theme}) => {
             <Grid
                 container
             >
-                <Grid
-                    item
-                    xs={6}
-                    className={classes.evenGrid}
-                >
-                    {projects.filter((_, i) => {
-                        return (i % 2 === 0);
-                    }).map((project, i) => (
-                        <ProjectThumb
-                            project={project}
-                            key={project.index}
-                            isLast={Math.floor(projects.length/2) === i+1}
-                        />
-                    ))}
-                </Grid>
-                <Grid
-                    item
-                    xs={6}
-                    className={classes.oddGrid}
-                >
-                    {projects.filter((_, i) => {
-                        return (i % 2 !== 0);
-                    }).map((project, i) => (
-                        <ProjectThumb
-                            project={project}
-                            key={project.index}
-                            isLast={Math.floor(projects.length/2) === i+1}
-                        />
-                    ))}
-                </Grid>
+                {width >= 600 ? 
+                    <Fragment>
+                        <Grid
+                            item
+                            xs={6}
+                            className={classes.evenGrid}
+                        >
+                            {projects.filter((_, i) => {
+                                return (i % 2 === 0);
+                            }).map((project, i) => (
+                                <ProjectThumb
+                                    project={project}
+                                    key={project.index}
+                                    isLast={Math.floor(projects.length/2) === i+1}
+                                />
+                            ))}
+                        </Grid>
+                        <Grid
+                            item
+                            xs={6}
+                            className={classes.oddGrid}
+                        >
+                            {projects.filter((_, i) => {
+                                return (i % 2 !== 0);
+                            }).map((project, i) => (
+                                <ProjectThumb
+                                    project={project}
+                                    key={project.index}
+                                    isLast={Math.floor(projects.length/2) === i+1}
+                                />
+                            ))}
+                        </Grid>
+                    </Fragment>
+                :
+                    <Grid
+                        item
+                        xs={12}
+                    >
+                        {projects.map((project, i) => (
+                            <ProjectThumb
+                                project={project}
+                                key={project.index}
+                                isLast={projects.length === i+1}
+                            />
+                        ))}
+                    </Grid>
+                }
             </Grid>
         </SubComponentWrapper>
     )

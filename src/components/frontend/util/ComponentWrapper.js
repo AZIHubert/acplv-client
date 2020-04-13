@@ -12,7 +12,10 @@ const useStyles = makeStyles(theme => ({
         position: 'relative',
     },
     wrapper: {
-        margin: theme.spacing(0, 6)
+        margin: theme.spacing(0, 6),
+        [theme.breakpoints.down('xs')]: {
+            margin: theme.spacing(0, 1)
+        },
     },
     title: {
         fontSize: '6rem'

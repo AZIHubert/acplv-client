@@ -11,11 +11,18 @@ const useStyles = makeStyles(theme => ({
     container: {
         overflowX: 'hidden',
         padding: theme.spacing(2, 0),
+        [theme.breakpoints.down('xs')]: {
+            padding: theme.spacing(1, 0),
+        },
         borderTop: `1px solid ${theme.palette.secondaryColor}`,
         borderBottom: `1px solid ${theme.palette.secondaryColor}`,
+        
     },
     separator: {
-        padding: theme.spacing(0, 1)
+        padding: theme.spacing(0, 1),
+        [theme.breakpoints.down('xs')]: {
+            padding: theme.spacing(0, 0.5),
+        },
     },
     textOne: {
         animation: theme.transitions.create('$animateOne', {

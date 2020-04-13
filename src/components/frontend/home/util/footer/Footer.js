@@ -12,12 +12,19 @@ const useStyles = makeStyles(theme => ({
         position: 'relative',
     },
     contactContainer: {
-        margin: theme.spacing(0, 3)
+        margin: theme.spacing(0, 3),
+        [theme.breakpoints.down('xs')]: {
+            margin: 0,
+        },
     },
     contactLink: {
         textStrokeWidth: 0.5,
         textStrokeColor: theme.palette.secondaryColor,
         color: 'transparent',
+        [theme.breakpoints.down('xs')]: {
+            textStrokeWidth: 'unset',
+            color: theme.palette.secondaryColor
+        },
         transition: theme.transitions.create('text-stroke-color', {
             easing: theme.transitions.easing.easeIn,
             duration: theme.transitions.duration.shortest
@@ -42,7 +49,15 @@ const useStyles = makeStyles(theme => ({
             height: 1,
             bottom: 0,
             margin: '0 auto'
-        }
+        },
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '2rem',
+            paddingBottom: theme.spacing(1),
+            marginBottom: theme.spacing(2),
+            '&:after': {
+                width: 80
+            },
+        },
     }
 }))
 

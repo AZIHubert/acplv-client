@@ -2,10 +2,14 @@ import React from 'react'
 
 import {NavLink, Link} from 'react-router-dom'
 
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
+import {
+    Box,
+    Typography
+} from '@material-ui/core'
 
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import useWindowSize from '../../../hooks/useWindowSize'
+
+import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
     fixedContainer: {
@@ -18,6 +22,9 @@ const useStyles = makeStyles(theme => ({
     container: {
         backgroundColor: theme.palette.primaryColor,
         margin: theme.spacing(0, 6),
+        [theme.breakpoints.down('xs')]: {
+            margin: theme.spacing(0, 1)
+        },
         height: '100%',
         borderBottom: `2px solid ${theme.palette.tertiaryColor}`
     },
@@ -43,9 +50,13 @@ const useStyles = makeStyles(theme => ({
 
 export default (theme) => {
     const classes = useStyles(theme)
+    const {width} = useWindowSize()
     return (
         <div className={classes.fixedContainer}>
-            <Box display="flex" className={classes.container}>
+            <Box
+                display="flex"
+                className={classes.container}
+            >
                 <Box
                     display="flex"
                     flexDirection="column"
@@ -69,41 +80,52 @@ export default (theme) => {
                         flexDirection="column"
                         justifyContent="center"
                     >
-                        <Box>
-                            <Typography
-                                variant="h4"
-                                component={NavLink}
-                                to="/"
-                                exact
-                                className={classes.menuItem}
-                            >
-                                home
-                            </Typography>
-                            <Typography
-                                variant="h4"
-                                component={NavLink}
-                                to="/about"
-                                className={classes.menuItem}
-                            >
-                                à propos
-                            </Typography>
-                            <Typography
-                                variant="h4"
-                                component={NavLink}
-                                to="/projects"
-                                className={classes.menuItem}
-                            >
-                                projects
-                            </Typography>
-                            <Typography
-                                variant="h4"
-                                component={NavLink}
-                                to="/contact"
-                                className={classes.menuItem}
-                            >
-                                contact
-                            </Typography>
-                        </Box>
+                        {width >= 600 ?
+                            <Box>
+                                <Typography
+                                    variant="h4"
+                                    component={NavLink}
+                                    to="/"
+                                    exact
+                                    className={classes.menuItem}
+                                >
+                                    home
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    component={NavLink}
+                                    to="/about"
+                                    className={classes.menuItem}
+                                >
+                                    à propos
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    component={NavLink}
+                                    to="/projects"
+                                    className={classes.menuItem}
+                                >
+                                    projects
+                                </Typography>
+                                <Typography
+                                    variant="h4"
+                                    component={NavLink}
+                                    to="/contact"
+                                    className={classes.menuItem}
+                                >
+                                    contact
+                                </Typography>
+                            </Box>
+                        :
+                            <Box>
+                                <Typography
+                                    variant="h4"
+                                    className={classes.menuItem}
+                                >
+                                    HMenu
+                                </Typography>
+                            </Box>
+                        }
                     </Box>
                 </Box>
             </Box>

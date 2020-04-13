@@ -4,11 +4,15 @@ import SubComponentWrapper from '../util/SubComponentWrapper'
 import ComponentWrapper from '../util/ComponentWrapper'
 import ProjectThumb from './util/ProjectThumb'
 
-import Grid from '@material-ui/core/Grid'
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
+import useWindowSize from '../../../hooks/useWindowSize'
 
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import {
+    Grid,
+    Box,
+    Typography
+} from '@material-ui/core'
+
+import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
     typeItemsContainer: {
@@ -46,6 +50,7 @@ const useStyles = makeStyles(theme => ({
 
 export default ({theme}) => {
     const classes = useStyles(theme)
+    const {width} = useWindowSize()
     const typesContainerRef = useRef(null)
     const [types] = useState([
         'KAKÉMONOS', 'STICKERS', 'PLAQUES PLEXIGLASS', 'BORNES TACTILES D’EXTÉRIEUR',
@@ -190,40 +195,57 @@ export default ({theme}) => {
                     container
                     className={classes.projectsContainer}
                 >
-                    <Grid
-                        item
-                        xs={6}
-                        className={classes.evenGrid}
-                    >
-                        {displayProjects.filter((_, i) => {
-                            return (i % 2 === 0);
-                        }).map((project, i) => (
-                            <ProjectThumb
-                                project={project}
-                                key={project.index}
-                                isLast={
-                                    projects.length % 2 ?
-                                        Math.floor(projects.length/2) + 1 === i+1
-                                    : Math.floor(projects.length/2) === i+1
-                                }
-                            />
-                        ))}
-                    </Grid>
-                    <Grid
-                        item
-                        xs={6}
-                        className={classes.oddGrid}
-                    >
-                        {displayProjects.filter((_, i) => {
-                            return (i % 2 !== 0);
-                        }).map((project, i) => (
-                            <ProjectThumb
-                                project={project}
-                                key={project.index}
-                                isLast={Math.floor(projects.length/2) === i+1}
-                            />
-                        ))}
-                    </Grid>
+                    {width >= 600 ? 
+                        <Fragment>
+                            <Grid
+                                item
+                                xs={6}
+                                className={classes.evenGrid}
+                            >
+                                {displayProjects.filter((_, i) => {
+                                    return (i % 2 === 0);
+                                }).map((project, i) => (
+                                    <ProjectThumb
+                                        project={project}
+                                        key={project.index}
+                                        isLast={
+                                            projects.length % 2 ?
+                                                Math.floor(projects.length/2) + 1 === i+1
+                                            : Math.floor(projects.length/2) === i+1
+                                        }
+                                    />
+                                ))}
+                            </Grid>
+                            <Grid
+                                item
+                                xs={6}
+                                className={classes.oddGrid}
+                            >
+                                {displayProjects.filter((_, i) => {
+                                    return (i % 2 !== 0);
+                                }).map((project, i) => (
+                                    <ProjectThumb
+                                        project={project}
+                                        key={project.index}
+                                        isLast={Math.floor(projects.length/2) === i+1}
+                                    />
+                                ))}
+                            </Grid>
+                        </Fragment>
+                    :
+                        <Grid
+                            item
+                            xs={12}
+                        >
+                            {displayProjects.map((project, i) => (
+                                <ProjectThumb
+                                    project={project}
+                                    key={project.index}
+                                    isLast={projects.length === i+1}
+                                />
+                            ))}
+                        </Grid>
+                    }
                 </Grid>
             </SubComponentWrapper>
         </ComponentWrapper>
