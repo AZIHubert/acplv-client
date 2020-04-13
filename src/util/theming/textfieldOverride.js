@@ -2,14 +2,18 @@ export default (theme) => ({
   MuiFormLabel: {
     root: {
       color: theme.palette.secondaryColor,
+      '&::selection': {
+        background: theme.palette.secondaryColor,
+        color: theme.palette.primaryColor
+      },
       '&.Mui-focused': {
-        color: theme.palette.tertiaryColor
+        color: theme.palette.secondaryColor
       }
     }
   },
   MuiInputBase: {
     root: {
-      color: theme.palette.secondaryColor
+      color: theme.palette.tertiaryColor,
     }
   },
   MuiInput: {

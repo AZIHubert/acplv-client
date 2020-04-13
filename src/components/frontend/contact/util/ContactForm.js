@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
 
 import CustomTextField from './CustomTextfield'
+import CustomMultilinesField from './CustomMultilinesField'
+import CustomButton from './CustomButton'
 
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
 
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
@@ -62,6 +62,33 @@ export default ({theme}) => {
                 />
                 <CustomTextField
                     label="objet"
+                />
+                <Grid
+                    container
+                    spacing={2}
+                >
+                    <Grid
+                        item
+                        xs={6}
+                    >
+                        <CustomTextField
+                            label="prénom"
+                        />
+                    </Grid>
+                    <Grid
+                        item
+                        xs={6}
+                    >
+                        <CustomTextField
+                            label="nom"
+                        />
+                    </Grid>
+                </Grid>
+                <CustomMultilinesField
+                    label="message"
+                />
+                <CustomButton
+                    text="send"
                 />
             </form>
         </Box>

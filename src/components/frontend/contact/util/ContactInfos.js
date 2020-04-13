@@ -7,12 +7,11 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
     contactContainer: {
-        paddingBottom: theme.spacing(2),
-        marginBottom: theme.spacing(2),
-        borderBottom: `1px solid ${theme.palette.tertiaryColor}`,
+        paddingBottom: theme.spacing(1),
+        marginBottom: theme.spacing(1),
     },
     socialMediaContainer: {
-        paddingTop: theme.spacing(4)
+        paddingTop: theme.spacing(10)
     },
     socialMedia: {
         borderBottom: `1px solid ${theme.palette.tertiaryColor}`,
