@@ -27,11 +27,11 @@ export default ({theme}) => {
         lastName: '',
         body: ''
     })
-    const handleChange = e => {
-        setMessage({
-            ...message,
-            [e.target.name]: e.target.value });
-    }
+    // const handleChange = e => {
+    //     setMessage({
+    //         ...message,
+    //         [e.target.name]: e.target.value });
+    // }
     const handleSubmit = e => {
         e.preventDefault();
         setMessage({
