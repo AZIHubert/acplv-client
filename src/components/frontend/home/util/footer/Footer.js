@@ -4,7 +4,6 @@ import Email from './util/Email'
 
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
-import Link from '@material-ui/core/Link'
 
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
@@ -27,8 +26,7 @@ export default ({theme}) => {
     const [showEmail, setShowEmail] = useState(false)
     useEffect(() => {
         document.fonts.ready.then(() => setShowEmail(true))
-
-    }, []);
+    }, [])
     return (
         <Box
             className={classes.container}
@@ -50,17 +48,6 @@ export default ({theme}) => {
                         let's chat!
                     </Typography>
                     {showEmail && <Email /> }
-                    {/* <Typography
-                        variant="h1"
-                    >
-                        <Link
-                            href="mailto:contact@acplv.com"
-                            className={classes.contactLink}
-                        >
-                            contact@acplv.com
-                        </Link>
-                    </Typography> */}
-                    
                 </Box>
             </Box>
         </Box>

@@ -22,7 +22,7 @@ export default ({theme}) => {
             paddingBottom
         >
             <Grid container>
-                <Grid item xs={12} sm={9}>
+                <Grid item xs={12} md={9}>
                     <Typography
                         variant="body2"
                         className={classes.text}

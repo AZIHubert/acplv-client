@@ -11,7 +11,11 @@ const useStyles = makeStyles(theme => ({
         marginBottom: theme.spacing(1),
     },
     socialMediaContainer: {
-        paddingTop: theme.spacing(10)
+        paddingTop: theme.spacing(10),
+        textAlign: 'right',
+        [theme.breakpoints.down('sm')]: {
+            textAlign: 'center'
+        },
     },
     socialMedia: {
         borderBottom: `1px solid ${theme.palette.tertiaryColor}`,
@@ -52,9 +56,7 @@ export default ({theme}) => {
                     CONTACT@ACPLV.COM
                 </Typography>
             </Box>
-            <Box
-                // className={classes.contactContainer}
-            >
+            <Box>
                 <Typography
                     variant='body2'
                 >
@@ -72,7 +74,6 @@ export default ({theme}) => {
                 </Typography>
             </Box>
             <Box
-                textAlign='right'
                 className={classes.socialMediaContainer}
             >
                 <Typography
@@ -89,7 +90,6 @@ export default ({theme}) => {
                 </Typography>
                 <Typography
                     variant='body2'
-                    // className={classes.socialMedia}
                 >
                     Instagram
                 </Typography>

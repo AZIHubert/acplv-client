@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Textfit } from 'react-textfit';
+import {Textfit} from 'react-textfit';
 
 import {makeStyles} from '@material-ui/core/styles'
 

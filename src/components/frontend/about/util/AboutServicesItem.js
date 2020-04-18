@@ -6,7 +6,9 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
     title: {
-        borderBottom: props => props.isLast ? '' : `1px solid ${theme.palette.secondaryColor}`
+        borderBottom: props => props.isLast ? '' : `1px solid ${theme.palette.secondaryColor}`,
+        paddingBottom: props => props.isLast ? '' : theme.spacing(0.5),
+        marginBottom: props => props.isLast ? '' : theme.spacing(0.5)
     }
 }))
 

@@ -2,6 +2,8 @@ import React from 'react'
 
 import {NavLink, Link} from 'react-router-dom'
 
+import HMenu from './util/HMenu'
+
 import {
     Box,
     Typography
@@ -118,12 +120,7 @@ export default (theme) => {
                             </Box>
                         :
                             <Box>
-                                <Typography
-                                    variant="h4"
-                                    className={classes.menuItem}
-                                >
-                                    HMenu
-                                </Typography>
+                                <HMenu />
                             </Box>
                         }
                     </Box>

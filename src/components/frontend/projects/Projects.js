@@ -23,26 +23,50 @@ const useStyles = makeStyles(theme => ({
         textStrokeWidth: 0.4,
         textStrokeColor: theme.palette.secondaryColor,
         color: 'transparent',
-        paddingRight: theme.spacing(1),
         cursor: 'pointer',
+        paddingRight: theme.spacing(1),
         '&:hover, &.active': {
             color: theme.palette.tertiaryColor,
-            textStrokeColor: 'transparent'
-        }
+            textStrokeColor: 'transparent',
+        },
+        '&:after': {
+            content: '" * "',
+            color: theme.palette.primaryColor,
+            textStrokeWidth: 0.4,
+            textStrokeColor: theme.palette.secondaryColor,
+        },
+        [theme.breakpoints.down('824')]: {
+            textStrokeWidth: 'unset',
+            color: theme.palette.secondaryColor,
+            '&:after': {
+                color: theme.palette.secondaryColor,
+                textStrokeWidth: 'unset',
+            }
+        },
     },
     separator: {
         textStrokeWidth: 0.5,
         textStrokeColor: theme.palette.secondaryColor,
         color: 'transparent',
-        padding: theme.spacing(0, 1)
+        padding: theme.spacing(0, 1),
+        [theme.breakpoints.down('824')]: {
+            textStrokeWidth: 'unset',
+            color: theme.palette.secondaryColor
+        },
     },
     projectsContainer: {
         paddingTop: theme.spacing(10)
     },
     evenGrid: {
-        paddingRight: theme.spacing(8)
+        [theme.breakpoints.down('sm')]: {
+            paddingRight: theme.spacing(2.5),
+        },
+        paddingRight: theme.spacing(3),
     },
     oddGrid: {
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: theme.spacing(2.5),
+        },
         paddingTop: theme.spacing(8),
         paddingLeft: theme.spacing(8)
     }
@@ -163,12 +187,12 @@ export default ({theme}) => {
                             >
                                 All
                             </Typography>
-                            <Typography
+                            {/* <Typography
                                 variant="h3"
                                 className={classes.separator}
                             >
                                 * 
-                            </Typography>
+                            </Typography> */}
                             {types.map((type, i) => (
                                 <Fragment
                                     key={i}
@@ -180,12 +204,12 @@ export default ({theme}) => {
                                     >
                                         {type}
                                     </Typography>
-                                    {i !== types.length -1 ? <Typography
+                                    {/* {i !== types.length -1 ? <Typography
                                         variant="h3"
                                         className={classes.separator}
                                     >
                                         * 
-                                    </Typography> : null}
+                                    </Typography> : null} */}
                                 </Fragment>
                             ))}
                         </Box>

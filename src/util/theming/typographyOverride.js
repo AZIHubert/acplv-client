@@ -3,9 +3,12 @@ export default (theme) => ({
         h1: {
             textTransform: 'uppercase',
             [theme.breakpoints.up('xl')]: {
-                fontSize: '6.8rem',
+                fontSize: '6.6rem',
             },
-            fontSize: '5.5rem',
+            fontSize: '4.8rem',
+            [theme.breakpoints.down('824')]: {
+                fontSize: '3rem',
+            },
             [theme.breakpoints.down('xs')]: {
                 fontSize: '1.8rem',
             },
@@ -27,8 +30,11 @@ export default (theme) => ({
         h3: {
             textTransform: 'uppercase',
             fontSize: '2.4rem',
+            [theme.breakpoints.down('824')]: {
+                fontSize: '1.8rem'
+            },
             [theme.breakpoints.down('xs')]: {
-                fontSize: '1.1rem',
+                fontSize: '1.2rem',
             },
             '&::selection': {
                 backgroundColor: theme.palette.secondaryColor,

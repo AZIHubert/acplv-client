@@ -11,9 +11,15 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
     evenGrid: {
-        paddingRight: theme.spacing(8)
+        [theme.breakpoints.down('sm')]: {
+            paddingRight: theme.spacing(2.5),
+        },
+        paddingRight: theme.spacing(3),
     },
     oddGrid: {
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: theme.spacing(2.5),
+        },
         paddingTop: theme.spacing(8),
         paddingLeft: theme.spacing(8)
     }

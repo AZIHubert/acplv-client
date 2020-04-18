@@ -12,10 +12,13 @@ const useStyles = makeStyles(theme => ({
     },
     title: {
         fontSize: '4rem',
-        [theme.breakpoints.down('xs')]: {
-            fontSize: '1.5rem',
+        [theme.breakpoints.down('824')]: {
+            fontSize: '2.5rem',
             textStrokeWidth: 'unset',
             color: theme.palette.secondaryColor
+        },
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '1.5rem'
         },
         color: 'transparent',
         textStrokeWidth: 0.4,

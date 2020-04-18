@@ -19,11 +19,10 @@ const useStyles = makeStyles(theme => ({
             backgroundSize: '50%',
         },
         backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'bottom center',
-        // marginBottom: theme.spacing(10)
+        backgroundPosition: 'bottom center'
     },
     titleContainer: {
-        paddingBottom: theme.spacing(1)
+        paddingBottom: theme.spacing(16)
     },
     whoAreWeContainer: {
         height: theme.spacing(17)
@@ -66,16 +65,16 @@ export default ({theme}) => {
                          en signalétique
                     </Typography>
                 </div>
-                <div className={classes.subTitleContainer}>
+                {/* <div className={classes.subTitleContainer}>
                     <Typography
                         variant="body2"
                         className={classes.paddingLeft}
                     >
                         based in paris
                     </Typography>
-                </div>
+                </div> */}
                 
-                    {width >= 600 ?
+                    {width >= 824 ?
                         <Box
                             display="flex"
                             justifyContent="space-between"
@@ -115,7 +114,7 @@ export default ({theme}) => {
                             <Typography
                                 variant="h1"
                             >
-                                qui sommes nous
+                                qui sommes nous ?
                             </Typography>
                         </Box>
                     }
