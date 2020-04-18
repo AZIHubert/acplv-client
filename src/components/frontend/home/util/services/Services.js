@@ -74,13 +74,12 @@ export default () => {
             title="nos services"
             hasBorder
             paddingTop
-            paddingBottom
         >
             {services.map((service, i) => (
                 <Service
                     service={service}
                     key={i}
-                    isFirst={!i}
+                    isLast={services.length === i + 1}
                 />
             ))}
         </SubComponentWrapper>

@@ -105,7 +105,7 @@ export default (theme) => {
                                     to="/projects"
                                     className={classes.menuItem}
                                 >
-                                    projects
+                                    projets
                                 </Typography>
                                 <Typography
                                     variant="h4"

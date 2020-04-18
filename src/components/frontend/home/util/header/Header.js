@@ -104,7 +104,7 @@ export default ({theme}) => {
                                 <Typography
                                     variant="h1"
                                 >
-                                    nous
+                                    nous ?
                                 </Typography>
                             </Box>
                         </Box>

@@ -60,7 +60,6 @@ export default ({theme}) => {
     return (
         
         <SubComponentWrapper
-            hasBorder
             paddingTop
             paddingBottom
             title="projets"

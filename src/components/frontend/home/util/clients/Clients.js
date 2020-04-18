@@ -95,7 +95,6 @@ export default ({theme}) => {
     return (
         <SubComponentWrapper
             title="clients"
-            hasBorder
             paddingTop
             paddingBottom
         >

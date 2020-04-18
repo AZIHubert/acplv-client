@@ -1,4 +1,6 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+
+import Email from './util/Email'
 
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -11,58 +13,22 @@ const useStyles = makeStyles(theme => ({
         height: `calc(100vh - ${theme.custom.navbarHeight}px - ${theme.custom.footerHeight}px)`,
         position: 'relative',
     },
-    contactContainer: {
-        margin: theme.spacing(0, 3),
-        [theme.breakpoints.down('xs')]: {
-            margin: 0,
-        },
-    },
-    contactLink: {
-        textStrokeWidth: 0.5,
-        textStrokeColor: theme.palette.secondaryColor,
-        color: 'transparent',
-        [theme.breakpoints.down('xs')]: {
-            textStrokeWidth: 'unset',
-            color: theme.palette.secondaryColor
-        },
-        transition: theme.transitions.create('text-stroke-color', {
-            easing: theme.transitions.easing.easeIn,
-            duration: theme.transitions.duration.shortest
-        }),
-        '&:hover': {
-            color: 'transparent',
-            textStrokeColor: theme.palette.tertiaryColor,
-        }
-    },
     letsChatText: {
         fontSize: '4.5rem',
-        paddingBottom: theme.spacing(3),
-        marginBottom: theme.spacing(4),
-        position: 'relative',
-        '&:after': {
-            content: "''",
-            backgroundColor: theme.palette.secondaryColor,
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            width: 200,
-            height: 1,
-            bottom: 0,
-            margin: '0 auto'
-        },
         [theme.breakpoints.down('xs')]: {
             fontSize: '2rem',
             paddingBottom: theme.spacing(1),
-            marginBottom: theme.spacing(2),
-            '&:after': {
-                width: 80
-            },
         },
     }
 }))
 
 export default ({theme}) => {
     const classes = useStyles(theme)
+    const [showEmail, setShowEmail] = useState(false)
+    useEffect(() => {
+        document.fonts.ready.then(() => setShowEmail(true))
+
+    }, []);
     return (
         <Box
             className={classes.container}
@@ -76,14 +42,15 @@ export default ({theme}) => {
                 flexDirection="column"
                 justifyContent="center"
             >
-                <Box textAlign="center">
+                <Box>
                     <Typography
                         variant="h1"
                         className={classes.letsChatText}
                     >
                         let's chat!
                     </Typography>
-                    <Typography
+                    {showEmail && <Email /> }
+                    {/* <Typography
                         variant="h1"
                     >
                         <Link
@@ -92,7 +59,8 @@ export default ({theme}) => {
                         >
                             contact@acplv.com
                         </Link>
-                    </Typography>
+                    </Typography> */}
+                    
                 </Box>
             </Box>
         </Box>

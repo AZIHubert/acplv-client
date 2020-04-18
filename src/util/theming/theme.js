@@ -46,6 +46,7 @@ export default () => {
           body: {
             backgroundColor: defaultTheme.palette.primaryColor,
             color: defaultTheme.palette.secondaryColor,
+            fontFamily: 'GillSansBook, Arial'
           }
         }
       },

@@ -18,6 +18,12 @@ export default App;
 
 // TODO
 
+
+
+// Supprimer base in paris
+// '?' qui sommes nous
+// Trais
+
 // Media Queries
 // Add Gill
 // Home Services add service
