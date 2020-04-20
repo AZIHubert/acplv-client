@@ -47,7 +47,8 @@ export default () => {
             backgroundColor: defaultTheme.palette.primaryColor,
             color: defaultTheme.palette.secondaryColor,
             fontFamily: 'GillSansBook, Arial'
-          }
+          },
+          a: {textDecoration: 'none'}
         }
       },
       ...typography,

@@ -55,8 +55,11 @@ export default (theme) => ({
         },
         body1: {
             fontSize: '1.2rem',
+            [theme.breakpoints.down('sm')]: {
+                fontSize: '0.9rem',
+            },
             [theme.breakpoints.down('xs')]: {
-                fontSize: '1rem',
+                fontSize: '0.8rem',
             },
             textTransform: 'uppercase',
             '&::selection': {
@@ -66,8 +69,11 @@ export default (theme) => ({
         },
         body2: {
             fontSize: '1.2rem',
+            [theme.breakpoints.down('sm')]: {
+                fontSize: '0.9rem',
+            },
             [theme.breakpoints.down('xs')]: {
-                fontSize: '1rem',
+                fontSize: '0.8rem',
             },
             color: theme.palette.tertiaryColor,
             textTransform: 'uppercase',

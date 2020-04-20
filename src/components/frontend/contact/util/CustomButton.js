@@ -9,12 +9,13 @@ import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
     container: {
-        paddingTop: theme.spacing(2),
-        paddingRight: theme.spacing(2)
+        paddingTop: theme.spacing(3),
+        paddingRight: theme.spacing(4)
     },
     button: {
-        width: 90,
-        height: 90,
+        fontSize: '2rem',
+        width: 150,
+        height: 150,
         borderRadius: '50%',
         backgroundColor: theme.palette.tertiaryColor,
         color: theme.palette.primaryColor,

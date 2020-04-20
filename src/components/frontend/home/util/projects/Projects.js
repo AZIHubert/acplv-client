@@ -1,7 +1,9 @@
 import React, {useState, Fragment} from 'react'
 
 import SubComponentWrapper from '../../../util/SubComponentWrapper'
-import ProjectThumb from './util/ProjectThumb'
+// import ProjectThumb from './util/ProjectThumb'
+
+import ProjectThumb from '../../../util/ProjectThumb'
 
 import useWindowSize from '../../../../../hooks/useWindowSize'
 
@@ -11,14 +13,20 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
     evenGrid: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('xs')]: {
             paddingRight: theme.spacing(2.5),
         },
-        paddingRight: theme.spacing(3),
+        [theme.breakpoints.down('sm')]: {
+            paddingRight: theme.spacing(3),
+        },
+        paddingRight: theme.spacing(8),
     },
     oddGrid: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('xs')]: {
             paddingLeft: theme.spacing(2.5),
+        },
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: theme.spacing(2),
         },
         paddingTop: theme.spacing(8),
         paddingLeft: theme.spacing(8)

@@ -7,9 +7,9 @@ const useStyles = makeStyles(theme => ({
         position: 'relative',
         width: 30,
         // overflow: 'hidden',
-        '&:before': {
+        '&::before': {
             content: '""',
-            display: 'box',
+            display: 'block',
             paddingTop: '75%'
         }
     },

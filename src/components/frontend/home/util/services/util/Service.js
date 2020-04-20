@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
             fontSize: '1.5rem'
         },
         color: 'transparent',
-        textStrokeWidth: 0.4,
+        textStrokeWidth: 1,
         textStrokeColor: theme.palette.secondaryColor,
     }
 }))

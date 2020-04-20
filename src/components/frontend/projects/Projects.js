@@ -2,7 +2,7 @@ import React, {useState, useRef, Fragment} from 'react'
 
 import SubComponentWrapper from '../util/SubComponentWrapper'
 import ComponentWrapper from '../util/ComponentWrapper'
-import ProjectThumb from './util/ProjectThumb'
+import ProjectThumb from '../util/ProjectThumb'
 
 import useWindowSize from '../../../hooks/useWindowSize'
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
         borderBottom: `1px solid ${theme.palette.secondaryColor}`
     },
     typeItem: {
-        textStrokeWidth: 0.4,
+        textStrokeWidth: 1,
         textStrokeColor: theme.palette.secondaryColor,
         color: 'transparent',
         cursor: 'pointer',
@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
         '&:after': {
             content: '" * "',
             color: theme.palette.primaryColor,
-            textStrokeWidth: 0.4,
+            textStrokeWidth: 1,
             textStrokeColor: theme.palette.secondaryColor,
         },
         [theme.breakpoints.down('824')]: {
@@ -58,14 +58,20 @@ const useStyles = makeStyles(theme => ({
         paddingTop: theme.spacing(10)
     },
     evenGrid: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('xs')]: {
             paddingRight: theme.spacing(2.5),
         },
-        paddingRight: theme.spacing(3),
+        [theme.breakpoints.down('sm')]: {
+            paddingRight: theme.spacing(3),
+        },
+        paddingRight: theme.spacing(8),
     },
     oddGrid: {
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('xs')]: {
             paddingLeft: theme.spacing(2.5),
+        },
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: theme.spacing(2),
         },
         paddingTop: theme.spacing(8),
         paddingLeft: theme.spacing(8)

@@ -7,7 +7,7 @@ import {makeStyles} from '@material-ui/core/styles'
 const useStyles = makeStyles(theme => ({
     contactLink: {
         textTransform: 'uppercase',
-        textStrokeWidth: 0.5,
+        textStrokeWidth: 1,
         lineHeight: 1,
         textStrokeColor: theme.palette.secondaryColor,
         color: 'transparent',

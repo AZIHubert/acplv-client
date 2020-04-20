@@ -15,26 +15,20 @@ import useWindowSize from '../../../hooks/useWindowSize'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
-    container: {
-        padding: theme.spacing(0, 10),
-        [theme.breakpoints.down('sm')]: {
-            padding: theme.spacing(0)
-        },
-    },
     paddingLeft: {
-        paddingLeft: theme.spacing(3),
+        paddingLeft: theme.spacing(5),
         [theme.breakpoints.down('sm')]: {
-            paddingLeft: theme.spacing(1)
+            paddingLeft: theme.spacing(2)
         },
         [theme.breakpoints.down('xs')]: {
             paddingLeft: theme.spacing(0)
         },
     },
     paddingRight: {
-        paddingRight: theme.spacing(3),
+        paddingRight: theme.spacing(5),
         paddingTop: theme.spacing(10),
         [theme.breakpoints.down('sm')]: {
-            paddingRight: theme.spacing(1),
+            paddingRight: theme.spacing(2),
         },
         [theme.breakpoints.down('xs')]: {
             paddingTop: theme.spacing(6),

@@ -9,7 +9,7 @@ export default (theme) => ({
       '&.Mui-focused': {
         color: theme.palette.secondaryColor
       }
-    }
+    },
   },
   MuiInputBase: {
     root: {
@@ -17,12 +17,14 @@ export default (theme) => ({
     }
   },
   MuiInput: {
+    root: {
+      '&.MuiInput-underline:hover:not(.Mui-disabled):before': {
+        borderBottom: `2px solid ${theme.palette.secondaryColor}`
+      }
+    },
     underline: {
       '&:before': {
         borderBottom: `1px solid ${theme.palette.secondaryColor}`
-      },
-      '&:hover:not(.Mui-disabled):before': {
-        borderBottom: `2px solid ${theme.palette.secondaryColor}`
       },
       '&:after': {
         borderBottom: `2px solid ${theme.palette.tertiaryColor}`
