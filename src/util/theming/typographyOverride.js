@@ -10,7 +10,7 @@ export default (theme) => ({
                 fontSize: '3rem',
             },
             [theme.breakpoints.down('xs')]: {
-                fontSize: '1.8rem',
+                fontSize: '2.2rem',
             },
             lineHeight: 1,
             '&::selection': {

@@ -9,13 +9,31 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
     container: {
-        overflowX: 'hidden',
-        padding: theme.spacing(2, 0),
+        position: 'relative',
+        overflow: 'hidden',
+        width: '100%',
+        height: 70,
+        [theme.breakpoints.down('824')]: {
+            height: 55
+        },
         [theme.breakpoints.down('xs')]: {
-            padding: theme.spacing(1, 0),
+            height: 40,
         },
         borderTop: `1px solid ${theme.palette.secondaryColor}`,
         borderBottom: `1px solid ${theme.palette.secondaryColor}`,
+    },
+    textContainer: {
+        position: 'absolute',
+        top: '50%',
+        left: 0,
+        transform: 'translateY(-50%)'
+        // overflowX: 'hidden',
+        // padding: theme.spacing(2, 0),
+        // [theme.breakpoints.down('xs')]: {
+        //     padding: theme.spacing(1, 0),
+        // },
+        // borderTop: `1px solid ${theme.palette.secondaryColor}`,
+        // borderBottom: `1px solid ${theme.palette.secondaryColor}`,
         
     },
     separator: {
@@ -99,48 +117,52 @@ export default ({theme}) => {
             paddingBottom
         >
             <Box
-                display="flex"
                 className={classes.container}
             >
                 <Box
                     display="flex"
-                    className={`text ${classes.textOne}`}
+                    className={classes.textContainer}
                 >
-                    {clients.map(client => (
-                        <Fragment key={client.index}>
-                            <Typography
-                                variant="h3"
-                            >
-                                {client.title.replace(/\s/g, String.fromCharCode(160))}
-                            </Typography>
-                            <Typography
-                                variant="h3"
-                                className={classes.separator}
-                            >
-                                * 
-                            </Typography>
-                        </Fragment>
-                    ))}
-                </Box>
-                <Box
-                    display="flex"
-                    className={`text ${classes.textTwo}`}
-                >
-                    {clients.map(client => (
-                        <Fragment key={client.index}>
-                            <Typography
-                                variant="h3"
-                            >
-                                {client.title.replace(/\s/g, String.fromCharCode(160))}
-                            </Typography>
-                            <Typography
-                                variant="h3"
-                                className={classes.separator}
-                            >
-                                * 
-                            </Typography>
-                        </Fragment>
-                    ))}
+                    <Box
+                        display="flex"
+                        className={`text ${classes.textOne}`}
+                    >
+                        {clients.map(client => (
+                            <Fragment key={client.index}>
+                                <Typography
+                                    variant="h3"
+                                >
+                                    {client.title.replace(/\s/g, String.fromCharCode(160))}
+                                </Typography>
+                                <Typography
+                                    variant="h3"
+                                    className={classes.separator}
+                                >
+                                    * 
+                                </Typography>
+                            </Fragment>
+                        ))}
+                    </Box>
+                    <Box
+                        display="flex"
+                        className={`text ${classes.textTwo}`}
+                    >
+                        {clients.map(client => (
+                            <Fragment key={client.index}>
+                                <Typography
+                                    variant="h3"
+                                >
+                                    {client.title.replace(/\s/g, String.fromCharCode(160))}
+                                </Typography>
+                                <Typography
+                                    variant="h3"
+                                    className={classes.separator}
+                                >
+                                    * 
+                                </Typography>
+                            </Fragment>
+                        ))}
+                    </Box>
                 </Box>
             </Box>
         </SubComponentWrapper>
