@@ -36,6 +36,9 @@ const useStyles = makeStyles(theme => ({
         // borderBottom: `1px solid ${theme.palette.secondaryColor}`,
         
     },
+    text: {
+        lineHeight: 0
+    },
     separator: {
         padding: theme.spacing(0, 1),
         [theme.breakpoints.down('xs')]: {
@@ -131,12 +134,13 @@ export default ({theme}) => {
                             <Fragment key={client.index}>
                                 <Typography
                                     variant="h3"
+                                    className={classes.text}
                                 >
                                     {client.title.replace(/\s/g, String.fromCharCode(160))}
                                 </Typography>
                                 <Typography
                                     variant="h3"
-                                    className={classes.separator}
+                                    className={`${classes.separator} ${classes.text}`}
                                 >
                                     * 
                                 </Typography>
@@ -151,12 +155,13 @@ export default ({theme}) => {
                             <Fragment key={client.index}>
                                 <Typography
                                     variant="h3"
+                                    className={classes.text}
                                 >
                                     {client.title.replace(/\s/g, String.fromCharCode(160))}
                                 </Typography>
                                 <Typography
                                     variant="h3"
-                                    className={classes.separator}
+                                    className={`${classes.separator} ${classes.text}`}
                                 >
                                     * 
                                 </Typography>
