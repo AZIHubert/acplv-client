@@ -39,7 +39,8 @@ export default (theme) => ({
             '&::selection': {
                 backgroundColor: theme.palette.secondaryColor,
                 color: theme.palette.primaryColor
-            }
+            },
+            
         },
         h4: {
             fontSize: '1rem',
@@ -52,6 +53,17 @@ export default (theme) => ({
                 backgroundColor: theme.palette.secondaryColor,
                 color: theme.palette.primaryColor
             }
+        },
+        h5: {
+            display: 'inline-block',
+            textTransform: 'uppercase',
+            fontSize: '4rem',
+            [theme.breakpoints.down('sm')]: {
+                fontSize: '2rem',
+            },
+            [theme.breakpoints.down('xs')]: {
+                fontSize: '1.5rem',
+            },
         },
         body1: {
             fontSize: '1.2rem',

@@ -1,4 +1,9 @@
-import React, {useState, useRef, Fragment} from 'react'
+import React, {
+    useState,
+    useRef,
+    useEffect,
+    Fragment
+} from 'react'
 
 import SubComponentWrapper from '../util/SubComponentWrapper'
 import ComponentWrapper from '../util/ComponentWrapper'
@@ -17,9 +22,16 @@ import {makeStyles} from '@material-ui/core/styles'
 const useStyles = makeStyles(theme => ({
     typeItemsContainer: {
         paddingBottom: theme.spacing(2),
-        borderBottom: `1px solid ${theme.palette.secondaryColor}`
+        position: 'relative'
+    },
+    typesLine: {
+        backgroundColor: theme.palette.secondaryColor,
+        width: '100%',
+        height: 1,
+        position: 'relative'
     },
     typeItem: {
+        lineHeight: 1.3,
         textStrokeWidth: 1,
         textStrokeColor: theme.palette.secondaryColor,
         color: 'transparent',
@@ -30,7 +42,7 @@ const useStyles = makeStyles(theme => ({
             textStrokeColor: 'transparent',
         },
         '&:after': {
-            content: '" * "',
+            content: '"\\00a0* "',
             color: theme.palette.primaryColor,
             textStrokeWidth: 1,
             textStrokeColor: theme.palette.secondaryColor,
@@ -55,7 +67,13 @@ const useStyles = makeStyles(theme => ({
         },
     },
     projectsContainer: {
-        paddingTop: theme.spacing(10)
+        paddingTop: theme.spacing(10),
+        [theme.breakpoints.down('sm')]: {
+            paddingTop: theme.spacing(7)
+        },
+        [theme.breakpoints.down('sm')]: {
+            paddingTop: theme.spacing(4)
+        }
     },
     evenGrid: {
         [theme.breakpoints.down('xs')]: {
@@ -82,6 +100,7 @@ export default ({theme}) => {
     const classes = useStyles(theme)
     const {width} = useWindowSize()
     const typesContainerRef = useRef(null)
+    const allContainerRef = useRef(null)
     const [types] = useState([
         'KAKÉMONOS', 'STICKERS', 'PLAQUES PLEXIGLASS', 'BORNES TACTILES D’EXTÉRIEUR',
         'RELOOKING VITRINES'
@@ -155,6 +174,26 @@ export default ({theme}) => {
     }
     ])
     const [displayProjects, setDisplayProjects] = useState([...projects])
+    const [typesLine, setTypesLine] = useState([]);
+    const setLines = () => {
+        const typesContainer = typesContainerRef.current
+        const typesContainerHeight = typesContainer.clientHeight
+        const typeHeight = allContainerRef.current.clientHeight
+        const numberOfLine = Math.floor(typesContainerHeight / typeHeight)
+        console.log(numberOfLine, typesContainerHeight, typeHeight)
+        setTypesLine([])
+        for(let i = 0; i < numberOfLine - 1; i++){
+            setTypesLine(prevState => [...prevState, typeHeight + i*typeHeight])
+        }
+    }
+    useEffect(() => {
+        setLines()
+        document.fonts.ready.then(() => {
+            setLines()
+            window.addEventListener('resize', setLines)
+            return () => window.removeEventListener('resize', setLines)
+        })
+    }, [])
     const reseFilter = e => {
         typesContainerRef.current.childNodes.forEach(e => e.classList.remove('active'))
         e.target.classList.add('active')
@@ -170,7 +209,6 @@ export default ({theme}) => {
             title="projets"
         >
             <SubComponentWrapper
-                paddingTop
                 paddingBottom
             >
                 <Grid
@@ -186,36 +224,33 @@ export default ({theme}) => {
                             flexWrap="wrap"
                             ref={typesContainerRef}
                         >
+                            {typesLine.map((top, i) => (
+                                <Box
+                                    key={i}
+                                    style={{top}}
+                                    className={classes.typesLine}
+                                >
+                                </Box>
+                            ))}
                             <Typography
-                                variant="h3"
+                                variant="h5"
                                 className={`${classes.firstTypesItem} ${classes.typeItem} active`}
                                 onClick={reseFilter}
+                                ref={allContainerRef}
                             >
                                 All
                             </Typography>
-                            {/* <Typography
-                                variant="h3"
-                                className={classes.separator}
-                            >
-                                * 
-                            </Typography> */}
                             {types.map((type, i) => (
                                 <Fragment
                                     key={i}
                                 >
                                     <Typography
-                                        variant="h3"
+                                        variant="h5"
                                         className={classes.typeItem}
                                         onClick={(e) => handleFilter(type, e)}
                                     >
                                         {type}
                                     </Typography>
-                                    {/* {i !== types.length -1 ? <Typography
-                                        variant="h3"
-                                        className={classes.separator}
-                                    >
-                                        * 
-                                    </Typography> : null} */}
                                 </Fragment>
                             ))}
                         </Box>
