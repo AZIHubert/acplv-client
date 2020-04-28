@@ -1,5 +1,9 @@
 import React from 'react'
 
+import {
+    Box
+} from '@material-ui/core'
+
 import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
@@ -70,32 +74,34 @@ const useStyles = makeStyles(theme => ({
 export default ({theme}) => {
     const classes = useStyles(theme)
     return (
-        <div
-            className={classes.squareBox}
-        >
+        <Box>
             <div
-                className={classes.squareContent}
+                className={classes.squareBox}
             >
                 <div
-                    className={classes.barContainer}
+                    className={classes.squareContent}
                 >
                     <div
-                        className={`topBar ${classes.bar} ${classes.topBar}`}
+                        className={classes.barContainer}
                     >
-                        <div></div>
-                    </div>
-                    <div
-                        className={`middleBar ${classes.bar} ${classes.middleBar}`}
-                    >
-                        <div></div>
-                    </div>
-                    <div
-                        className={`bottomBar ${classes.bar} ${classes.bottomBar}`}
-                    >
-                        <div></div>
+                        <div
+                            className={`topBar ${classes.bar} ${classes.topBar}`}
+                        >
+                            <div></div>
+                        </div>
+                        <div
+                            className={`middleBar ${classes.bar} ${classes.middleBar}`}
+                        >
+                            <div></div>
+                        </div>
+                        <div
+                            className={`bottomBar ${classes.bar} ${classes.bottomBar}`}
+                        >
+                            <div></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </Box>
     )
 }

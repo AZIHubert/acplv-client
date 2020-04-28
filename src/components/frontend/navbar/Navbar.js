@@ -1,17 +1,22 @@
 import React from 'react'
 
-import {NavLink, Link} from 'react-router-dom'
+import {
+    Link
+} from 'react-router-dom'
 
 import HMenu from './util/HMenu'
+import RMenu from './util/RMenu'
 
 import {
     Box,
     Typography
 } from '@material-ui/core'
 
-import useWindowSize from '../../../hooks/useWindowSize'
+import {
+    makeStyles
+} from '@material-ui/core/styles'
 
-import {makeStyles} from '@material-ui/core/styles'
+import { useMediaQuery } from 'react-responsive'
 
 const useStyles = makeStyles(theme => ({
     fixedContainer: {
@@ -29,30 +34,12 @@ const useStyles = makeStyles(theme => ({
         },
         height: '100%',
         borderBottom: `2px solid ${theme.palette.tertiaryColor}`
-    },
-    menuItem: {
-        paddingLeft: theme.spacing(3),
-        transition: theme.transitions.create('color', {
-            easing: theme.transitions.easing.easeIn,
-            duration: theme.transitions.duration.shortest
-        }),
-        '&:hover::selection': {
-            backgroundColor: theme.palette.tertiaryColor,
-            color: theme.palette.primaryColor
-        },
-        '&.active': {
-            color: theme.palette.tertiaryColor,
-            '&::selection': {
-                backgroundColor: theme.palette.tertiaryColor,
-                color: theme.palette.primaryColor
-            },
-        }
     }
 }))
 
 export default (theme) => {
     const classes = useStyles(theme)
-    const {width} = useWindowSize()
+    const isVerticalMobile = useMediaQuery({ query: '(max-width: 600px)' })
     return (
         <div className={classes.fixedContainer}>
             <Box
@@ -82,46 +69,10 @@ export default (theme) => {
                         flexDirection="column"
                         justifyContent="center"
                     >
-                        {width >= 600 ?
-                            <Box>
-                                <Typography
-                                    variant="h4"
-                                    component={NavLink}
-                                    to="/"
-                                    exact
-                                    className={classes.menuItem}
-                                >
-                                    home
-                                </Typography>
-                                <Typography
-                                    variant="h4"
-                                    component={NavLink}
-                                    to="/about"
-                                    className={classes.menuItem}
-                                >
-                                    à propos
-                                </Typography>
-                                <Typography
-                                    variant="h4"
-                                    component={NavLink}
-                                    to="/projects"
-                                    className={classes.menuItem}
-                                >
-                                    projets
-                                </Typography>
-                                <Typography
-                                    variant="h4"
-                                    component={NavLink}
-                                    to="/contact"
-                                    className={classes.menuItem}
-                                >
-                                    contact
-                                </Typography>
-                            </Box>
+                        {isVerticalMobile ?
+                            <HMenu />
                         :
-                            <Box>
-                                <HMenu />
-                            </Box>
+                            <RMenu />
                         }
                     </Box>
                 </Box>

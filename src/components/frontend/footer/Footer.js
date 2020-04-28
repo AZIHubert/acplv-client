@@ -6,9 +6,11 @@ import {
     Link
 } from '@material-ui/core'
 
-import useWindowSize from '../../../hooks/useWindowSize'
+import {
+    makeStyles
+} from '@material-ui/core/styles'
 
-import {makeStyles} from '@material-ui/core/styles'
+import { useMediaQuery } from 'react-responsive'
 
 const useStyles = makeStyles(theme => ({
     absoluteContainer: {
@@ -38,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 
 export default ({theme}) => {
     const classes = useStyles(theme)
-    const {width} = useWindowSize()
+    const isVerticalMobile = useMediaQuery({query: '(max-width: 600px)'})
     return (
         <Box
             display="flex"
@@ -79,7 +81,7 @@ export default ({theme}) => {
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                {width >= 600 ? 'facebook' : 'Fa'}
+                                {isVerticalMobile ? 'Fa' : 'facebook'}
                             </Link>
                         </Typography>
                         <Typography
@@ -91,7 +93,7 @@ export default ({theme}) => {
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                {width >= 600 ? 'linkedin' : 'Li'}
+                                {isVerticalMobile ? 'Li' : 'LinkedIn'}
                             </Link>
                         </Typography>
                         <Typography
@@ -103,7 +105,7 @@ export default ({theme}) => {
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                {width >= 600 ? 'Instagram' : 'In'}
+                                {isVerticalMobile ? 'In' : 'Instagram'}
                             </Link>
                         </Typography>
                     </Box>

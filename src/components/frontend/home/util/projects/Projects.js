@@ -1,41 +1,12 @@
-import React, {useState, Fragment} from 'react'
+import React, {
+    useState
+} from 'react'
 
 import SubComponentWrapper from '../../../util/SubComponentWrapper'
-// import ProjectThumb from './util/ProjectThumb'
+import ProjectList from '../../../util/ProjectList'
 
-import ProjectThumb from '../../../util/ProjectThumb'
 
-import useWindowSize from '../../../../../hooks/useWindowSize'
-
-import Grid from '@material-ui/core/Grid'
-
-import makeStyles from '@material-ui/core/styles/makeStyles'
-
-const useStyles = makeStyles(theme => ({
-    evenGrid: {
-        [theme.breakpoints.down('xs')]: {
-            paddingRight: theme.spacing(2.5),
-        },
-        [theme.breakpoints.down('sm')]: {
-            paddingRight: theme.spacing(3),
-        },
-        paddingRight: theme.spacing(8),
-    },
-    oddGrid: {
-        [theme.breakpoints.down('xs')]: {
-            paddingLeft: theme.spacing(2.5),
-        },
-        [theme.breakpoints.down('sm')]: {
-            paddingLeft: theme.spacing(2),
-        },
-        paddingTop: theme.spacing(8),
-        paddingLeft: theme.spacing(8)
-    }
-}))
-
-export default ({theme}) => {
-    const {width} = useWindowSize()
-    const classes = useStyles(theme)
+export default () => {
     const [types] = useState([
         'KAKÉMONOS', 'STICKERS', 'PLAQUES PLEXIGLASS', 'BORNES TACTILES D’EXTÉRIEUR',
         'RELOOKING VITRINES'
@@ -79,57 +50,9 @@ export default ({theme}) => {
             title="projets"
             subTitle="récents"
         >
-            <Grid
-                container
-            >
-                {width >= 600 ? 
-                    <Fragment>
-                        <Grid
-                            item
-                            xs={6}
-                            className={classes.evenGrid}
-                        >
-                            {projects.filter((_, i) => {
-                                return (i % 2 === 0);
-                            }).map((project, i) => (
-                                <ProjectThumb
-                                    project={project}
-                                    key={project.index}
-                                    isLast={Math.floor(projects.length/2) === i+1}
-                                />
-                            ))}
-                        </Grid>
-                        <Grid
-                            item
-                            xs={6}
-                            className={classes.oddGrid}
-                        >
-                            {projects.filter((_, i) => {
-                                return (i % 2 !== 0);
-                            }).map((project, i) => (
-                                <ProjectThumb
-                                    project={project}
-                                    key={project.index}
-                                    isLast={Math.floor(projects.length/2) === i+1}
-                                />
-                            ))}
-                        </Grid>
-                    </Fragment>
-                :
-                    <Grid
-                        item
-                        xs={12}
-                    >
-                        {projects.map((project, i) => (
-                            <ProjectThumb
-                                project={project}
-                                key={project.index}
-                                isLast={projects.length === i+1}
-                            />
-                        ))}
-                    </Grid>
-                }
-            </Grid>
+            <ProjectList
+                projects={projects}
+            />
         </SubComponentWrapper>
     )
 }

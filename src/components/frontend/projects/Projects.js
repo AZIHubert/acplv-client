@@ -7,9 +7,7 @@ import React, {
 
 import SubComponentWrapper from '../util/SubComponentWrapper'
 import ComponentWrapper from '../util/ComponentWrapper'
-import ProjectThumb from '../util/ProjectThumb'
-
-import useWindowSize from '../../../hooks/useWindowSize'
+import ProjectList from '../util/ProjectList'
 
 import {
     Grid,
@@ -17,7 +15,11 @@ import {
     Typography
 } from '@material-ui/core'
 
-import {makeStyles} from '@material-ui/core/styles'
+import {
+    makeStyles
+} from '@material-ui/core/styles'
+
+import { useMediaQuery } from 'react-responsive'
 
 const useStyles = makeStyles(theme => ({
     wrapper: {
@@ -73,31 +75,12 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('sm')]: {
             paddingTop: theme.spacing(4)
         }
-    },
-    evenGrid: {
-        [theme.breakpoints.down('xs')]: {
-            paddingRight: theme.spacing(2.5),
-        },
-        [theme.breakpoints.down('sm')]: {
-            paddingRight: theme.spacing(3),
-        },
-        paddingRight: theme.spacing(8),
-    },
-    oddGrid: {
-        [theme.breakpoints.down('xs')]: {
-            paddingLeft: theme.spacing(2.5),
-        },
-        [theme.breakpoints.down('sm')]: {
-            paddingLeft: theme.spacing(2),
-        },
-        paddingTop: theme.spacing(8),
-        paddingLeft: theme.spacing(8)
     }
 }))
 
 export default ({theme}) => {
     const classes = useStyles(theme)
-    const {width} = useWindowSize()
+    const isMobile = useMediaQuery({ query: '(max-width: 824px)' })
     const typesContainerRef = useRef(null)
     const allContainerRef = useRef(null)
     const [types] = useState([
@@ -211,107 +194,56 @@ export default ({theme}) => {
                 <Box
                     className={classes.wrapper}
                 >
-                <Grid
-                    container
-                    className={classes.typeItemsContainer}
-                >
                     <Grid
-                        item
-                        xs={12}
+                        container
+                        className={classes.typeItemsContainer}
                     >
-                        <Box
-                            display="flex"
-                            flexWrap="wrap"
-                            ref={typesContainerRef}
-                        >
-                            {width >= 824 ? typesLine.map((top, i) => (
-                                <Box
-                                    key={i}
-                                    style={{top}}
-                                    className={classes.typesLine}
-                                >
-                                </Box>
-                            )) : null}
-                            <Typography
-                                variant="h5"
-                                className={`${classes.firstTypesItem} ${classes.typeItem} active`}
-                                onClick={reseFilter}
-                                ref={allContainerRef}
-                            >
-                                All
-                            </Typography>
-                            {types.map((type, i) => (
-                                <Fragment
-                                    key={i}
-                                >
-                                    <Typography
-                                        variant="h5"
-                                        className={classes.typeItem}
-                                        onClick={(e) => handleFilter(type, e)}
-                                    >
-                                        {type}
-                                    </Typography>
-                                </Fragment>
-                            ))}
-                        </Box>
-                    </Grid>
-                </Grid>
-                <Grid
-                    container
-                    className={classes.projectsContainer}
-                >
-                    {width >= 600 ? 
-                        <Fragment>
-                            <Grid
-                                item
-                                xs={6}
-                                className={classes.evenGrid}
-                            >
-                                {displayProjects.filter((_, i) => {
-                                    return (i % 2 === 0);
-                                }).map((project, i) => (
-                                    <ProjectThumb
-                                        project={project}
-                                        key={project.index}
-                                        isLast={
-                                            projects.length % 2 ?
-                                                Math.floor(projects.length/2) + 1 === i+1
-                                            : Math.floor(projects.length/2) === i+1
-                                        }
-                                    />
-                                ))}
-                            </Grid>
-                            <Grid
-                                item
-                                xs={6}
-                                className={classes.oddGrid}
-                            >
-                                {displayProjects.filter((_, i) => {
-                                    return (i % 2 !== 0);
-                                }).map((project, i) => (
-                                    <ProjectThumb
-                                        project={project}
-                                        key={project.index}
-                                        isLast={Math.floor(projects.length/2) === i+1}
-                                    />
-                                ))}
-                            </Grid>
-                        </Fragment>
-                    :
                         <Grid
                             item
                             xs={12}
                         >
-                            {displayProjects.map((project, i) => (
-                                <ProjectThumb
-                                    project={project}
-                                    key={project.index}
-                                    isLast={projects.length === i+1}
-                                />
-                            ))}
+                            <Box
+                                display="flex"
+                                flexWrap="wrap"
+                                ref={typesContainerRef}
+                            >
+                                {isMobile ? null : (
+                                    typesLine.map((top, i) => (
+                                        <Box
+                                            key={i}
+                                            style={{top}}
+                                            className={classes.typesLine}
+                                        >
+                                        </Box>
+                                    ))
+                                )}
+                                <Typography
+                                    variant="h5"
+                                    className={`${classes.firstTypesItem} ${classes.typeItem} active`}
+                                    onClick={reseFilter}
+                                    ref={allContainerRef}
+                                >
+                                    All
+                                </Typography>
+                                {types.map((type, i) => (
+                                    <Fragment
+                                        key={i}
+                                    >
+                                        <Typography
+                                            variant="h5"
+                                            className={classes.typeItem}
+                                            onClick={(e) => handleFilter(type, e)}
+                                        >
+                                            {type}
+                                        </Typography>
+                                    </Fragment>
+                                ))}
+                            </Box>
                         </Grid>
-                    }
-                </Grid>
+                    </Grid>
+                    <ProjectList
+                        projects={projects}
+                    />
                 </Box>
             </SubComponentWrapper>
         </ComponentWrapper>

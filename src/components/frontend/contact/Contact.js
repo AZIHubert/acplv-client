@@ -10,9 +10,11 @@ import {
     Grid
 } from '@material-ui/core'
 
-import useWindowSize from '../../../hooks/useWindowSize'
+import {
+    makeStyles
+} from '@material-ui/core/styles'
 
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import { useMediaQuery } from 'react-responsive'
 
 const useStyles = makeStyles(theme => ({
     paddingLeft: {
@@ -40,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 
 export default ({theme}) => {
     const classes = useStyles(theme)
-    const {width} = useWindowSize();
+    const isVerticalMobile = useMediaQuery({query: '(max-width: 600px)'})
     return (
         <ComponentWrapper
             title="contact"
@@ -52,7 +54,7 @@ export default ({theme}) => {
                 <Grid
                     container
                     className={classes.container}
-                    direction={width <= 600 ? "column-reverse" : 'row'}
+                    direction={isVerticalMobile ? "column-reverse" : 'row'}
                 >
                     <Grid
                         item
