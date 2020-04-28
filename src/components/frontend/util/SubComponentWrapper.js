@@ -1,8 +1,14 @@
 import React from 'react'
 
-import Typography from '@material-ui/core/Typography'
+import Title from './Title'
 
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import {
+    Typography
+} from '@material-ui/core'
+
+import {
+    makeStyles
+} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -41,21 +47,17 @@ export default (props) => {
             {title && <div
                 className={subTitle ? '' : classes.titleContainer}
             >
-                <Typography
-                    variant="h1"
-                >
-                    {title}
-                </Typography>
+                <Title
+                    title={title}
+                />
             </div>}
             {subTitle && <div
                 className={classes.titleContainer}
             >
-                <Typography
-                    variant="h1"
+                <Title
+                    title={subTitle}
                     className={classes.subTitle}
-                >
-                    {subTitle}
-                </Typography>
+                />
             </div>}
 
             {children}
