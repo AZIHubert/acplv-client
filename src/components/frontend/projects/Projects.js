@@ -20,6 +20,9 @@ import {
 import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
+    wrapper: {
+        paddingTop: theme.spacing(2)
+    },
     typeItemsContainer: {
         paddingBottom: theme.spacing(2),
         position: 'relative'
@@ -28,13 +31,9 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.secondaryColor,
         width: '100%',
         height: 1,
-        position: 'relative'
+        position: 'absolute'
     },
     typeItem: {
-        lineHeight: 1.3,
-        textStrokeWidth: 1,
-        textStrokeColor: theme.palette.secondaryColor,
-        color: 'transparent',
         cursor: 'pointer',
         paddingRight: theme.spacing(1),
         '&:hover, &.active': {
@@ -47,7 +46,7 @@ const useStyles = makeStyles(theme => ({
             textStrokeWidth: 1,
             textStrokeColor: theme.palette.secondaryColor,
         },
-        [theme.breakpoints.down('824')]: {
+        [theme.breakpoints.down('sm')]: {
             textStrokeWidth: 'unset',
             color: theme.palette.secondaryColor,
             '&:after': {
@@ -61,7 +60,7 @@ const useStyles = makeStyles(theme => ({
         textStrokeColor: theme.palette.secondaryColor,
         color: 'transparent',
         padding: theme.spacing(0, 1),
-        [theme.breakpoints.down('824')]: {
+        [theme.breakpoints.down('md')]: {
             textStrokeWidth: 'unset',
             color: theme.palette.secondaryColor
         },
@@ -177,22 +176,20 @@ export default ({theme}) => {
     const [typesLine, setTypesLine] = useState([]);
     const setLines = () => {
         const typesContainer = typesContainerRef.current
-        const typesContainerHeight = typesContainer.clientHeight
-        const typeHeight = allContainerRef.current.clientHeight
+        const typesContainerHeight = typesContainer.getBoundingClientRect().height
+        const typeHeight = allContainerRef.current.getBoundingClientRect().height
         const numberOfLine = Math.floor(typesContainerHeight / typeHeight)
-        console.log(numberOfLine, typesContainerHeight, typeHeight)
         setTypesLine([])
-        for(let i = 0; i < numberOfLine - 1; i++){
+        for(let i = 0; i < numberOfLine; i++){
             setTypesLine(prevState => [...prevState, typeHeight + i*typeHeight])
         }
     }
     useEffect(() => {
-        setLines()
         document.fonts.ready.then(() => {
             setLines()
             window.addEventListener('resize', setLines)
-            return () => window.removeEventListener('resize', setLines)
         })
+        return () => window.removeEventListener('resize', setLines)
     }, [])
     const reseFilter = e => {
         typesContainerRef.current.childNodes.forEach(e => e.classList.remove('active'))
@@ -211,6 +208,9 @@ export default ({theme}) => {
             <SubComponentWrapper
                 paddingBottom
             >
+                <Box
+                    className={classes.wrapper}
+                >
                 <Grid
                     container
                     className={classes.typeItemsContainer}
@@ -224,14 +224,14 @@ export default ({theme}) => {
                             flexWrap="wrap"
                             ref={typesContainerRef}
                         >
-                            {typesLine.map((top, i) => (
+                            {width >= 824 ? typesLine.map((top, i) => (
                                 <Box
                                     key={i}
                                     style={{top}}
                                     className={classes.typesLine}
                                 >
                                 </Box>
-                            ))}
+                            )) : null}
                             <Typography
                                 variant="h5"
                                 className={`${classes.firstTypesItem} ${classes.typeItem} active`}
@@ -312,6 +312,7 @@ export default ({theme}) => {
                         </Grid>
                     }
                 </Grid>
+                </Box>
             </SubComponentWrapper>
         </ComponentWrapper>
     )

@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
         paddingRight: theme.spacing(4)
     },
     button: {
-        fontSize: '2rem',
+        fontSize: '1.5rem',
         width: 150,
         height: 150,
         borderRadius: '50%',
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
         '&:hover': {
             backgroundColor: theme.palette.tertiaryColor,
             color: theme.palette.primaryColor,
-            transform: 'rotate(0deg)',
+            transform: 'rotate(20deg)',
         }
     }
 }))

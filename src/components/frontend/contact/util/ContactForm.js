@@ -26,12 +26,7 @@ export default ({theme}) => {
         firstName: '',
         lastName: '',
         body: ''
-    })
-    // const handleChange = e => {
-    //     setMessage({
-    //         ...message,
-    //         [e.target.name]: e.target.value });
-    // }
+    });
     const handleSubmit = e => {
         e.preventDefault();
         setMessage({
@@ -88,7 +83,7 @@ export default ({theme}) => {
                     label="message"
                 />
                 <CustomButton
-                    text="send"
+                    text="envoyer"
                 />
             </form>
         </Box>

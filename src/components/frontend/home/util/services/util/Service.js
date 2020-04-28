@@ -7,8 +7,8 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles(theme => ({
     container: {
         borderBottom: `1px solid ${theme.palette.secondaryColor}`,
-        marginBottom: props => props.isLast ? '' : theme.spacing(0.5),
-        paddingBottom: theme.spacing(0.5)
+        marginBottom: props => props.isLast ? '' : theme.spacing(1.2),
+        paddingBottom: theme.spacing(0.3)
     },
     title: {
         fontSize: '4rem',

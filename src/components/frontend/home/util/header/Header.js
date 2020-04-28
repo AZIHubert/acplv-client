@@ -4,6 +4,8 @@ import SubComponentWrapper from '../../../util/SubComponentWrapper'
 
 import useWindowSize from '../../../../../hooks/useWindowSize'
 
+import { useMediaQuery } from 'react-responsive'
+
 import {
     Box,
     Typography
@@ -44,6 +46,7 @@ const useStyles = makeStyles(theme => ({
 export default ({theme}) => {
     const classes = useStyles(theme)
     const {width} = useWindowSize()
+    const isMobile = useMediaQuery({ query: '(max-width: 824px)' })
     return (
         <SubComponentWrapper
             paddingTop
@@ -65,16 +68,51 @@ export default ({theme}) => {
                          en signalétique
                     </Typography>
                 </div>
-                {/* <div className={classes.subTitleContainer}>
-                    <Typography
-                        variant="body2"
-                        className={classes.paddingLeft}
-                    >
-                        based in paris
-                    </Typography>
-                </div> */}
-                
-                    {width >= 824 ?
+                    {isMobile ? (
+                        <Box
+                            className={classes.paddingBottom}
+                        >
+                            <Typography
+                                variant="h1"
+                            >
+                                qui sommes nous ?
+                            </Typography>
+                        </Box>
+                    ) : (
+                        <Box
+                            display="flex"
+                            justifyContent="space-between"
+                            className={`${classes.whoAreWeContainer} ${classes.paddingBottom}`}
+                        >
+                            <Typography
+                                variant="h1"
+                            >
+                                qui
+                            </Typography>
+                            <Box
+                                flexGrow="3"
+                                alignSelf="flex-end"
+                                textAlign="center"
+                            >
+                                <Typography
+                                    variant="h1"
+                                >
+                                    sommes
+                                </Typography>
+                            </Box>
+                            <Box
+                                flexGrow="2"
+                                textAlign="right"
+                            >
+                                <Typography
+                                    variant="h1"
+                                >
+                                    nous ?
+                                </Typography>
+                            </Box>
+                        </Box>
+                    )}
+                    {/* {width >= 824 ?
                         <Box
                             display="flex"
                             justifyContent="space-between"
@@ -117,7 +155,7 @@ export default ({theme}) => {
                                 qui sommes nous ?
                             </Typography>
                         </Box>
-                    }
+                    } */}
             </div>
         </SubComponentWrapper>
     )

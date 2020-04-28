@@ -10,6 +10,9 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 const useStyles = makeStyles(theme => ({
     container: {
         height: `calc(100vh - ${theme.custom.navbarHeight}px - ${theme.custom.footerHeight}px)`,
+        [theme.breakpoints.down('xs')]: {
+            height: `calc(75vh - ${theme.custom.navbarHeight}px - ${theme.custom.footerHeight}px)`,
+        },
         position: 'relative',
     },
     letsChatText: {

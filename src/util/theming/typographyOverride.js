@@ -55,9 +55,16 @@ export default (theme) => ({
             }
         },
         h5: {
+            textStrokeWidth: 1,
+            textStrokeColor: theme.palette.secondaryColor,
+            color: 'transparent',
             display: 'inline-block',
             textTransform: 'uppercase',
+            lineHeight: 1.22,
             fontSize: '4rem',
+            [theme.breakpoints.down('md')]: {
+                fontSize: '3rem',
+            },
             [theme.breakpoints.down('sm')]: {
                 fontSize: '2rem',
             },
@@ -66,7 +73,7 @@ export default (theme) => ({
             },
         },
         body1: {
-            fontSize: '1.2rem',
+            fontSize: '1.4rem',
             [theme.breakpoints.down('sm')]: {
                 fontSize: '0.9rem',
             },
@@ -80,7 +87,10 @@ export default (theme) => ({
             }
         },
         body2: {
-            fontSize: '1.2rem',
+            fontSize: '1.4rem',
+            [theme.breakpoints.down('md')]: {
+                fontSize: '1.2rem',
+            },
             [theme.breakpoints.down('sm')]: {
                 fontSize: '0.9rem',
             },
