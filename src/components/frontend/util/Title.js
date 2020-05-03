@@ -1,55 +1,86 @@
 import React, {
-    useState,
-    useRef,
-    useEffect
-} from 'react'
+    useRef
+} from 'react';
 
-import TitleLetter from './TitleLetter'
+import Line from './Line';
+
+import {
+    useSpring,
+    animated
+} from 'react-spring';
+
+import useOnScreen from '../../../hooks/useOnScreen';
 
 import {
     Box,
     Typography
-} from '@material-ui/core'
+} from '@material-ui/core';
 
 import {
     makeStyles
-} from '@material-ui/core/styles'
+} from '@material-ui/core/styles';
+
+const AnimatedBox = animated(Box);
+const AnimatedTypography = animated(Typography);
+
+const config = {
+    mass: 5,
+    friction: 400,
+    tension: 1800
+}
 
 const useStyles = makeStyles(theme => ({
-    container: {
-        overflow: 'hidden'
+    outerContainer: {
+        overflow: 'hidden',
+    },
+    innerContainer: {
+        padding: theme.spacing(0.2, 0, 0.3, 0)
     }
 }));
 
-export default ({title, theme}) => {
-    const classes = useStyles(theme)
-    const titleRef = useRef()
-    const [isVisible, setIsVisible] = useState(false)
-    const checkIfVisible = ({current}) => {
-        const position = current.getBoundingClientRect();
-        if(position.top >= (20 + 70) && position.bottom <= window.innerHeight - 20) {
-            setIsVisible(true)
-        }
-    }
-    useEffect(() => {
-        checkIfVisible(titleRef);
-        window.addEventListener('scroll', checkIfVisible.bind(this, titleRef))
-        return () => window.removeEventListener('scroll', checkIfVisible.bind(this, titleRef))
-    }, [])
+export default ({
+    title,
+    customClass,
+    theme,
+    lineBottom,
+    variant
+}) => {
+    const classes = useStyles(theme);
+    const titleRef = useRef(null);
+    const onScreen = useOnScreen(titleRef, "-70px 0px 0px 0px", true);
+    const {yBox, yTypography,  opacity} = useSpring({
+        opacity: onScreen ? 1 : 0.5,
+        yBox: onScreen ? 0 : 10,
+        yTypography: onScreen ? 0 : 75,
+        config
+    });
     return (
         <Box
             ref={titleRef}
-            display="flex"
-            className={classes.container}
+            className="r"
         >
-        {[...title].map((c, i) => (
-            <TitleLetter
-                key={i}
-                letter={c === ' ' ? '\u00A0' : c}
-                delay={i*50}
-                isVisible={isVisible}
-            />
-        ))}
+            <AnimatedBox
+                className={classes.outerContainer}
+                style={{
+                    transform: yBox.interpolate(y => `translate3d(0px, -${y}px, 0px)`)
+                }}
+            >
+                <Box
+                    className={classes.innerContainer}
+                >
+                    <AnimatedTypography
+                        variant={variant}
+                        className={customClass}
+                        style={{
+                            opacity,
+                            transform: yTypography.interpolate(y => `translate3d(0px, ${y}%, 0px)`)
+                        }}
+                    >
+                        {title}
+                    </AnimatedTypography>
+                </Box>
+                {lineBottom && <Line />}
+            </AnimatedBox>
         </Box>
-    )
-}
+    );
+};

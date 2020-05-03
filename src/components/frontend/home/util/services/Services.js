@@ -1,10 +1,14 @@
-import React, {useState} from 'react'
+import React, {
+    useState,
+    Fragment
+} from 'react';
 
-import SubComponentWrapper from '../../../util/SubComponentWrapper'
+import SubComponentWrapper from '../../../util/SubComponentWrapper';
 
-import Service from './util/Service'
+import Service from './util/Service';
 
 export default () => {
+    
     const [services] = useState([{
         title: 'SIGNALÉTIQUE EXTÉRIEUR',
         index: 0,
@@ -68,7 +72,7 @@ export default () => {
             title: 'TABLES TACTILES',
             index: 2
         }]
-    }])
+    }]);
     return (
         <SubComponentWrapper
             title="nos services"
@@ -76,11 +80,14 @@ export default () => {
             paddingTop
         >
             {services.map((service, i) => (
-                <Service
-                    service={service}
+                <Fragment
                     key={i}
-                    isLast={services.length === i + 1}
-                />
+                >
+                    <Service
+                        service={service}
+                        isLast={services.length === i + 1}
+                    />
+                </Fragment>
             ))}
         </SubComponentWrapper>
     )

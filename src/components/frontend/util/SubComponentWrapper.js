@@ -1,17 +1,14 @@
 import React from 'react'
 
-import Title from './Title'
-
-import {
-    Typography
-} from '@material-ui/core'
+import Title from './Title';
+import Line from './Line';
 
 import {
     makeStyles
 } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-    container: {
+    innerContainer: {
         padding: props => theme.spacing(
             props.paddingTop ? 10 : 0,
             0,
@@ -24,7 +21,6 @@ const useStyles = makeStyles(theme => ({
                 props.paddingBottom ? 5 : 0
             ),
         },
-        borderTop: props => props.hasBorder ? `1px solid ${theme.palette.secondaryColor}` : ''
     },
     titleContainer: {
         paddingBottom: theme.spacing(5)
@@ -38,29 +34,38 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default (props) => {
-    const {title, subTitle, children} = props
+    const {title, subTitle, hasBorder, children} = props
     const classes = useStyles(props)
     return (
-        <div
-            className={classes.container}
-        >
-            {title && <div
-                className={subTitle ? '' : classes.titleContainer}
-            >
-                <Title
-                    title={title}
+        <div>
+            {hasBorder && (
+                <Line
+                    index={0}
                 />
-            </div>}
-            {subTitle && <div
-                className={classes.titleContainer}
+            )}
+            <div
+                className={classes.innerContainer}
             >
-                <Title
-                    title={subTitle}
-                    className={classes.subTitle}
-                />
-            </div>}
+                {title && <div
+                    className={subTitle ? '' : classes.titleContainer}
+                >
+                    <Title
+                        title={title}
+                        variant='h1'
+                    />
+                </div>}
+                {subTitle && <div
+                    className={classes.titleContainer}
+                >
+                    <Title
+                        title={subTitle}
+                        className={classes.subTitle}
+                        variant='h1'
+                    />
+                </div>}
 
-            {children}
+                {children}
+            </div>
         </div>
     )
 }

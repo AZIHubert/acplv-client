@@ -155,7 +155,7 @@ export default ({theme}) => {
         type: types[(Math.random() * types.length) | 0]
     }
     ])
-    const [displayProjects, setDisplayProjects] = useState([...projects])
+    // const [displayProjects, setDisplayProjects] = useState([...projects])
     const [typesLine, setTypesLine] = useState([]);
     const setLines = () => {
         const typesContainer = typesContainerRef.current
@@ -177,12 +177,12 @@ export default ({theme}) => {
     const reseFilter = e => {
         typesContainerRef.current.childNodes.forEach(e => e.classList.remove('active'))
         e.target.classList.add('active')
-        setDisplayProjects([...projects])
+        // setDisplayProjects([...projects])
     }
     const handleFilter = (type, e) => {
         typesContainerRef.current.childNodes.forEach(e => e.classList.remove('active'))
         e.target.classList.add('active')
-        setDisplayProjects([...projects.filter(project => project.type === type)])
+        // setDisplayProjects([...projects.filter(project => project.type === type)])
     }
     return (
         <ComponentWrapper

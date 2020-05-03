@@ -62,7 +62,11 @@ export default () => {
           body: {
             backgroundColor: defaultTheme.palette.primaryColor,
             color: defaultTheme.palette.secondaryColor,
-            fontFamily: 'GillSans, Arial'
+            fontFamily: 'GillSans, Arial',
+            overflowX: 'hidden'
+          },
+          html: {
+            overflowX: 'hidden'
           },
           a: {textDecoration: 'none'}
         }

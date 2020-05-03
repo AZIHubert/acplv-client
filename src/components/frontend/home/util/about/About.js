@@ -1,6 +1,6 @@
 import React from 'react'
 
-import SubComponentWrapper from '../../../util/SubComponentWrapper'
+import SubComponentWrapper from '../../../util/SubComponentWrapper';
 
 import {
     Grid,
@@ -46,6 +46,7 @@ export default ({theme}) => {
                     </Typography>
                 </Grid>
             </Grid>
+
             
         </SubComponentWrapper>
     )

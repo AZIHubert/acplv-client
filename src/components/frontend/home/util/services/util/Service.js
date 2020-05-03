@@ -1,14 +1,20 @@
-import React from 'react'
+import React from 'react';
+import Title from '../../../../util/Title';
 
-import { Box, Typography } from '@material-ui/core'
+import {
+    Box
+} from '@material-ui/core';
 
-import { makeStyles } from '@material-ui/core/styles'
+import {
+    makeStyles
+} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-    container: {
-        borderBottom: `1px solid ${theme.palette.secondaryColor}`,
-        marginBottom: props => props.isLast ? '' : theme.spacing(1.2),
-        paddingBottom: theme.spacing(0.3)
+    outerContainer: {
+        paddingBottom: props => props.isLast ? '' : theme.spacing(1),
+    },
+    innerContainer: {
+        paddingBottom: props => props.isLast ? '' : theme.spacing(1),
     },
     title: {
         fontSize: '4rem',
@@ -28,17 +34,21 @@ const useStyles = makeStyles(theme => ({
 
 export default (props) => {
     const classes = useStyles(props)
-    const {service} = props
+    const {service} = props;
     return (
         <Box
-            className={classes.container}
+            className={classes.outerContainer}
         >
-            <Typography
-                variant="h2"
-                className={classes.title}
+            <Box
+                className={classes.innerContainer}
             >
-                {service.title}
-            </Typography>
+                <Title
+                    variant="h2"
+                    title={service.title}
+                    customClass={classes.title}
+                    lineBottom
+                />
+            </Box>
         </Box>
     )
 }

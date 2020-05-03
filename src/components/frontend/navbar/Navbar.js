@@ -28,10 +28,15 @@ const useStyles = makeStyles(theme => ({
     },
     container: {
         backgroundColor: theme.palette.primaryColor,
-        margin: theme.spacing(0, 6),
+        padding: theme.spacing(0, 6),
         [theme.breakpoints.down('xs')]: {
-            margin: theme.spacing(0, 1)
+            padding: theme.spacing(0, 1)
         },
+        height: '100%',
+        
+    },
+    innerContainer: {
+        width: '100%',
         height: '100%',
         borderBottom: `2px solid ${theme.palette.tertiaryColor}`
     }
@@ -43,37 +48,41 @@ export default (theme) => {
     return (
         <div className={classes.fixedContainer}>
             <Box
-                display="flex"
                 className={classes.container}
             >
                 <Box
                     display="flex"
-                    flexDirection="column"
-                    justifyContent="center"
-                >
-                    <Typography
-                        variant="h4"
-                        component={Link}
-                        to="/"
-                    >
-                        acplv
-                    </Typography>
-                </Box>
-                <Box
-                    display="flex"
-                    flexGrow={1}
-                    justifyContent="flex-end"
+                    className={classes.innerContainer}
                 >
                     <Box
                         display="flex"
                         flexDirection="column"
                         justifyContent="center"
                     >
-                        {isVerticalMobile ?
-                            <HMenu />
-                        :
-                            <RMenu />
-                        }
+                        <Typography
+                            variant="h4"
+                            component={Link}
+                            to="/"
+                        >
+                            acplv
+                        </Typography>
+                    </Box>
+                    <Box
+                        display="flex"
+                        flexGrow={1}
+                        justifyContent="flex-end"
+                    >
+                        <Box
+                            display="flex"
+                            flexDirection="column"
+                            justifyContent="center"
+                        >
+                            {isVerticalMobile ?
+                                <HMenu />
+                            :
+                                <RMenu />
+                            }
+                        </Box>
                     </Box>
                 </Box>
             </Box>

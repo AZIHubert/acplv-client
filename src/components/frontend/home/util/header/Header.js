@@ -1,19 +1,23 @@
 import React from 'react'
 
-import SubComponentWrapper from '../../../util/SubComponentWrapper'
+import SubComponentWrapper from '../../../util/SubComponentWrapper';
+import HeaderImage from './util/HeaderImage'
 
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'react-responsive';
 
 import {
-    Box,
-    Typography
-} from '@material-ui/core'
+    Box
+} from '@material-ui/core';
 
-import {makeStyles} from '@material-ui/core/styles'
+import ParallaxVertical from '../../../util/ParallaxVerticale';
+
+import Title from '../../../util/Title';
+
+import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     container: {
-        backgroundImage: 'url(\'https://dummyimage.com/500x700/757575/000000&text=Header+Image\')',
+        position: 'relative',
         backgroundSize: '40%',
         [theme.breakpoints.down('xs')]: {
             backgroundSize: '50%',
@@ -42,38 +46,54 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default ({theme}) => {
-    const classes = useStyles(theme)
-    const isMobile = useMediaQuery({ query: '(max-width: 824px)' })
+    const classes = useStyles(theme);
+    const isMobile = useMediaQuery({ query: '(max-width: 824px)' });
     return (
         <SubComponentWrapper
             paddingTop
         >
             <div className={classes.container}>
                 <div className={classes.titleContainer}>
-                    <Typography
-                        variant="h1"
-                        className={classes.paddingLeft}
+                    <ParallaxVertical
+                        ratio={-0.3}
+                        verticale
                     >
-                        acplv
-                    </Typography>
-                    <Typography variant="h1">
-                        solutions globales
-                    </Typography>
-                    <Typography
-                        variant="h1"
+                        <Title
+                            variant="h1"
+                            customClass={classes.paddingLeft}
+                            title='acplv'
+                            
+                        />
+                    </ParallaxVertical>
+                    <ParallaxVertical
+                        ratio={0.6}
+                        verticale
                     >
-                         en signalétique
-                    </Typography>
+                        <Title
+                            variant="h1"
+                            title="solutions globales"
+                        />
+                    </ParallaxVertical>
+                    <ParallaxVertical
+                        ratio={-0.5}
+                        verticale
+                    >
+                        <Title
+                            variant="h1"
+                            title="en signalétique"
+                        />
+                    </ParallaxVertical>
+                    <HeaderImage />
                 </div>
                 {isMobile ? (
                     <Box
                         className={classes.paddingBottom}
                     >
-                        <Typography
+                        <Title
                             variant="h1"
                         >
                             qui sommes nous ?
-                        </Typography>
+                        </Title>
                     </Box>
                 ) : (
                     <Box
@@ -81,31 +101,28 @@ export default ({theme}) => {
                         justifyContent="space-between"
                         className={`${classes.whoAreWeContainer} ${classes.paddingBottom}`}
                     >
-                        <Typography
+                        <Title
                             variant="h1"
-                        >
-                            qui
-                        </Typography>
+                            title="qui"
+                        />
                         <Box
                             flexGrow="3"
                             alignSelf="flex-end"
                             textAlign="center"
                         >
-                            <Typography
+                            <Title
                                 variant="h1"
-                            >
-                                sommes
-                            </Typography>
+                                title="sommes"
+                            />
                         </Box>
                         <Box
                             flexGrow="2"
                             textAlign="right"
                         >
-                            <Typography
+                            <Title
                                 variant="h1"
-                            >
-                                nous ?
-                            </Typography>
+                                title="nous ?"
+                            />
                         </Box>
                     </Box>
                 )}
