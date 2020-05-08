@@ -30,9 +30,12 @@ const useStyles = makeStyles(theme => ({
             height: theme.spacing(17),
         },
         [theme.breakpoints.up('1350')]: {
-            height: theme.spacing(50),
+            height: theme.spacing(30),
         },
-        marginTop: '-10rem'
+        marginTop: '-7rem',
+        [theme.breakpoints.down('sm')]: {
+            marginTop: '-1rem',
+        },
     },
     paddingBottom: {
         marginBottom: theme.spacing(5)

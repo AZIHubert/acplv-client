@@ -10,8 +10,21 @@ import {
 
 const useStyles = makeStyles(theme => ({
     imageContainer: {
-        marginTop: '-10rem',
-        maxHeight: '100vh',
+        marginTop: '-7rem',
+        width: '100%',
+        height: '110vh',
+        [theme.breakpoints.down('sm')]: {
+            height: '50vh',
+            marginTop: '-1rem',
+        },
+        backgroundSize: 'contain',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundImage: 'url("https://dummyimage.com/500x700/757575/000000&text=Header+Image")'
+    },
+    image: {
+        // maxWidth: '100%',
+        maxHeight: '100%'
     }
 }));
 
@@ -21,11 +34,9 @@ export default ({theme}) => {
         <Box
             display="flex"
             justifyContent="center"
+            alignItems='center'
             className={classes.imageContainer}
         >
-            <img
-                src="https://dummyimage.com/500x700/757575/000000&text=Header+Image"
-            />
         </Box>
     )
 }

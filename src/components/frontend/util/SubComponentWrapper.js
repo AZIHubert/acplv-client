@@ -27,12 +27,12 @@ const useStyles = makeStyles(theme => ({
     },
     title: {
         [theme.breakpoints.up('1350')]: {
-            fontSize: '5rem',
+            fontSize: '4rem',
         }
     },
     subTitle: {
         [theme.breakpoints.up('1350')]: {
-            fontSize: '5rem',
+            fontSize: '4rem',
         },
         paddingLeft: theme.spacing(15),
         [theme.breakpoints.down('xs')]: {
