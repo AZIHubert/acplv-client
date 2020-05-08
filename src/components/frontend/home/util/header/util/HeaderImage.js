@@ -1,31 +1,31 @@
 import React from 'react';
-// import ParallaxVertical from '../../../../util/ParallaxVerticale';
 
 import {
     Box
 } from '@material-ui/core';
 
-export default () => {
+import {
+    makeStyles 
+} from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+    imageContainer: {
+        marginTop: '-10rem',
+        maxHeight: '100vh',
+    }
+}));
+
+export default ({theme}) => {
+    const classes = useStyles(theme);
     return (
         <Box
             display="flex"
             justifyContent="center"
-            style={{
-                // position: 'absolute',
-                marginTop: '-10rem',
-                maxHeight: '100vh',
-            }}
+            className={classes.imageContainer}
         >
-            {/* <ParallaxVertical
-                ratio={-0.4}
-            > */}
-                <img
-                    src="https://dummyimage.com/500x700/757575/000000&text=Header+Image"
-                    style={{
-                        width: 'auto'
-                    }}
-                />
-            {/* </ParallaxVertical> */}
+            <img
+                src="https://dummyimage.com/500x700/757575/000000&text=Header+Image"
+            />
         </Box>
     )
 }

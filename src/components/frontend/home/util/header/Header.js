@@ -86,62 +86,42 @@ export default ({theme}) => {
                 <HeaderImage />
                 
                 {isMobile ? (
-                    // <ParallaxVertical
-                    //     ratio={0.1}
-                    //     relativeToPercent={50}
-                    // >
-                        <Box
-                            className={`${classes.whoAreWeContainer} ${classes.paddingBottom}`}
-                        >
-                            <Title
-                                variant="h1"
-                                title="qui sommes nous ?"
-                            />
-                        </Box>
-                    // </ParallaxVertical>
+                    <Box
+                        className={`${classes.whoAreWeContainer} ${classes.paddingBottom}`}
+                    >
+                        <Title
+                            variant="h1"
+                            title="qui sommes nous ?"
+                        />
+                    </Box>
                 ) : (
                     <Box
                         display="flex"
                         justifyContent="space-between"
                         className={`${classes.whoAreWeContainer} ${classes.paddingBottom}`}
                     >
-                        {/* <ParallaxVertical
-                            ratio={0.07}
-                            relativeToPercent={50}
-                        > */}
                             <Title
                                 variant="h1"
                                 title="qui"
                             />
-                        {/* </ParallaxVertical> */}
                         <Box
                             flexGrow="3"
                             alignSelf="flex-end"
                             textAlign="center"
                         >
-                            {/* <ParallaxVertical
-                                ratio={-0.07}
-                                relativeToPercent={50}
-                            > */}
-                                <Title
-                                    variant="h1"
-                                    title="sommes"
-                                />
-                            {/* </ParallaxVertical> */}
+                            <Title
+                                variant="h1"
+                                title="sommes"
+                            />
                         </Box>
                         <Box
                             flexGrow="2"
                             textAlign="right"
                         >
-                            {/* <ParallaxVertical
-                                ratio={0.15}
-                                relativeToPercent={50}
-                            > */}
-                                <Title
-                                    variant="h1"
-                                    title="nous ?"
-                                />
-                            {/* </ParallaxVertical> */}
+                            <Title
+                                variant="h1"
+                                title="nous ?"
+                            />
                         </Box>
                     </Box>
                 )}
