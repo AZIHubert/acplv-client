@@ -52,7 +52,7 @@ export default ({projects, theme}) => {
                         <ProjectThumb
                             project={project}
                             key={project.index}
-                            isLast={projects.length === i+1}
+                            isFirst={i===0}
                         />
                     ))}
                 </Grid>
@@ -69,25 +69,26 @@ export default ({projects, theme}) => {
                             <ProjectThumb
                                 project={project}
                                 key={project.index}
-                                isLast={Math.floor(projects.length/2) === i+1}
+                                isFirst={i===0}
                             />
                         ))}
                     </Grid>
-                    <Grid
-                        item
-                        xs={6}
-                        className={classes.oddGrid}
-                    >
-                        {projects.filter((_, i) => {
-                            return (i % 2 !== 0);
-                        }).map((project, i) => (
-                            <ProjectThumb
-                                project={project}
-                                key={project.index}
-                                isLast={Math.floor(projects.length/2) === i+1}
-                            />
-                        ))}
-                    </Grid>
+                    
+                        <Grid
+                            item
+                            xs={6}
+                            className={classes.oddGrid}
+                        >
+                            {projects.filter((_, i) => {
+                                return (i % 2 !== 0);
+                            }).map((project, i) => (
+                                <ProjectThumb
+                                    project={project}
+                                    key={project.index}
+                                    isLast={Math.floor(projects.length/2) === i+1}
+                                />
+                            ))}
+                        </Grid>
                 </Fragment>
                 
              )}

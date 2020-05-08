@@ -21,7 +21,7 @@ import { useMediaQuery } from 'react-responsive'
 const useStyles = makeStyles(theme => ({
     fixedContainer: {
         position: 'fixed',
-        zIndex: 100,
+        zIndex: 10,
         width: '100%',
         top: 0,
         height: theme.custom.navbarHeight

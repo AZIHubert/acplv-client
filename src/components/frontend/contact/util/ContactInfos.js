@@ -3,7 +3,9 @@ import React, {Fragment} from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import makeStyles from '@material-ui/core/styles/makeStyles';
+
+import Title from '../../util/Title';
 
 const useStyles = makeStyles(theme => ({
     contactContainer: {
@@ -18,7 +20,7 @@ const useStyles = makeStyles(theme => ({
         },
     },
     socialMedia: {
-        borderBottom: `1px solid ${theme.palette.tertiaryColor}`,
+        // borderBottom: `1px solid ${theme.palette.tertiaryColor}`,
         paddingBottom: theme.spacing(1),
         marginBottom: theme.spacing(1)
     }
@@ -31,68 +33,63 @@ export default ({theme}) => {
             <Box
                 className={classes.contactContainer}
             >
-                <Typography
+                <Title
                     variant='body2'
-                >
-                    téléphone
-                </Typography>
-                <Typography
+                    title='téléphone'
+                />
+                <Title
                     variant='body1'
-                >
-                    +33.08.11.11.11.11
-                </Typography>
+                    title='+33.08.11.11.11.11'
+                />
             </Box>
             <Box
                 className={classes.contactContainer}
             >
-                <Typography
+                <Title
                     variant='body2'
-                >
-                    Email
-                </Typography>
-                <Typography
+                    title='Email'
+                />
+                <Title
                     variant='body1'
-                >
-                    CONTACT@ACPLV.COM
-                </Typography>
+                    title='CONTACT@ACPLV.COM'
+                    href='mailto:CONTACT@ACPLV.COM'
+                />
             </Box>
             <Box>
-                <Typography
+                <Title
                     variant='body2'
-                >
-                    adresse
-                </Typography>
-                <Typography
+                    title='adresse'
+                />
+                <Title
                     variant='body1'
-                >
-                    11 rue de Besançon
-                </Typography>
-                <Typography
+                    title='11 rue de Besançon'
+                />
+                <Title
                     variant='body1'
-                >
-                    75000, Paris
-                </Typography>
+                    title='75000, Paris'
+                />
             </Box>
             <Box
                 className={classes.socialMediaContainer}
             >
-                <Typography
+                <Title
                     variant='body2'
-                    className={classes.socialMedia}
-                >
-                    Facebook
-                </Typography>
-                <Typography
+                    customClass={classes.socialMedia}
+                    title='Facebook'
+                    href="https://www.facebook.com/AcPlvCommunicationDeProximite"
+                />
+                <Title
                     variant='body2'
-                    className={classes.socialMedia}
-                >
-                    Linkedin
-                </Typography>
-                <Typography
+                    customClass={classes.socialMedia}
+                    title='Linkedin'
+                    href="https://www.linkedin.com/in/meesook-souryadhay-1b660240/"
+                />
+                <Title
                     variant='body2'
-                >
-                    Instagram
-                </Typography>
+                    customClass={classes.socialMedia}
+                    title='Instagram'
+                    href="https://www.instagram.com/"
+                />
             </Box>
         </Fragment>
     );

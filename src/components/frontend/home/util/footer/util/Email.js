@@ -6,6 +6,7 @@ import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
     contactLink: {
+        fontFamily: 'GillSansBold',
         textTransform: 'uppercase',
         textStrokeWidth: 1,
         lineHeight: 1,

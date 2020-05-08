@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => ({
         paddingBottom: props => props.isLast ? '' : theme.spacing(1),
     },
     title: {
+        fontFamily: 'GillSansBold',
         fontSize: '4rem',
         [theme.breakpoints.down('824')]: {
             fontSize: '2.5rem',

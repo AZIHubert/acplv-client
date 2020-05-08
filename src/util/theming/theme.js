@@ -66,9 +66,17 @@ export default () => {
             overflowX: 'hidden'
           },
           html: {
-            overflowX: 'hidden'
+            [defaultTheme.breakpoints.up('824')]: {
+              cursor: 'none'
+            },
+            overflowX: 'hidden',
           },
-          a: {textDecoration: 'none'}
+          a: {
+            textDecoration: 'none',
+            [defaultTheme.breakpoints.up('824')]: {
+              cursor: 'none'
+            },
+          }
         }
       },
       ...typography,

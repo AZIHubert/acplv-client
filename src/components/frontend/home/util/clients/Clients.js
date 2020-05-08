@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography'
 
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
+import Line from '../../../util/Line';
+
 const useStyles = makeStyles(theme => ({
     container: {
         position: 'relative',
@@ -19,22 +21,12 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('xs')]: {
             height: 40,
         },
-        borderTop: `1px solid ${theme.palette.secondaryColor}`,
-        borderBottom: `1px solid ${theme.palette.secondaryColor}`,
     },
     textContainer: {
         position: 'absolute',
         top: '50%',
         left: 0,
         transform: 'translateY(-50%)'
-        // overflowX: 'hidden',
-        // padding: theme.spacing(2, 0),
-        // [theme.breakpoints.down('xs')]: {
-        //     padding: theme.spacing(1, 0),
-        // },
-        // borderTop: `1px solid ${theme.palette.secondaryColor}`,
-        // borderBottom: `1px solid ${theme.palette.secondaryColor}`,
-        
     },
     text: {
         lineHeight: 0
@@ -119,6 +111,7 @@ export default ({theme}) => {
             paddingTop
             paddingBottom
         >
+            <Line />
             <Box
                 className={classes.container}
             >
@@ -170,6 +163,9 @@ export default ({theme}) => {
                     </Box>
                 </Box>
             </Box>
+            <Line
+                justifyContent='flex-end'
+            />
         </SubComponentWrapper>
     )
 }

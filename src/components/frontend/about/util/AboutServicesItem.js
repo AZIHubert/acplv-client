@@ -1,28 +1,27 @@
-import React, {Fragment} from 'react'
-
-import Typography from '@material-ui/core/Typography'
+import React, {Fragment} from 'react';
 
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
+import Title from '../../util/Title';
+
 const useStyles = makeStyles(theme => ({
     title: {
-        borderBottom: props => props.isLast ? '' : `1px solid ${theme.palette.secondaryColor}`,
         paddingBottom: props => props.isLast ? '' : theme.spacing(0.5),
         marginBottom: props => props.isLast ? '' : theme.spacing(0.5)
     }
 }))
 
 export default (props) => {
-    const {title} = props
+    const {title, isLast} = props
     const classes = useStyles(props)
     return (
         <Fragment>
-            <Typography
+            <Title
                 variant="h3"
-                className={classes.title}
-            >
-                {title}
-            </Typography>
+                title={title}
+                customClass={classes.title}
+                lineBottom={!isLast}
+            />
         </Fragment>
     )
 }

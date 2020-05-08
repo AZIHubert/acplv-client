@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({theme}) => {
+export default ({theme, justifyContent, ...rest}) => {
     const classes = useStyles(theme);
     const lineRef = useRef(null);
     const onScreen = useOnScreen(lineRef, "-70px 0px 0px 0px", true);
@@ -48,11 +48,12 @@ export default ({theme}) => {
     return(
         <Box
             display="flex"
-            justifyContent="left"
+            justifyContent={justifyContent}
             className={classes.container}
+            {...rest}
         >
             <AnimatedBox
-                className={`${classes.line}`}
+                className={classes.line}
                 ref={lineRef}
                 style={props}
             >

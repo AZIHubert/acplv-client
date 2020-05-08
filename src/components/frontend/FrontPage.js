@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 
 import Navbar from './navbar/Navbar';
+import Mouse from './Mouse/Mouse'
 
 import { Route, Switch } from "react-router-dom";
 import Home from './home/Home';
@@ -14,19 +15,18 @@ import Loader from './loader/Loader';
 
 
 export default () => {
-    const [load, setLoad] = useState(true);
+    const [isLoading, setLoading] = useState(true)
     useEffect(() => {
-        setTimeout(() => {
-            setLoad(false);
-        }, 20);
-    }, []);
+        setTimeout(() => setLoading(false), 2000);
+    })
     return (
         <>
-            {load ? (
+            {isLoading ?
                 <Loader />
-            ) : (
+            :
                 <>
                     <Navbar />
+                    <Mouse />
                     <Switch>
                         <Route path={'/about'} component={About} />
                         <Route path={'/projects'} component={Project} />
@@ -34,7 +34,7 @@ export default () => {
                         <Route exact path={'/'} component={Home} />
                     </Switch>
                 </>
-            )}
+            }
         </>
     );
 };

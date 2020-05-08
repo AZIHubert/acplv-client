@@ -1,8 +1,21 @@
-import React from 'react'
+import React, {
+    useEffect,
+    useContext
+}  from 'react'
 
-import Footer from '../footer/Footer'
+import Footer from '../footer/Footer';
 
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import {
+    Box
+} from '@material-ui/core';
+
+import {
+    makeStyles
+} from '@material-ui/core/styles';
+
+import {
+    FirstLoadContext
+} from  '../../../context/firstLoadContext';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -23,15 +36,15 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default ({children, theme}) => {
-    const classes = useStyles(theme)
+    const classes = useStyles(theme);
     return (
-        <div
+        <Box
             className={classes.container}
         >
             <div className={classes.wrapper}>
                 {children}
             </div>
             <Footer />
-        </div>
+        </Box>
     )
 }

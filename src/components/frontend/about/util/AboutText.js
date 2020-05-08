@@ -1,13 +1,17 @@
 import React from 'react'
 
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
+import {
+    Grid,
+    Typography
+} from '@material-ui/core';
 
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import {
+    makeStyles
+} from '@material-ui/core/styles';
 
 import SubComponentWrapper from '../../util/SubComponentWrapper';
 
-
+import ParagraphAnimate from '../../util/ParagraphAnimate';
 
 
 const useStyles = makeStyles(theme => ({
@@ -30,16 +34,16 @@ export default ({theme}) => {
                 container
             >
                 <Grid item xs={12} md={9}>
-                    <Typography
+                    <ParagraphAnimate
                         variant="body2"
-                        className={classes.text}
+                        customClass={classes.text}
                     >
                         NOUS TRANSFORMONS L’IMAGE DE VOS LOCAUX,
                         COMMERCES ET VITRINES POUR OPTIMISER VOTRE IMPACT VISUEL.
-                    </Typography>
-                    <Typography
+                    </ParagraphAnimate>
+                    <ParagraphAnimate
                         variant="body1"
-                        className={classes.text}
+                        customClass={classes.text}
                     >
                         ACPLV EST UNE SOCIÉTÉ DE SOLUTION SIGNALÉTIQUE CRÉÉE EN 1995,
                         NOUS MAÎTRISONS TOUS LES MAILLONS DE LA CHAINE,
@@ -50,7 +54,7 @@ export default ({theme}) => {
                         QUI S’ADAPTENT А TOUTES LES SURFACES.
                         QU’IL S’AGISSE DE PLV STANDARD ADAPTÉE OU PERSONNALISÉE,
                         OU DE SOLUTIONS SPÉCIFIQUES CRÉÉES SUR MESURE…
-                    </Typography>
+                    </ParagraphAnimate>
                 </Grid>
             </Grid>
         </SubComponentWrapper>

@@ -3,6 +3,8 @@ import React from 'react'
 import Title from './Title';
 import Line from './Line';
 
+import ParallaxVerticale from './ParallaxVerticale';
+
 import {
     makeStyles
 } from '@material-ui/core/styles'
@@ -49,19 +51,29 @@ export default (props) => {
                 {title && <div
                     className={subTitle ? '' : classes.titleContainer}
                 >
-                    <Title
-                        title={title}
-                        variant='h1'
-                    />
+                    {/* <ParallaxVerticale
+                        ratio={0.1}
+                        relativeToPercent={75}
+                    > */}
+                        <Title
+                            title={title}
+                            variant='h1'
+                        />
+                    {/* </ParallaxVerticale> */}
                 </div>}
                 {subTitle && <div
                     className={classes.titleContainer}
                 >
-                    <Title
-                        title={subTitle}
-                        className={classes.subTitle}
-                        variant='h1'
-                    />
+                    {/* <ParallaxVerticale
+                        ratio={0.1}
+                        relativeToPercent={75}
+                    > */}
+                        <Title
+                            title={subTitle}
+                            className={classes.subTitle}
+                            variant='h1'
+                        />
+                    {/* </ParallaxVerticale> */}
                 </div>}
 
                 {children}

@@ -13,7 +13,8 @@ import useOnScreen from '../../../hooks/useOnScreen';
 
 import {
     Box,
-    Typography
+    Typography,
+    Link
 } from '@material-ui/core';
 
 import {
@@ -35,6 +36,9 @@ const useStyles = makeStyles(theme => ({
     },
     innerContainer: {
         padding: theme.spacing(0.2, 0, 0.3, 0)
+    },
+    link: {
+        color: 'inherit'
     }
 }));
 
@@ -43,7 +47,9 @@ export default ({
     customClass,
     theme,
     lineBottom,
-    variant
+    variant,
+    href,
+    ...rest
 }) => {
     const classes = useStyles(theme);
     const titleRef = useRef(null);
@@ -57,7 +63,7 @@ export default ({
     return (
         <Box
             ref={titleRef}
-            className="r"
+            
         >
             <AnimatedBox
                 className={classes.outerContainer}
@@ -75,8 +81,16 @@ export default ({
                             opacity,
                             transform: yTypography.interpolate(y => `translate3d(0px, ${y}%, 0px)`)
                         }}
+                        {...rest}
                     >
-                        {title}
+                        {!!href ? (
+                            <a
+                                href={href}
+                                className={classes.link}
+                            >
+                                {title}
+                            </a>
+                        ) : <>{title}</>}
                     </AnimatedTypography>
                 </Box>
                 {lineBottom && <Line />}

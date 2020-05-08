@@ -1,4 +1,6 @@
-import React from 'react'
+import React, {
+    useRef
+} from 'react'
 
 import {
     Grid,
@@ -8,13 +10,29 @@ import {
 
 import {
     makeStyles
-} from '@material-ui/core/styles'
+} from '@material-ui/core/styles';
+
+import {
+    useSpring,
+    animated
+} from 'react-spring';
+
+import useOnScreen from '../../../hooks/useOnScreen';
+
+import Title from './Title';
+
+const AnimatedBox = animated(Box);
+
+const config = {
+    mass: 4,
+    friction: 200,
+    tension: 1500
+}
 
 const useStyles = makeStyles(theme => ({
     container: {
-        borderBottom: `1px solid ${theme.palette.secondaryColor}`,
         paddingBottom: theme.spacing(1),
-        marginBottom: props => props.isLast ? '0' : theme.spacing(8)
+        marginTop: props => props.isFirst ? '0' : theme.spacing(8)
     },
     squareBox: {
         position: 'relative',
@@ -53,58 +71,97 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.up('lg')]: {
             textAlign: 'right'
         },
+    },
+    lineContainer: {
+        width: '100%',
+        height: 2
+    },
+    line: {
+        height: '100%',
+        backgroundColor: theme.palette.secondaryColor
     }
 }))
 
-export default (props) => {
-    const {project} = props
-    const classes = useStyles(props)
+export default props => {
+    const {project} = props;
+    const classes = useStyles(props);
+    const thumbRef = useRef(null);
+    const onScreen = useOnScreen(thumbRef, "-70px 0px 0px 0px", true);
+    const {y, opacity, lineOpacity, lineWidth} = useSpring({
+        y: onScreen ? 0 : 20,
+        opacity: onScreen ? 1 : 0,
+        lineWidth: onScreen ? '100%' : '0%',
+        lineOpacity: onScreen ? 1 : 0,
+        config
+    });
     return (
-        <div
+        <Box
+            ref={thumbRef}
             className={classes.container}
         >
-            <div
-                className={classes.squareBox}
+            <AnimatedBox
+                style={{
+                    opacity,
+                    transform: y.interpolate(y => `translate3d(0px, ${y}%, 0px)`)
+                }}
             >
                 <div
-                    className={classes.squareContent}
+                    className={classes.squareBox}
                 >
                     <div
-                        className={classes.thumbnailContainer}
-                    ></div>
-                </div>
-            </div>
-            <Grid
-                container
-            >
-                <Grid
-                    item
-                    xs={12} lg={6}
-                >
-                    <Box>
-                        <Typography
-                            variant="body2"
-                            className={classes.projectTitle}
-                        >
-                            {project.title}
-                        </Typography>
-                    </Box>
-                </Grid>
-                <Grid
-                    item
-                    xs={12} lg={6}
-                >
-                    <Box
-                        className={classes.projectTypeContainer}
+                        className={classes.squareContent}
                     >
-                        <Typography
-                            variant="body1"
+                        <div
+                            className={classes.thumbnailContainer}
+                        ></div>
+                    </div>
+                </div>
+                <Grid
+                    container
+                >
+                    <Grid
+                        item
+                        xs={12} lg={6}
+                    >
+                        <Box>
+                            <Typography
+                                variant="body2"
+                                className={classes.projectTitle}
+                            >
+                                {project.title}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid
+                        item
+                        xs={12} lg={6}
+                    >
+                        <Box
+                            className={classes.projectTypeContainer}
                         >
-                            {project.type}
-                        </Typography>
-                    </Box>
+                            <Typography
+                                variant="body1"
+                            >
+                                {project.type}
+                            </Typography>
+                        </Box>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </div>
+                <Box
+                    display="flex"
+                    justifyContent="left"
+                    className={classes.lineContainer}
+                >
+                    <AnimatedBox
+                        className={classes.line}
+                        style={{
+                            width: lineWidth,
+                            opacity: lineOpacity
+                        }}
+                    >
+                    </AnimatedBox>
+                </Box>
+            </AnimatedBox>
+        </Box>
     )
 }
