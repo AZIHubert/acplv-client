@@ -3,8 +3,6 @@ import React from 'react'
 import Title from './Title';
 import Line from './Line';
 
-import ParallaxVerticale from './ParallaxVerticale';
-
 import {
     makeStyles
 } from '@material-ui/core/styles'
@@ -27,7 +25,15 @@ const useStyles = makeStyles(theme => ({
     titleContainer: {
         paddingBottom: theme.spacing(5)
     },
+    title: {
+        [theme.breakpoints.up('1350')]: {
+            fontSize: '5rem',
+        }
+    },
     subTitle: {
+        [theme.breakpoints.up('1350')]: {
+            fontSize: '5rem',
+        },
         paddingLeft: theme.spacing(15),
         [theme.breakpoints.down('xs')]: {
             paddingLeft: theme.spacing(2),
@@ -51,29 +57,20 @@ export default (props) => {
                 {title && <div
                     className={subTitle ? '' : classes.titleContainer}
                 >
-                    {/* <ParallaxVerticale
-                        ratio={0.1}
-                        relativeToPercent={75}
-                    > */}
-                        <Title
-                            title={title}
-                            variant='h1'
-                        />
-                    {/* </ParallaxVerticale> */}
+                    <Title
+                        title={title}
+                        className={classes.title}
+                        variant='h1'
+                    />
                 </div>}
                 {subTitle && <div
                     className={classes.titleContainer}
                 >
-                    {/* <ParallaxVerticale
-                        ratio={0.1}
-                        relativeToPercent={75}
-                    > */}
-                        <Title
-                            title={subTitle}
-                            className={classes.subTitle}
-                            variant='h1'
-                        />
-                    {/* </ParallaxVerticale> */}
+                    <Title
+                        title={subTitle}
+                        className={classes.subTitle}
+                        variant='h1'
+                    />
                 </div>}
 
                 {children}
