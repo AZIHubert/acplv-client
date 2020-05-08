@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
         backgroundPosition: 'bottom center'
     },
     whoAreWeContainer: {
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('825')]: {
             height: theme.spacing(17),
         },
         [theme.breakpoints.up('1350')]: {
