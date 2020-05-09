@@ -82,7 +82,6 @@ const useStyles = makeStyles(theme => ({
             easing: theme.transitions.easing.easeIn,
             duration: theme.transitions.duration.shortest
         }),
-        // transition: 'color 200ms ease'
     },
     
     separator: {

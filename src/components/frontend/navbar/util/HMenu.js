@@ -1,16 +1,25 @@
-import React from 'react'
+import React, {
+    useState
+} from 'react';
+
+import HMenuDrawer from './HMenuDrawer';
 
 import {
     Box
 } from '@material-ui/core'
 
-import {makeStyles} from '@material-ui/core/styles'
+import 
+{useTransition
+} from 'react-spring';
+
+import {
+    makeStyles
+} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     squareBox: {
         position: 'relative',
         width: 30,
-        // overflow: 'hidden',
         '&::before': {
             content: '""',
             display: 'block',
@@ -72,36 +81,53 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default ({theme}) => {
-    const classes = useStyles(theme)
+    const classes = useStyles(theme);
+    const [open, setOpen] = useState(false);
+    const handleClick = () => setOpen(true);
+    const transitions = useTransition(open, null, {
+        from: { opacity: 0, yBox: 20, yTypography: 100 },
+        enter: {opacity: 1, yBox: 0, yBox: 0, yTypography: 0},
+        leave: { opacity: 0, yBox: 20, yTypography: 100 },
+    })
     return (
-        <Box>
-            <div
-                className={classes.squareBox}
-            >
+        <>
+            <Box>
                 <div
-                    className={classes.squareContent}
+                    className={classes.squareBox}
+                    onClick={handleClick}
                 >
                     <div
-                        className={classes.barContainer}
+                        className={classes.squareContent}
                     >
                         <div
-                            className={`topBar ${classes.bar} ${classes.topBar}`}
+                            className={classes.barContainer}
                         >
-                            <div></div>
-                        </div>
-                        <div
-                            className={`middleBar ${classes.bar} ${classes.middleBar}`}
-                        >
-                            <div></div>
-                        </div>
-                        <div
-                            className={`bottomBar ${classes.bar} ${classes.bottomBar}`}
-                        >
-                            <div></div>
+                            <div
+                                className={`topBar ${classes.bar} ${classes.topBar}`}
+                            >
+                                <div></div>
+                            </div>
+                            <div
+                                className={`middleBar ${classes.bar} ${classes.middleBar}`}
+                            >
+                                <div></div>
+                            </div>
+                            <div
+                                className={`bottomBar ${classes.bar} ${classes.bottomBar}`}
+                            >
+                                <div></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </Box>
+            </Box>
+            {transitions.map(({ item, key, props }) =>
+                item && <HMenuDrawer
+                    key={key}
+                    setOpen={setOpen}
+                    animatedProps={props}
+                />
+            )}
+        </>
     )
 }

@@ -2,16 +2,22 @@ import React, {
     useEffect,
     useState
 } from 'react';
+import {
+    Route,
+    Switch,
+    Redirect
+} from "react-router-dom";
 
 import Navbar from './navbar/Navbar';
 import Mouse from './Mouse/Mouse'
 
-import { Route, Switch } from "react-router-dom";
 import Home from './home/Home';
 import About from './about/About';
 import Project from './projects/Projects';
 import Contact from './contact/Contact';
 import Loader from './loader/Loader';
+import NotFound from '../notFound/NotFound';
+
 
 
 export default () => {
@@ -28,10 +34,12 @@ export default () => {
                     <Navbar />
                     <Mouse />
                     <Switch>
+                        <Route exact path={'/'} component={Home} />
+                        <Route path={'/home'} render={() => (<Redirect to="/" />)} />
                         <Route path={'/about'} component={About} />
                         <Route path={'/projects'} component={Project} />
                         <Route path={'/contact'} component={Contact} />
-                        <Route exact path={'/'} component={Home} />
+                        <Route path="*" component={NotFound} />
                     </Switch>
                 </>
             }

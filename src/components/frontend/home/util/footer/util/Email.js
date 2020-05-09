@@ -12,12 +12,12 @@ const useStyles = makeStyles(theme => ({
         lineHeight: 1,
         textStrokeColor: theme.palette.secondaryColor,
         color: 'transparent',
-        transition: theme.transitions.create('text-stroke-color', {
+        transition: theme.transitions.create(['text-stroke-color', 'color'], {
             easing: theme.transitions.easing.easeIn,
             duration: theme.transitions.duration.shortest
         }),
         '&:hover': {
-            color: 'transparent',
+            color: theme.palette.tertiaryColor,
             textStrokeColor: theme.palette.tertiaryColor,
         },
         '&:hover::selection': {
