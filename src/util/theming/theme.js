@@ -63,19 +63,11 @@ export default () => {
             backgroundColor: defaultTheme.palette.primaryColor,
             color: defaultTheme.palette.secondaryColor,
             fontFamily: 'GillSans, Arial',
-            overflowX: 'hidden',
-            '&.no-scroll': {
-              overflow: 'hidden',
-            }
           },
           html: {
             [defaultTheme.breakpoints.up('824')]: {
               cursor: 'none'
             },
-            overflowX: 'hidden',
-            '&.no-scroll': {
-              overflow: 'hidden',
-            }
           },
           a: {
             textDecoration: 'none',

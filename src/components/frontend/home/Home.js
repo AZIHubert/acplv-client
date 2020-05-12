@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import ComponentWrapper from '../util/ComponentWrapper';
 
@@ -9,10 +9,25 @@ import Project from './util/projects/Projects';
 import Clients from './util/clients/Clients';
 import Footer from './util/footer/Footer';
 
+import {
+    makeStyles
+} from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+    headerContainer: {
+        overflowX: 'hidden'
+    }
+}))
+
 export default () => {
+    const classes = useStyles();
     return (
         <ComponentWrapper>
-            <Header />
+            <div
+                className={classes.headerContainer}
+            >
+                <Header />
+            </div>
             <About />
             <Service />
             <Project />
