@@ -3,12 +3,16 @@ import React from 'react';
 import RootPage from './components/RootPage';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import HMenuContextProvider from './context/HMenuContext';
+
 function App() {
   return (
     <Router>
-      <div className="App">
-        <RootPage />
-      </div>
+      <HMenuContextProvider>
+        <div className="App">
+          <RootPage />
+        </div>
+      </HMenuContextProvider>
     </Router>
   );
 }

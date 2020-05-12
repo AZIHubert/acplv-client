@@ -1,8 +1,13 @@
 import React, {
-    useState
+    useState,
+    useContext
 } from 'react';
 
 import HMenuDrawer from './HMenuDrawer';
+
+import {
+    HMenuContext
+} from '../../../../context/HMenuContext';
 
 import {
     Box
@@ -36,7 +41,7 @@ const useStyles = makeStyles(theme => ({
             easing: theme.transitions.easing.easeIn,
             duration: theme.transitions.duration.complex
         }),
-        '&:hover': {
+        '&:hover, &.animated': {
             transform: 'rotate(90deg)',
             '& .topBar div, & .bottomBar div': {
                 width: '50%'
@@ -82,8 +87,7 @@ const useStyles = makeStyles(theme => ({
 
 export default ({theme}) => {
     const classes = useStyles(theme);
-    const [open, setOpen] = useState(false);
-    const handleClick = () => setOpen(true);
+    const {menuClick, open} = useContext(HMenuContext);
     const transitions = useTransition(open, null, {
         from: { opacity: 0, yBox: 20, yTypography: 100 },
         enter: {opacity: 1, yBox: 0, yBox: 0, yTypography: 0},
@@ -94,10 +98,10 @@ export default ({theme}) => {
             <Box>
                 <div
                     className={classes.squareBox}
-                    onClick={handleClick}
+                    onClick={() => menuClick(true)}
                 >
                     <div
-                        className={classes.squareContent}
+                        className={`${classes.squareContent} ${open ? 'animated' : ''}`}
                     >
                         <div
                             className={classes.barContainer}
@@ -124,7 +128,7 @@ export default ({theme}) => {
             {transitions.map(({ item, key, props }) =>
                 item && <HMenuDrawer
                     key={key}
-                    setOpen={setOpen}
+                    setOpen={menuClick.bind(this, false)}
                     animatedProps={props}
                 />
             )}

@@ -13,10 +13,6 @@ import {
     makeStyles
 } from '@material-ui/core/styles';
 
-import {
-    FirstLoadContext
-} from  '../../../context/firstLoadContext';
-
 const useStyles = makeStyles(theme => ({
     container: {
         marginTop: theme.custom.navbarHeight,
