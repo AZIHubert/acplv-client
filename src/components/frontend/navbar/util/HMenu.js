@@ -23,6 +23,7 @@ import {
 
 const useStyles = makeStyles(theme => ({
     squareBox: {
+        cursor: 'pointer',
         position: 'relative',
         width: 30,
         '&::before': {

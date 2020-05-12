@@ -43,6 +43,7 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(1, 2)
     },
     cross: {
+        cursor: 'pointer',
         fontSize: '1.3rem',
         '&:hover': {
             color: theme.palette.tertiaryColor
