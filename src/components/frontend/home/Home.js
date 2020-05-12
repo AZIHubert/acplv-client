@@ -20,14 +20,9 @@ const useStyles = makeStyles(() => ({
 }))
 
 export default () => {
-    const classes = useStyles();
     return (
         <ComponentWrapper>
-            <div
-                className={classes.headerContainer}
-            >
-                <Header />
-            </div>
+            <Header />
             <About />
             <Service />
             <Project />

@@ -18,15 +18,24 @@ import Contact from './contact/Contact';
 import Loader from './loader/Loader';
 import NotFound from '../notFound/NotFound';
 
+import {
+    makeStyles
+} from '@material-ui/core/styles';
 
+const useStyles = makeStyles(() => ({
+    container: {
+        overflowX: 'hidden'
+    }
+}))
 
 export default () => {
+    const classes = useStyles()
     const [isLoading, setLoading] = useState(true)
     useEffect(() => {
         setTimeout(() => setLoading(false), 2000);
     })
     return (
-        <>
+        <div className={classes.container}>
             {isLoading ?
                 <Loader />
             :
@@ -43,6 +52,6 @@ export default () => {
                     </Switch>
                 </>
             }
-        </>
+        </div>
     );
 };
