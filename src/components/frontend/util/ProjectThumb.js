@@ -62,10 +62,12 @@ const useStyles = makeStyles(theme => ({
     thumbnailContainer: {
         width: '100%',
         height: '100%',
-        backgroundColor: theme.palette.tertiaryColor,
-        backgroundImage: props => `url('${props.project.thumbnail}')`,
+        backgroundColor: theme.palette.secondaryColor,
         backgroundSize: 'cover',
-        backgroundPosition: 'center center'
+        backgroundPosition: 'center center',
+        '&:hover': {
+            backgroundImage: props => `url('${props.project.thumbnail}')`
+        }
     },
     projectTypeContainer: {
         [theme.breakpoints.up('lg')]: {

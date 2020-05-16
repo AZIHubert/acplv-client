@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default ({label, theme}) => {
+export default ({label, value, handleChange, name, theme}) => {
     const classes = useStyles(theme)
     return (
         <Box
@@ -20,6 +20,9 @@ export default ({label, theme}) => {
             <TextField
                 fullWidth
                 label={label}
+                value={value}
+                onChange={handleChange}
+                name={name}
             />
         </Box>
     )

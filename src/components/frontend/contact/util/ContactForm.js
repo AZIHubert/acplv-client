@@ -19,7 +19,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default ({theme}) => {
-    const classes = useStyles(theme)
+    const classes = useStyles(theme);
+    const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState({
         email: '',
         object: '',
@@ -27,16 +28,29 @@ export default ({theme}) => {
         lastName: '',
         body: ''
     });
+    const [sending, setSending] = useState(false);
     const handleSubmit = e => {
         e.preventDefault();
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+            setMessage({
+                email: '',
+                object: '',
+                firstName: '',
+                lastName: '',
+                body: ''
+            });
+            setSending(true);
+        }, 2000);
+    }
+    const handleChange = e => {
         setMessage({
-            email: '',
-            object: '',
-            firstName: '',
-            lastName: '',
-            body: ''
+            ...message,
+            [e.target.name]: e.target.value
         })
     }
+    console.log(loading, message, sending)
     return (
         <Box>
             <Box
@@ -47,6 +61,13 @@ export default ({theme}) => {
                 >
                     Send us an email
                 </Typography>
+                {sending && 
+                    <Typography
+                        variant="body1"
+                    >
+                        votre message a bien été envoyé
+                    </Typography>
+                }
             </Box>
             <form
                 noValidate
@@ -54,9 +75,15 @@ export default ({theme}) => {
             >
                 <CustomTextField
                     label="email"
+                    value={message.email}
+                    handleChange={handleChange}
+                    name="email"
                 />
                 <CustomTextField
                     label="objet"
+                    value={message.object}
+                    handleChange={handleChange}
+                    name="object"
                 />
                 <Grid
                     container
@@ -68,6 +95,9 @@ export default ({theme}) => {
                     >
                         <CustomTextField
                             label="prénom"
+                            value={message.firstName}
+                            handleChange={handleChange}
+                            name="firstName"
                         />
                     </Grid>
                     <Grid
@@ -76,14 +106,21 @@ export default ({theme}) => {
                     >
                         <CustomTextField
                             label="nom"
+                            value={message.lastName}
+                            handleChange={handleChange}
+                            name="lastName"
                         />
                     </Grid>
                 </Grid>
                 <CustomMultilinesField
                     label="message"
+                    value={message.body}
+                    handleChange={handleChange}
+                    name="body"
                 />
                 <CustomButton
                     text="envoyer"
+                    loading={loading}
                 />
             </form>
         </Box>

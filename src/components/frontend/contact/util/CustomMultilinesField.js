@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
-export default ({label}) => {
+export default ({label, handleChange, value, name}) => {
     const classes = useStyles()
     return (
         <Box>
@@ -31,6 +31,9 @@ export default ({label}) => {
                 multiline
                 fullWidth
                 rows={5}
+                onChange={handleChange}
+                value={value}
+                name={name}
             ></TextField>
         </Box>
     )

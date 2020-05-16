@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default ({text, theme}) => {
+export default ({text, loading, theme}) => {
     const classes = useStyles(theme)
     return (
         <Box
@@ -44,8 +44,9 @@ export default ({text, theme}) => {
                 variant="contained"
                 className={classes.button}
                 disableRipple
+                type="submit"
             >
-                {text}
+                {loading ? 'wait' : text}
             </Button>
         </Box>
     )
