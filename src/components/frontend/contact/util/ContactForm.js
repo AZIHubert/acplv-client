@@ -50,7 +50,6 @@ export default ({theme}) => {
             [e.target.name]: e.target.value
         })
     }
-    console.log(loading, message, sending)
     return (
         <Box>
             <Box
