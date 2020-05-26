@@ -7,12 +7,22 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
     container: {
-        paddingBottom: theme.spacing(2)
+        paddingBottom: theme.spacing(2),
+        opacity: props => props.loading ? '0.5' : ''
+    },
+    textField: {
+        '& .MuiInputBase-root': {
+            cursor: 'none'
+        },
+        '& input': {
+            cursor: 'none'
+        }
     }
 }))
 
-export default ({label, value, handleChange, name, theme}) => {
-    const classes = useStyles(theme)
+export default props => {
+    const {label, value, handleChange, name} = props;
+    const classes = useStyles(props)
     return (
         <Box
             className={classes.container}
@@ -23,6 +33,7 @@ export default ({label, value, handleChange, name, theme}) => {
                 value={value}
                 onChange={handleChange}
                 name={name}
+                className={classes.textField}
             />
         </Box>
     )

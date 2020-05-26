@@ -9,16 +9,6 @@ import Project from './util/projects/Projects';
 import Clients from './util/clients/Clients';
 import Footer from './util/footer/Footer';
 
-import {
-    makeStyles
-} from '@material-ui/core/styles';
-
-const useStyles = makeStyles(() => ({
-    headerContainer: {
-        overflowX: 'hidden'
-    }
-}))
-
 export default () => {
     return (
         <ComponentWrapper>

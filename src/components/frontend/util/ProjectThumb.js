@@ -19,8 +19,6 @@ import {
 
 import useOnScreen from '../../../hooks/useOnScreen';
 
-import Title from './Title';
-
 const AnimatedBox = animated(Box);
 
 const config = {
@@ -65,9 +63,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.secondaryColor,
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
-        '&:hover': {
-            backgroundImage: props => `url('${props.project.thumbnail}')`
-        }
+        backgroundImage: props => `url('${props.project.thumbnail}')`
     },
     projectTypeContainer: {
         [theme.breakpoints.up('lg')]: {

@@ -9,16 +9,30 @@ import {
 import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(() => ({
+    container: {
+        opacity: props => props.loading ? '0.5' : ''
+    },
     label: {
         textTransform: 'lowercase',
-        fontSize: '1rem'
+        fontSize: '1rem',
+    },
+    textField: {
+        '& .MuiInputBase-root': {
+            cursor: 'none'
+        },
+        '& textarea': {
+            cursor: 'none'
+        }
     }
 }))
 
-export default ({label, handleChange, value, name}) => {
-    const classes = useStyles()
+export default props => {
+    const {label, handleChange, value, name} = props;
+    const classes = useStyles(props)
     return (
-        <Box>
+        <Box
+            className={classes.container}
+        >
             <Box>
                 <Typography
                     variant="body1"
@@ -34,7 +48,9 @@ export default ({label, handleChange, value, name}) => {
                 onChange={handleChange}
                 value={value}
                 name={name}
-            ></TextField>
+                className={classes.textField}
+                // disabled
+            />
         </Box>
     )
 }

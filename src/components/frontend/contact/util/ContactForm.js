@@ -1,8 +1,12 @@
-import React, {useState} from 'react'
+import React, {
+    useState,
+    useEffect
+} from 'react'
 
-import CustomTextField from './CustomTextfield'
-import CustomMultilinesField from './CustomMultilinesField'
-import CustomButton from './CustomButton'
+import CustomTextField from './CustomTextfield';
+import CustomMultilinesField from './CustomMultilinesField';
+import CustomButton from './CustomButton';
+import ContactFeedBack from './ContactFeedBack';
 
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -21,6 +25,7 @@ const useStyles = makeStyles(theme => ({
 export default ({theme}) => {
     const classes = useStyles(theme);
     const [loading, setLoading] = useState(false);
+    const [feedbackMessage, setFeedbackMesage] = useState('');
     const [message, setMessage] = useState({
         email: '',
         object: '',
@@ -29,10 +34,15 @@ export default ({theme}) => {
         body: ''
     });
     const [sending, setSending] = useState(false);
-    const handleSubmit = e => {
-        e.preventDefault();
-        setLoading(true);
-        setTimeout(() => {
+    let timerSendingVar;
+    const timerSending = () => {
+        timerSendingVar = setTimeout(() => {
+            setSending(false);
+        }, 5000);
+    }
+    let timerSubmitVar;
+    const timerSubmit = () => {
+        timerSubmitVar = setTimeout(() => {
             setLoading(false);
             setMessage({
                 email: '',
@@ -41,88 +51,109 @@ export default ({theme}) => {
                 lastName: '',
                 body: ''
             });
+            setFeedbackMesage('Votre message à bien été envoyé');
             setSending(true);
+            timerSending()
         }, 2000);
     }
-    const handleChange = e => {
-        setMessage({
-            ...message,
-            [e.target.name]: e.target.value
-        })
+    const handleSubmit = e => {
+        e.preventDefault();
+        if(!loading){
+            setLoading(true);
+            timerSubmit()
+        }
     }
+    const handleChange = e => {
+        if(!loading){
+            setMessage({
+                ...message,
+                [e.target.name]: e.target.value
+            });
+        }
+    }
+    useEffect(() => {
+        return () => {
+            clearTimeout(timerSubmitVar);
+            clearTimeout(timerSendingVar);
+        }
+    }, [timerSubmitVar, timerSendingVar])
     return (
-        <Box>
-            <Box
-                className={classes.title}
-            >
-                <Typography
-                    variant="h2"
+        <>
+            <Box>
+                <Box
+                    className={classes.title}
                 >
-                    Send us an email
-                </Typography>
-                {sending && 
                     <Typography
-                        variant="body1"
+                        variant="h2"
                     >
-                        votre message a bien été envoyé
+                        Send us an email
                     </Typography>
-                }
-            </Box>
-            <form
-                noValidate
-                onSubmit={handleSubmit}
-            >
-                <CustomTextField
-                    label="email"
-                    value={message.email}
-                    handleChange={handleChange}
-                    name="email"
-                />
-                <CustomTextField
-                    label="objet"
-                    value={message.object}
-                    handleChange={handleChange}
-                    name="object"
-                />
-                <Grid
-                    container
-                    spacing={2}
+                </Box>
+                <form
+                    noValidate
+                    onSubmit={handleSubmit}
                 >
+                    <CustomTextField
+                        label="email"
+                        value={message.email}
+                        handleChange={handleChange}
+                        name="email"
+                        loading={loading}
+                    />
                     <Grid
-                        item
-                        xs={6}
+                        container
+                        spacing={2}
                     >
-                        <CustomTextField
-                            label="prénom"
-                            value={message.firstName}
-                            handleChange={handleChange}
-                            name="firstName"
-                        />
+                        <Grid
+                            item
+                            xs={6}
+                        >
+                            <CustomTextField
+                                label="prénom"
+                                value={message.firstName}
+                                handleChange={handleChange}
+                                name="firstName"
+                                loading={loading}
+                            />
+                        </Grid>
+                        <Grid
+                            item
+                            xs={6}
+                        >
+                            <CustomTextField
+                                label="nom"
+                                value={message.lastName}
+                                handleChange={handleChange}
+                                name="lastName"
+                                loading={loading}
+                            />
+                        </Grid>
                     </Grid>
-                    <Grid
-                        item
-                        xs={6}
-                    >
-                        <CustomTextField
-                            label="nom"
-                            value={message.lastName}
-                            handleChange={handleChange}
-                            name="lastName"
-                        />
-                    </Grid>
-                </Grid>
-                <CustomMultilinesField
-                    label="message"
-                    value={message.body}
-                    handleChange={handleChange}
-                    name="body"
-                />
-                <CustomButton
-                    text="envoyer"
-                    loading={loading}
-                />
-            </form>
-        </Box>
-        
+                    <CustomTextField
+                        label="objet"
+                        value={message.object}
+                        handleChange={handleChange}
+                        name="object"
+                        loading={loading}
+                    />
+                    <CustomMultilinesField
+                        label="message"
+                        value={message.body}
+                        handleChange={handleChange}
+                        name="body"
+                        loading={loading}
+                    />
+                    <CustomButton
+                        text="envoyer"
+                        loading={loading}
+                    />
+                </form>
+            </Box>
+            <ContactFeedBack
+                text={feedbackMessage}
+                sending={sending}
+                setSending={setSending}
+            />
+        </>
     )
 }

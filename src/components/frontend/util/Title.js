@@ -13,8 +13,7 @@ import useOnScreen from '../../../hooks/useOnScreen';
 
 import {
     Box,
-    Typography,
-    Link
+    Typography
 } from '@material-ui/core';
 
 import {
@@ -63,7 +62,6 @@ export default ({
     return (
         <Box
             ref={titleRef}
-            
         >
             <AnimatedBox
                 className={classes.outerContainer}

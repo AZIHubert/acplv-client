@@ -1,5 +1,4 @@
 import React, {
-    useState,
     useContext
 } from 'react';
 
@@ -91,7 +90,7 @@ export default ({theme}) => {
     const {menuClick, open} = useContext(HMenuContext);
     const transitions = useTransition(open, null, {
         from: { opacity: 0, yBox: 20, yTypography: 100 },
-        enter: {opacity: 1, yBox: 0, yBox: 0, yTypography: 0},
+        enter: {opacity: 1, yBox: 0, yTypography: 0},
         leave: { opacity: 0, yBox: 20, yTypography: 100 },
     })
     return (

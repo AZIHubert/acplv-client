@@ -1,8 +1,7 @@
 import React, {
     useState,
     useRef,
-    useEffect,
-    Fragment
+    useEffect
 } from 'react'
 
 import SubComponentWrapper from '../util/SubComponentWrapper'
@@ -18,8 +17,6 @@ import {
 import {
     makeStyles
 } from '@material-ui/core/styles';
-
-import Line from '../util/Line';
 
 import useOnScreen from '../../../hooks/useOnScreen';
 
