@@ -65,7 +65,7 @@ export default ({theme}) => {
     );
     useEffect(() => {
         set({ xy: [x, y] })
-    }, [x, y]);
+    }, [x, y, set]);
     return (
         !isMobile &&
             <>

@@ -34,21 +34,21 @@ export default ({
         y: 0,
         config
     }));
-    const getY = () => {
-        if(!!relativeToPercent){
-            const refPos = ref.current.getBoundingClientRect();
-            let zeroPos = refPos.top - (window.innerHeight * relativeToPercent)/100 + refPos.height/2;
-            set({y: zeroPos * ratio});
-        } else {
-            const pageYOffset = window.pageYOffset;
-            set({y: pageYOffset * ratio});
-        }
-    }
     useEffect(() => {
+        const getY = () => {
+            if(!!relativeToPercent){
+                const refPos = ref.current.getBoundingClientRect();
+                let zeroPos = refPos.top - (window.innerHeight * relativeToPercent)/100 + refPos.height/2;
+                set({y: zeroPos * ratio});
+            } else {
+                const pageYOffset = window.pageYOffset;
+                set({y: pageYOffset * ratio});
+            }
+        };
         getY()
         window.addEventListener('scroll', getY);
         return () => window.removeEventListener('scroll', getY);
-    }, []);
+    }, [ratio, relativeToPercent, set]);
     return (
         <AnimatedBox
             ref={ref}

@@ -8,13 +8,14 @@ export default (ref, rootMargin = '0px', once = false) => {
     const [isIntersecting, setIntersecting] = useState(false);
   
     useEffect(() => {
+      const current = ref.current;
       const observer = new IntersectionObserver(
         ([entry], obs) => {
           // Update our state when observer callback fires
           setIntersecting(entry.isIntersecting);
           if(once){
             if(entry.isIntersecting > 0){
-              obs.unobserve(ref.current);
+              obs.unobserve(current);
             }
           }
         },
@@ -23,12 +24,12 @@ export default (ref, rootMargin = '0px', once = false) => {
         }
       );
       if (ref.current) {
-        observer.observe(ref.current);
+        observer.observe(current);
       }
       return () => {
-        observer.unobserve(ref.current);
+        observer.unobserve(current);
       };
-    }, []); // Empty array ensures that effect is only run on mount and unmount
+    }, [once, ref, rootMargin]); // Empty array ensures that effect is only run on mount and unmount
   
     return isIntersecting;
   }
