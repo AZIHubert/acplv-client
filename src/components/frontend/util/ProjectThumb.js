@@ -63,7 +63,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.secondaryColor,
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
-        backgroundImage: props => `url('${props.project.thumbnail}')`
+        backgroundImage: props => `url('${props.project.thumbnailUrl}')`
     },
     projectTypeContainer: {
         [theme.breakpoints.up('lg')]: {
@@ -140,7 +140,7 @@ export default props => {
                             <Typography
                                 variant="body1"
                             >
-                                {project.type}
+                                {project.type.title}
                             </Typography>
                         </Box>
                     </Grid>
