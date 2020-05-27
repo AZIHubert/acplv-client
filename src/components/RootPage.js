@@ -9,6 +9,8 @@ import {
 } from '@material-ui/core'
 
 import FrontPage from './frontend/FrontPage';
+import Login from './loggers/login/Login';
+import Signup from './loggers/signup/Signup';
 
 export default () => {
     return (
@@ -16,6 +18,8 @@ export default () => {
             <CssBaseline />
             <Router>
                 <Switch>
+                    <Route path="/login" component={Login} />
+                    <Route path="/signup" component={Signup} />
                     <Route path="/" component={FrontPage} />
                 </Switch>
             </Router>

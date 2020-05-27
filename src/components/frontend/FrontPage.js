@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 
 import Navbar from './navbar/Navbar';
-import Mouse from './Mouse/Mouse'
+import Mouse from './Mouse/Mouse';
 
 import Home from './home/Home';
 import About from './about/About';
@@ -33,7 +33,7 @@ export default () => {
     const [isLoading, setLoading] = useState(true)
     useEffect(() => {
         setTimeout(() => setLoading(false), 2000);
-    })
+    });
     return (
         <div className={classes.container}>
             {isLoading ?

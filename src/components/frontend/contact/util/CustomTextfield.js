@@ -1,9 +1,13 @@
 import React from 'react'
 
-import TextField from '@material-ui/core/TextField';
-import Box from '@material-ui/core/Box'
+import {
+    TextField,
+    Box
+} from '@material-ui/core';
 
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import {
+    makeStyles
+} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     container: {

@@ -66,13 +66,13 @@ export default () => {
           },
           html: {
             [defaultTheme.breakpoints.up('824')]: {
-              cursor: 'none'
+              // cursor: 'none'
             },
           },
           a: {
             textDecoration: 'none',
             [defaultTheme.breakpoints.up('824')]: {
-              cursor: 'none'
+              // cursor: 'none'
             },
           }
         }
