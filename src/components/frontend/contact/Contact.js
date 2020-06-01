@@ -1,20 +1,29 @@
-import React from 'react'
+import React from 'react';
 
-import SubComponentWrapper from '../util/SubComponentWrapper'
-import ComponentWrapper from '../util/ComponentWrapper'
+import SubComponentWrapper from '../util/SubComponentWrapper';
+import ComponentWrapper from '../util/ComponentWrapper';
 
-import ContactForm from './util/ContactForm'
-import ContactInfo from './util/ContactInfos'
+import ContactForm from './util/ContactForm';
+import ContactInfo from './util/ContactInfos';
 
 import {
     Grid
-} from '@material-ui/core'
+} from '@material-ui/core';
 
 import {
     makeStyles
-} from '@material-ui/core/styles'
+} from '@material-ui/core/styles';
 
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'react-responsive';
+
+import Loader from '../loader/Loader';
+
+import {
+    useQuery
+} from '@apollo/react-hooks';
+import {
+    FETCH_CONTACT_GENERAL_QUERY
+} from '../../../graphql/querys/index';
 
 const useStyles = makeStyles(theme => ({
     paddingLeft: {
@@ -41,37 +50,53 @@ const useStyles = makeStyles(theme => ({
 
 
 export default ({theme}) => {
-    const classes = useStyles(theme)
-    const isVerticalMobile = useMediaQuery({query: '(max-width: 600px)'})
+    const classes = useStyles(theme);
+    const {loading, data} = useQuery(FETCH_CONTACT_GENERAL_QUERY);
+    const isVerticalMobile = useMediaQuery({query: '(max-width: 600px)'});
+    if(!loading) console.log(data);
     return (
-        <ComponentWrapper
-            title="contact"
-        >
-            <SubComponentWrapper
-                paddingTop
-                paddingBottom
+        !loading ? (
+            <ComponentWrapper
+                title="contact"
             >
-                <Grid
-                    container
-                    className={classes.container}
-                    direction={isVerticalMobile ? "column-reverse" : 'row'}
+                <SubComponentWrapper
+                    paddingTop
+                    paddingBottom
                 >
                     <Grid
-                        item
-                        xs={12} sm={6}
-                        className={classes.paddingRight}
+                        container
+                        className={classes.container}
+                        direction={isVerticalMobile ? "column-reverse" : 'row'}
                     >
-                        <ContactInfo />
+                        <Grid
+                            item
+                            xs={12} sm={6}
+                            className={classes.paddingRight}
+                        >
+                            <ContactInfo
+                                email={data.getGeneral.email}
+                                phone={data.getGeneral.phone}
+                                adressStreet={data.getGeneral.adressStreet}
+                                adressCity={data.getGeneral.adressCity}
+                                facebook={data.getGeneral.facebook}
+                                linkedin={data.getGeneral.linkedin}
+                                instagram={data.getGeneral.instagram}   
+                            />
+                        </Grid>
+                        {!!data.getGeneral.email && (
+                            <Grid
+                                item
+                                xs={12} sm={6}
+                                className={classes.paddingLeft}
+                            >
+                                <ContactForm />
+                            </Grid>
+                        )}
                     </Grid>
-                    <Grid
-                        item
-                        xs={12} sm={6}
-                        className={classes.paddingLeft}
-                    >
-                        <ContactForm />
-                    </Grid>
-                </Grid>
-            </SubComponentWrapper>
-        </ComponentWrapper>
+                </SubComponentWrapper>
+            </ComponentWrapper>
+        ) : (
+            <Loader />
+        )
     )
 }

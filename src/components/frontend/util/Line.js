@@ -28,11 +28,12 @@ const config = {
 const useStyles = makeStyles(theme => ({
     container: {
         width: '100%',
-        height: 2
+        height: 2,
+        margin: theme.spacing(1, 0)
     },
     line: {
         height: '100%',
-        backgroundColor: theme.palette.secondaryColor
+        backgroundColor: theme.palette.secondaryColor,
     }
 }));
 
@@ -47,8 +48,8 @@ export default ({theme, justifyContent, ...rest}) => {
     });
     return(
         <Box
-            display="flex"
-            justifyContent={justifyContent}
+            // display="flex"
+            // justifyContent={justifyContent}
             className={classes.container}
             {...rest}
         >

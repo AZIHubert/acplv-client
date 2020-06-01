@@ -1,7 +1,4 @@
-import React, {
-    useEffect,
-    useState
-} from 'react';
+import React from 'react';
 import {
     Route,
     Switch,
@@ -15,7 +12,6 @@ import Home from './home/Home';
 import About from './about/About';
 import Project from './projects/Projects';
 import Contact from './contact/Contact';
-import Loader from './loader/Loader';
 import NotFound from '../notFound/NotFound';
 
 import {
@@ -29,29 +25,19 @@ const useStyles = makeStyles(() => ({
 }))
 
 export default () => {
-    const classes = useStyles()
-    const [isLoading, setLoading] = useState(true)
-    useEffect(() => {
-        setTimeout(() => setLoading(false), 2000);
-    });
+    const classes = useStyles();
     return (
         <div className={classes.container}>
-            {isLoading ?
-                <Loader />
-            :
-                <>
-                    <Navbar />
-                    <Mouse />
-                    <Switch>
-                        <Route exact path={'/'} component={Home} />
-                        <Route path={'/home'} render={() => (<Redirect to="/" />)} />
-                        <Route path={'/about'} component={About} />
-                        <Route path={'/projects'} component={Project} />
-                        <Route path={'/contact'} component={Contact} />
-                        <Route path="*" component={NotFound} />
-                    </Switch>
-                </>
-            }
+            <Navbar />
+            <Mouse />
+            <Switch>
+                <Route exact path={'/'} component={Home} />
+                <Route path={'/home'} render={() => (<Redirect to="/" />)} />
+                <Route path={'/about'} component={About} />
+                <Route path={'/projects'} component={Project} />
+                <Route path={'/contact'} component={Contact} />
+                <Route path="*" component={NotFound} />
+            </Switch>
         </div>
     );
 };

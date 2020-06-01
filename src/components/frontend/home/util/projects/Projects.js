@@ -1,21 +1,12 @@
 import React from 'react';
 
-import {
-    useQuery
-} from '@apollo/react-hooks';
-
-import {
-    FETCH_FRONT_PROJECTS_QUERY
-} from '../../../../../graphql/querys/index';
-
 import SubComponentWrapper from '../../../util/SubComponentWrapper';
 import ProjectList from '../../../util/ProjectList';
 
 
-export default () => {
-    const {loading, data} = useQuery(FETCH_FRONT_PROJECTS_QUERY);
+export default ({projects}) => {
     return (
-        (!loading && data.getProjects) && (
+        !!projects.length && (
             <SubComponentWrapper
                 paddingTop
                 paddingBottom
@@ -23,7 +14,7 @@ export default () => {
                 subTitle="récents"
             >
                 <ProjectList
-                    projects={data.getProjects}
+                    projects={projects}
                 />
             </SubComponentWrapper>
         )

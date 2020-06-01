@@ -73,23 +73,22 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({filterProjects, theme}) => {
+export default ({filterProjects, theme, usedTypes}) => {
     const classes = useStyles(theme);
-    const isMobile = useMediaQuery({ query: '(max-width: 824px)' });
+    const types = [
+        {title: 'all', _id: 'all'},
+        ...usedTypes
+    ];
+    const [typesLine, setTypesLine] = useState([]);
     const typesContainerRef = useRef(null);
     const allContainerRef = useRef(null);
+    const isMobile = useMediaQuery({ query: '(max-width: 824px)' });
     const onScreen = useOnScreen(typesContainerRef, "-70px 0px 0px 0px", true);
-    const types = [
-        'KAKÉMONOS', 'STICKERS', 'PLAQUES PLEXIGLASS', 'BORNES TACTILES D’EXTÉRIEUR',
-        'RELOOKING VITRINES'
-    ];
-    types.unshift('all');
-    const [typesLine, setTypesLine] = useState([]);
     const setLines = () => {
         const typesContainer = typesContainerRef.current;
-        const typesContainerHeight = typesContainer.getBoundingClientRect().height
-        const typeHeight = allContainerRef.current.getBoundingClientRect().height
-        const numberOfLine = Math.ceil(typesContainerHeight / typeHeight)
+        const typesContainerHeight = typesContainer.getBoundingClientRect().height;
+        const typeHeight = allContainerRef.current.getBoundingClientRect().height;
+        const numberOfLine = Math.ceil(typesContainerHeight / typeHeight);
         setTypesLine([]);
         for(let i = 0; i < numberOfLine; i++){
             setTypesLine(prevState => [...prevState, typeHeight + i*typeHeight])
@@ -103,13 +102,13 @@ export default ({filterProjects, theme}) => {
     const resetFilter = e => {
         typesContainerRef.current.childNodes.forEach(e => e.classList.remove('active'))
         e.target.parentElement.classList.add('active')
-        filterProjects()
-    }
+        filterProjects('all')
+    };
     const handleFilter = (type, e) => {
         typesContainerRef.current.childNodes.forEach(e => e.classList.remove('active'))
         e.target.parentElement.classList.add('active')
-        filterProjects()
-    }
+        filterProjects(type)
+    };
     const typesTrail = useTrail(types.length, {
         config,
         opacity: onScreen ? 1 : 0.5,
@@ -155,7 +154,7 @@ export default ({filterProjects, theme}) => {
                     )}
                     {typesTrail.map(({yBox, yTypography,  opacity}, i) => (
                         <AnimatedBox
-                            key={i}
+                            key={types[i]._id}
                             className={`${classes.outerContainer} ${!i ? 'active' : ''}`}
                             style={{
                                 transform: yBox.interpolate(y => `translate3d(0px, -${y}px, 0px)`)
@@ -172,19 +171,19 @@ export default ({filterProjects, theme}) => {
                                         transform: yTypography.interpolate(y => `translate3d(0px, ${y}%, 0px)`)
                                     }}
                                 >
-                                    {types[i]}
+                                    {types[i].title}
                                 </AnimatedTypography>
                             :
                                 <AnimatedTypography
                                     variant="h5"
                                     className={classes.typeItem}
-                                    onClick={e => handleFilter(types[i], e)}
+                                    onClick={e => handleFilter(types[i]._id, e)}
                                     style={{
                                         opacity,
                                         transform: yTypography.interpolate(y => `translate3d(0px, ${y}%, 0px)`)
                                     }}
                                 >
-                                    {types[i]}
+                                    {types[i].title}
                                 </AnimatedTypography>
                             }
                         </AnimatedBox>

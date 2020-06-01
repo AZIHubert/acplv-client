@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 
 import {
     Box
@@ -27,71 +27,97 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default ({theme}) => {
+export default ({
+    email,
+    phone,
+    adressStreet,
+    adressCity,
+    facebook,
+    linkedin,
+    instagram,
+    theme}) => {
     const classes = useStyles(theme)
     return (
-        <Fragment>
-            <Box
-                className={classes.contactContainer}
-            >
-                <Title
-                    variant='body2'
-                    title='téléphone'
-                />
-                <Title
-                    variant='body1'
-                    title='+33.08.11.11.11.11'
-                />
-            </Box>
-            <Box
-                className={classes.contactContainer}
-            >
-                <Title
-                    variant='body2'
-                    title='Email'
-                />
-                <Title
-                    variant='body1'
-                    title='CONTACT@ACPLV.COM'
-                    href='mailto:CONTACT@ACPLV.COM'
-                />
-            </Box>
-            <Box>
-                <Title
-                    variant='body2'
-                    title='adresse'
-                />
-                <Title
-                    variant='body1'
-                    title='11 rue de Besançon'
-                />
-                <Title
-                    variant='body1'
-                    title='75000, Paris'
-                />
-            </Box>
-            <Box
-                className={classes.socialMediaContainer}
-            >
-                <Title
-                    variant='body2'
-                    customClass={classes.socialMedia}
-                    title='Facebook'
-                    href="https://www.facebook.com/AcPlvCommunicationDeProximite"
-                />
-                <Title
-                    variant='body2'
-                    customClass={classes.socialMedia}
-                    title='Linkedin'
-                    href="https://www.linkedin.com/in/meesook-souryadhay-1b660240/"
-                />
-                <Title
-                    variant='body2'
-                    customClass={classes.socialMedia}
-                    title='Instagram'
-                    href="https://www.instagram.com/"
-                />
-            </Box>
-        </Fragment>
+        <>
+            {!!phone && (
+                <Box
+                    className={classes.contactContainer}
+                >
+                    <Title
+                        variant='body2'
+                        title='téléphone'
+                    />
+                    <Title
+                        variant='body1'
+                        title={phone}
+                    />
+                </Box>
+            )}
+            {!!email && (
+                <Box
+                    className={classes.contactContainer}
+                >
+                    <Title
+                        variant='body2'
+                        title='Email'
+                    />
+                    <Title
+                        variant='body1'
+                        title={email}
+                        href={`mailto:${email}`}
+                    />
+                </Box>
+            )}
+            {(!!adressStreet || !!adressCity) && (
+                <Box>
+                    <Title
+                        variant='body2'
+                        title='adresse'
+                    />
+                    <Title
+                        variant='body1'
+                        title={adressStreet}
+                    />
+                    <Title
+                        variant='body1'
+                        title={adressCity}
+                    />
+                </Box>
+            )}
+            {(
+                facebook.isActive ||
+                instagram.isActive ||
+                linkedin.isActive
+            ) && (
+                <Box
+                    className={classes.socialMediaContainer}
+                >
+                    {facebook.isActive && (
+                        <Title
+                            variant='body2'
+                            customClass={classes.socialMedia}
+                            title='Facebook'
+                            href={facebook.link}
+                        />
+                    )}
+                    {linkedin.isActive && (
+                        <Title
+                            variant='body2'
+                            customClass={classes.socialMedia}
+                            title='Linkedin'
+                            href={linkedin.link}
+                        />
+                    )}
+                    {instagram.isActive && (
+                        <Title
+                            variant='body2'
+                            customClass={classes.socialMedia}
+                            title='Instagram'
+                            href={instagram.link}
+                        />
+                    )}
+                </Box>
+            )}
+        </>
     );
 };

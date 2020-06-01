@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default ({theme}) => {
+export default ({email, theme}) => {
     const classes = useStyles(theme)
     const [showEmail, setShowEmail] = useState(false)
     useEffect(() => {
@@ -50,7 +50,7 @@ export default ({theme}) => {
                     >
                         let's chat!
                     </Typography>
-                    {showEmail && <Email /> }
+                    {showEmail && <Email email={email} /> }
                 </Box>
             </Box>
         </Box>

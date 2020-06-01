@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-export default ({theme}) => {
+export default ({theme, whoAreWeExist}) => {
     const classes = useStyles(theme);
     const isMobile = useMediaQuery({ query: '(max-width: 824px)' });
     return (
@@ -88,45 +88,47 @@ export default ({theme}) => {
                 </div>
                 <HeaderImage />
                 
-                {isMobile ? (
-                    <Box
-                        className={`${classes.whoAreWeContainer} ${classes.paddingBottom}`}
-                    >
-                        <Title
-                            variant="h1"
-                            title="qui sommes nous ?"
-                        />
-                    </Box>
-                ) : (
-                    <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        className={`${classes.whoAreWeContainer} ${classes.paddingBottom}`}
-                    >
-                            <Title
-                                variant="h1"
-                                title="qui"
-                            />
+                {whoAreWeExist && (
+                    isMobile ? (
                         <Box
-                            flexGrow="3"
-                            alignSelf="flex-end"
-                            textAlign="center"
+                            className={`${classes.whoAreWeContainer} ${classes.paddingBottom}`}
                         >
                             <Title
                                 variant="h1"
-                                title="sommes"
+                                title="qui sommes nous ?"
                             />
                         </Box>
+                    ) : (
                         <Box
-                            flexGrow="2"
-                            textAlign="right"
+                            display="flex"
+                            justifyContent="space-between"
+                            className={`${classes.whoAreWeContainer} ${classes.paddingBottom}`}
                         >
-                            <Title
-                                variant="h1"
-                                title="nous ?"
-                            />
+                                <Title
+                                    variant="h1"
+                                    title="qui"
+                                />
+                            <Box
+                                flexGrow="3"
+                                alignSelf="flex-end"
+                                textAlign="center"
+                            >
+                                <Title
+                                    variant="h1"
+                                    title="sommes"
+                                />
+                            </Box>
+                            <Box
+                                flexGrow="2"
+                                textAlign="right"
+                            >
+                                <Title
+                                    variant="h1"
+                                    title="nous ?"
+                                />
+                            </Box>
                         </Box>
-                    </Box>
+                    )
                 )}
             </div>
         </SubComponentWrapper>

@@ -10,12 +10,6 @@ import {
 } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-    outerContainer: {
-        paddingBottom: props => props.isLast ? '' : theme.spacing(1),
-    },
-    innerContainer: {
-        paddingBottom: props => props.isLast ? '' : theme.spacing(1),
-    },
     title: {
         fontFamily: 'GillSansBold',
         fontSize: '4rem',
@@ -38,18 +32,14 @@ export default (props) => {
     const {service} = props;
     return (
         <Box
-            className={classes.outerContainer}
+            className={classes.container}
         >
-            <Box
-                className={classes.innerContainer}
-            >
-                <Title
-                    variant="h2"
-                    title={service.title}
-                    customClass={classes.title}
-                    lineBottom
-                />
-            </Box>
+            <Title
+                variant="h2"
+                title={service.title}
+                customClass={classes.title}
+                lineBottom
+            />
         </Box>
     )
 }

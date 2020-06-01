@@ -1,12 +1,15 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment} from 'react'
 
-import SubComponentWrapper from '../../../util/SubComponentWrapper'
+import {
+    Box,
+    Typography
+} from '@material-ui/core';
 
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
+import {
+    makeStyles
+} from '@material-ui/core/styles'
 
-import makeStyles from '@material-ui/core/styles/makeStyles'
-
+import SubComponentWrapper from '../../../util/SubComponentWrapper';
 import Line from '../../../util/Line';
 
 const useStyles = makeStyles(theme => ({
@@ -70,102 +73,71 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-export default ({theme}) => {
-    const classes = useStyles(theme)
-    const [clients] = useState([{
-        title: 'histoire d\'or',
-        index: 0
-    }, {
-        title: 'nike',
-        index: 1
-    }, {
-        title: 'fossile',
-        index: 2
-    },
-    {
-        title: 'tommy hilfiger',
-        index: 3
-    }, {
-        title: 'festina',
-        index: 4
-    }, {
-        title: 'hyatt',
-        index: 5
-    }, {
-        title: 'gucci',
-        index: 6
-    }, {
-        title: 'lacoste',
-        index: 7
-    }, {
-        title: 'hugo boss',
-        index: 8
-    }, {
-        title: 'calvin klein',
-        index: 9
-    }
-    ])
+export default ({clients, theme}) => {
+    const classes = useStyles(theme);
     return (
-        <SubComponentWrapper
-            title="clients"
-            paddingTop
-            paddingBottom
-        >
-            <Line />
-            <Box
-                className={classes.container}
+        !!clients.length && (
+            <SubComponentWrapper
+                title="clients"
+                paddingTop
+                paddingBottom
             >
+                <Line />
                 <Box
-                    display="flex"
-                    className={classes.textContainer}
+                    className={classes.container}
                 >
                     <Box
                         display="flex"
-                        className={`text ${classes.textOne}`}
+                        className={classes.textContainer}
                     >
-                        {clients.map(client => (
-                            <Fragment key={client.index}>
-                                <Typography
-                                    variant="h3"
-                                    className={classes.text}
-                                >
-                                    {client.title.replace(/\s/g, String.fromCharCode(160))}
-                                </Typography>
-                                <Typography
-                                    variant="h3"
-                                    className={`${classes.separator} ${classes.text}`}
-                                >
-                                    * 
-                                </Typography>
-                            </Fragment>
-                        ))}
-                    </Box>
-                    <Box
-                        display="flex"
-                        className={`text ${classes.textTwo}`}
-                    >
-                        {clients.map(client => (
-                            <Fragment key={client.index}>
-                                <Typography
-                                    variant="h3"
-                                    className={classes.text}
-                                >
-                                    {client.title.replace(/\s/g, String.fromCharCode(160))}
-                                </Typography>
-                                <Typography
-                                    variant="h3"
-                                    className={`${classes.separator} ${classes.text}`}
-                                >
-                                    * 
-                                </Typography>
-                            </Fragment>
-                        ))}
+                        <Box
+                            display="flex"
+                            className={`text ${classes.textOne}`}
+                        >
+                            {clients.map(client => (
+                                <Fragment key={client._id}>
+                                    <Typography
+                                        variant="h3"
+                                        className={classes.text}
+                                    >
+                                        {client.title.replace(/\s/g, String.fromCharCode(160))}
+                                    </Typography>
+                                    <Typography
+                                        variant="h3"
+                                        className={`${classes.separator} ${classes.text}`}
+                                    >
+                                        * 
+                                    </Typography>
+                                </Fragment>
+                            ))}
+                        </Box>
+                        <Box
+                            display="flex"
+                            className={`text ${classes.textTwo}`}
+                        >
+                            {clients.map(client => (
+                                <Fragment key={client._id   }>
+                                    <Typography
+                                        variant="h3"
+                                        className={classes.text}
+                                    >
+                                        {client.title.replace(/\s/g, String.fromCharCode(160))}
+                                    </Typography>
+                                    <Typography
+                                        variant="h3"
+                                        className={`${classes.separator} ${classes.text}`}
+                                    >
+                                        * 
+                                    </Typography>
+                                </Fragment>
+                            ))}
+                        </Box>
                     </Box>
                 </Box>
-            </Box>
-            <Line
-                justifyContent='flex-end'
-            />
-        </SubComponentWrapper>
-    )
-}
+                <Line
+                    justifyContent='flex-end'
+                />
+            </SubComponentWrapper>
+        )
+    );
+};

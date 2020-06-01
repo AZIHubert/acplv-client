@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default ({theme}) => {
+export default ({about, theme}) => {
     const classes = useStyles(theme)
     return (
         <SubComponentWrapper
@@ -34,25 +34,10 @@ export default ({theme}) => {
             >
                 <Grid item xs={12} md={9}>
                     <ParagraphAnimate
-                        variant="body2"
-                        customClass={classes.text}
-                    >
-                        NOUS TRANSFORMONS L’IMAGE DE VOS LOCAUX,
-                        COMMERCES ET VITRINES POUR OPTIMISER VOTRE IMPACT VISUEL.
-                    </ParagraphAnimate>
-                    <ParagraphAnimate
                         variant="body1"
                         customClass={classes.text}
                     >
-                        ACPLV EST UNE SOCIÉTÉ DE SOLUTION SIGNALÉTIQUE CRÉÉE EN 1995,
-                        NOUS MAÎTRISONS TOUS LES MAILLONS DE LA CHAINE,
-                        DE LA CONCEPTION À LA PRODUCTION JUSQU’À LA MISE EN PLACE SUR SITE ET
-                        LA MAINTENANCE DE VOS SUPPORTS.
-                        L’ÉQUIPE DE CRÉATEURS RÉPONDENT AU BESOINS LES PLUS EXIGEANTS GRÂCE
-                        À LEUR RÉACTIVITÉ DE DÉPLOIEMENT DES SOLUTIONS DE HAUTE QUALITÉ D’IMPRESSION,
-                        QUI S’ADAPTENT А TOUTES LES SURFACES.
-                        QU’IL S’AGISSE DE PLV STANDARD ADAPTÉE OU PERSONNALISÉE,
-                        OU DE SOLUTIONS SPÉCIFIQUES CRÉÉES SUR MESURE…
+                        {about}
                     </ParagraphAnimate>
                 </Grid>
             </Grid>

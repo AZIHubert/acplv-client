@@ -1,17 +1,20 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {
     useQuery
 } from '@apollo/react-hooks';
 
 import {
-    FETCH_FRONT_PROJECTS_QUERY
+    FETCH_FRONT_PROJECTS_QUERY,
+    FETCH_USED_TYPES
 } from '../../../graphql/querys/index';
 
 import SubComponentWrapper from '../util/SubComponentWrapper'
 import ComponentWrapper from '../util/ComponentWrapper'
 import ProjectList from '../util/ProjectList';
 import Types from './util/Types';
+
+import Loader from '../loader/Loader';
 
 import {
     Box
@@ -29,13 +32,34 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default ({theme}) => {
+    const [filteredProjects, setFilteredProjects] = useState([]);
     const classes = useStyles(theme);
-    const {loading, data} = useQuery(FETCH_FRONT_PROJECTS_QUERY);
-    const filterProjects = () => {
-        console.log('filtered');
+    const {loading: loadingProjects, data: dataProjects} = useQuery(FETCH_FRONT_PROJECTS_QUERY);
+    const {loading: loadingTypes, data: dataTypes} = useQuery(FETCH_USED_TYPES);
+    useEffect(() => {
+        if(!loadingProjects) {
+            const {getProjects} = dataProjects
+            setFilteredProjects([
+                ...getProjects
+            ]);
+        }
+      }, [dataProjects, loadingProjects])
+    const filterProjects = _id => {
+        if(_id === 'all'){
+            setFilteredProjects([
+                ...dataProjects.getProjects
+            ]);
+        } else {
+            setFilteredProjects([
+                ...dataProjects.getProjects.filter(project => project._id !== _id)
+            ]);
+        }
     };
     return (
-        (!loading && data.getProjects) && (
+        (!loadingProjects &&
+         !loadingTypes &&
+          dataProjects.getProjects &&
+          dataTypes.getUsedTypes) ? (
             <ComponentWrapper
                 title="projets"
             >
@@ -45,15 +69,20 @@ export default ({theme}) => {
                     <Box
                         className={classes.wrapper}
                     >
-                        <Types
-                            filterProjects={filterProjects}
-                        />
+                        {(dataTypes.getUsedTypes > 1) && (
+                            <Types
+                                filterProjects={filterProjects}
+                                usedTypes={dataTypes.getUsedTypes}
+                            />
+                        )}
                         <ProjectList
-                            projects={data.getProjects}
+                            projects={filteredProjects}
                         />
                     </Box>
                 </SubComponentWrapper>
             </ComponentWrapper>
+        ) : (
+            <Loader />
         )
     );
 };

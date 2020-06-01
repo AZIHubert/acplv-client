@@ -11,26 +11,27 @@ const useStyles = makeStyles(theme => ({
         paddingBottom: props => props.isLast ? '' : theme.spacing(5)
     },
     title: {
-        paddingBottom: theme.spacing(3)
+        paddingBottom: theme.spacing(3),
+        fontSize: '3rem'
     }
 }))
 
 export default (props) => {
-    const {service} = props
-    const classes = useStyles(props)
+    const classes = useStyles(props);
+    const {serviceCat} = props;
     return (
         <div className={classes.container}>
             <Typography
                 variant="h2"
                 className={classes.title}
             >
-                {service.title}
+                {serviceCat.title}
             </Typography>
-            {service.items.map((item, i) => (
+            {serviceCat.services.map((service, i) => (
                 <AboutServicesItem
-                    title={item.title}
-                    key={item.index}
-                    isLast={i === service.items.length - 1}
+                    title={service.title}
+                    key={service._id}
+                    isLast={i === serviceCat.services.length - 1}
                 />
             ))}
         </div>

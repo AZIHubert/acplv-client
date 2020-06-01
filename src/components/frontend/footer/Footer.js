@@ -8,9 +8,16 @@ import {
 
 import {
     makeStyles
-} from '@material-ui/core/styles'
+} from '@material-ui/core/styles';
 
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'react-responsive';
+
+import {
+    useQuery
+} from '@apollo/react-hooks';
+import {
+    FETCH_FOOTER_GENERAL_QUERY
+} from '../../../graphql/querys/index';
 
 const useStyles = makeStyles(theme => ({
     absoluteContainer: {
@@ -39,8 +46,9 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default ({theme}) => {
-    const classes = useStyles(theme)
-    const isVerticalMobile = useMediaQuery({query: '(max-width: 600px)'})
+    const classes = useStyles(theme);
+    const {loading, data} = useQuery(FETCH_FOOTER_GENERAL_QUERY);
+    const isVerticalMobile = useMediaQuery({query: '(max-width: 600px)'});
     return (
         <Box
             display="flex"
@@ -69,46 +77,54 @@ export default ({theme}) => {
                     flexDirection="column"
                     justifyContent="center"
                 >
-                    <Box
-                        display="flex"
-                    >
-                        <Typography
-                            variant="body1"
-                            className={`${classes.footerText} ${classes.socialMedia}`}
+                    {!loading && (
+                        <Box
+                            display="flex"
                         >
-                            <Link
-                                href="https://www.facebook.com/AcPlvCommunicationDeProximite"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                {isVerticalMobile ? 'Fa' : 'facebook'}
-                            </Link>
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            className={`${classes.footerText} ${classes.socialMedia}`}
-                        >
-                            <Link
-                                href="https://www.linkedin.com/in/meesook-souryadhay-1b660240/"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                {isVerticalMobile ? 'Li' : 'LinkedIn'}
-                            </Link>
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            className={classes.footerText}
-                        >
-                            <Link
-                                href="https://www.instagram.com/"
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                {isVerticalMobile ? 'In' : 'Instagram'}
-                            </Link>
-                        </Typography>
-                    </Box>
+                            {data.getGeneral.facebook.isActive && (
+                                <Typography
+                                    variant="body1"
+                                    className={`${classes.footerText} ${classes.socialMedia}`}
+                                >
+                                    <Link
+                                        href={`${data.getGeneral.facebook.link}`}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        {isVerticalMobile ? 'Fa' : 'facebook'}
+                                    </Link>
+                                </Typography>
+                            )}
+                            {data.getGeneral.linkedin.isActive && (
+                                <Typography
+                                    variant="body1"
+                                    className={`${classes.footerText} ${classes.socialMedia}`}
+                                >
+                                    <Link
+                                        href={`${data.getGeneral.linkedin.link}`}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        {isVerticalMobile ? 'Li' : 'LinkedIn'}
+                                    </Link>
+                                </Typography>
+                            )}
+                            {data.getGeneral.instagram.isActive && (
+                                <Typography
+                                    variant="body1"
+                                    className={classes.footerText}
+                                >
+                                    <Link
+                                        href={`${data.getGeneral.instagram.link}`}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        {isVerticalMobile ? 'In' : 'Instagram'}
+                                    </Link>
+                                </Typography>
+                            )}
+                        </Box>
+                    )}
                 </Box>
             </Box>
         </Box>

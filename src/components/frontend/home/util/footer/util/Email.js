@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-export default ({theme}) => {
+export default ({email, theme}) => {
     const classes = useStyles(theme)
     return (
         <Textfit
@@ -49,10 +49,10 @@ export default ({theme}) => {
             max={10000}
         >
             <a
-                href="mailto:contact@acplv.com"
+                href={`mailto:${email}`}
                 className={classes.contactLink}
             >
-                contact@acplv.com
+                {email}
             </a>
         </Textfit>
     )
