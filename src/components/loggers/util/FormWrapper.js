@@ -14,10 +14,10 @@ import {
 
 const useStyles = makeStyles(theme => ({
     formContainer: {
-        maxWidth: 400,
+        maxWidth: 600,
         margin: theme.spacing(4, 0),
         border: `1px solid ${theme.palette.secondaryColor}`,
-        padding: theme.spacing(2)
+        padding: theme.spacing(5)
     },
     returnButton: {
         padding: theme.spacing(1),
@@ -48,13 +48,18 @@ export default ({handleSubmit, theme, title, children}) => {
                 >
                     {title}
                 </Typography>
-                <form
-                    noValidate
-                    onSubmit={handleSubmit}
-                    className={classes.formContainer}
+                <Box
+                    display="flex"
+                    justifyContent="center"
                 >
-                    {children}
-                </form>
+                    <form
+                        noValidate
+                        onSubmit={handleSubmit}
+                        className={classes.formContainer}
+                    >
+                        {children}
+                    </form>
+                </Box>
                 <Box
                     display="flex"
                     justifyContent="flex-end"

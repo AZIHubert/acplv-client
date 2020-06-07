@@ -5,7 +5,6 @@ import SubComponentWrapper from '../../../util/SubComponentWrapper';
 import Service from './util/Service';
 
 export default ({serviceCats}) => {
-    console.log(serviceCats)
     return (
         <SubComponentWrapper
             title="nos services"

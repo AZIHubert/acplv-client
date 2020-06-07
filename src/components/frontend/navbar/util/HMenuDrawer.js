@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+import { AuthContext } from '../../../../context/AuthContext';
 
 import {
     Box,
@@ -76,13 +78,21 @@ const useStyles = makeStyles(theme => ({
             easing: theme.transitions.easing.easeIn,
             duration: theme.transitions.duration.complex
         }),
+    },
+    logout: {
+        fontFamily: 'GillSansBold'
     }
 }));
 
 export default ({setOpen, animatedProps, theme}) => {
     const classes = useStyles(theme);
+    const {user, logout} = useContext(AuthContext);
     const handleClick = () => setOpen(false);
     const {opacity, yBox, yTypography} = animatedProps;
+    const logoutAndClose = () => {
+        setOpen(false);
+        logout();
+    }
     return (
         <AnimatedBox
             className={classes.container}
@@ -195,6 +205,51 @@ export default ({setOpen, animatedProps, theme}) => {
                             </AnimatedTypography>
                         </AnimatedBox>
                     </li>
+                    {user && (
+                        <>
+                            <li
+                                className={classes.linkContainer}
+                            >
+                                <AnimatedBox
+                                    className={classes.animationContainer}
+                                    style={{transform: yBox.interpolate(y => `translate3d(0px, ${y}%, 0)`)}}
+                                >
+                                    <AnimatedTypography
+                                        variant="h4"
+                                        component={NavLink}
+                                        to="/backend"
+                                        exact
+                                        onClick={handleClick}
+                                        className={classes.link}
+                                        style={{
+                                            transform: yTypography.interpolate(y => `translate3d(0px, ${y}%, 0px)`)
+                                        }}
+                                    >
+                                        backend
+                                    </AnimatedTypography>
+                                </AnimatedBox>
+                            </li>
+                            <li
+                                className={classes.linkContainer}
+                            >
+                                <AnimatedBox
+                                    className={classes.animationContainer}
+                                    style={{transform: yBox.interpolate(y => `translate3d(0px, ${y}%, 0)`)}}
+                                >
+                                    <AnimatedTypography
+                                        variant="h4"
+                                        onClick={logoutAndClose}
+                                        className={`${classes.logout} ${classes.link}`}
+                                        style={{
+                                            transform: yTypography.interpolate(y => `translate3d(0px, ${y}%, 0px)`)
+                                        }}
+                                    >
+                                        logout
+                                    </AnimatedTypography>
+                                </AnimatedBox>
+                            </li>
+                        </>
+                    )}
                 </ul>
             </Box>
         </AnimatedBox>

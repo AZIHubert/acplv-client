@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import Logo from '../../../res/images/logo.png';
 
 import {
     Link
@@ -39,6 +40,10 @@ const useStyles = makeStyles(theme => ({
         width: '100%',
         height: '100%',
         borderBottom: `2px solid ${theme.palette.tertiaryColor}`
+    },
+    logotype: {
+        height: 50,
+        width: 'auto'
     }
 }))
 
@@ -59,13 +64,15 @@ export default (theme) => {
                         flexDirection="column"
                         justifyContent="center"
                     >
-                        <Typography
-                            variant="h4"
-                            component={Link}
+                        <Link
                             to="/"
                         >
-                            acplv
-                        </Typography>
+                            <img
+                                className={classes.logotype}
+                                src={Logo}
+                                alt="logotype"
+                            />
+                        </Link>
                     </Box>
                     <Box
                         display="flex"

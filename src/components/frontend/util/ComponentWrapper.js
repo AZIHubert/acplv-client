@@ -22,9 +22,6 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down('xs')]: {
             margin: theme.spacing(0, 1)
         },
-    },
-    title: {
-        fontSize: '6rem'
     }
 }))
 

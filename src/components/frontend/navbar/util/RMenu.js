@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react';
+
+import { AuthContext } from '../../../../context/AuthContext';
 
 import {
     NavLink
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 import {
     Box,
-    Typography
-} from '@material-ui/core'
+    Typography,
+    Link
+} from '@material-ui/core';
 
 import {
     makeStyles
@@ -35,7 +38,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default ({theme}) => {
-    const classes = useStyles(theme)
+    const classes = useStyles(theme);
+    const {user, logout} = useContext(AuthContext);
     return (
         <Box>
             <Typography
@@ -71,6 +75,26 @@ export default ({theme}) => {
             >
                 contact
             </Typography>
+            {user && (
+                <>
+                    <Typography
+                        variant="h4"
+                        component={NavLink}
+                        to="/backend"
+                        className={classes.menuItem}
+                    >
+                        backend
+                    </Typography>
+                    <Typography
+                        variant="h4"
+                        component={Link}
+                        onClick={logout}
+                        className={classes.menuItem}
+                    >
+                        logout
+                    </Typography>
+                </>
+            )}
         </Box>
     )
 }

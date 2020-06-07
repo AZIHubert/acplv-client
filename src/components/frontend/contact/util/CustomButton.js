@@ -44,6 +44,9 @@ const useStyles = makeStyles(theme => ({
     textContainer: {
         overflow: 'hidden',
         height: 138
+    },
+    text: {
+        fontSize: '1.4rem'
     }
 }))
 
@@ -94,6 +97,7 @@ export default ({text, loading, theme}) => {
                     <AnimatedTypography
                         key={key}
                         variant="body1"
+                        className={classes.text}
                         style={
                             props
                         }

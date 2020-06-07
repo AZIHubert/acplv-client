@@ -4,14 +4,17 @@ import RootPage from './components/RootPage';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import HMenuContextProvider from './context/HMenuContext';
+import {AuthProvider} from './context/AuthContext';
 
 function App() {
   return (
     <Router>
       <HMenuContextProvider>
-        <div className="App">
-          <RootPage />
-        </div>
+        <AuthProvider>
+          <div className="App">
+            <RootPage />
+          </div>
+        </AuthProvider>
       </HMenuContextProvider>
     </Router>
   );

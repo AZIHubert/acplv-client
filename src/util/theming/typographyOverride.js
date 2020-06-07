@@ -5,7 +5,7 @@ export default (theme) => ({
             [theme.breakpoints.up('1350')]: {
                 fontSize: '9rem',
             },
-            fontSize: '4.8rem',
+            fontSize: '5rem',
             [theme.breakpoints.down('824')]: {
                 fontSize: '3rem',
             },
@@ -20,7 +20,7 @@ export default (theme) => ({
         },
         h2: {
             textTransform: 'uppercase',
-            fontSize: '2rem',
+            fontSize: '4.5rem',
             color: theme.palette.tertiaryColor,
             '&::selection': {
                 backgroundColor: theme.palette.tertiaryColor,
@@ -76,12 +76,18 @@ export default (theme) => ({
             },
         },
         body1: {
-            fontSize: '1.4rem',
+            fontSize: '3rem',
+            [theme.breakpoints.down('lg')]: {
+                fontSize: '2.5rem',
+            },
+            [theme.breakpoints.down('md')]: {
+                fontSize: '2.25rem',
+            },
             [theme.breakpoints.down('sm')]: {
-                fontSize: '0.9rem',
+                fontSize: '2rem',
             },
             [theme.breakpoints.down('xs')]: {
-                fontSize: '0.8rem',
+                fontSize: '1.5rem',
             },
             textTransform: 'uppercase',
             '&::selection': {
@@ -90,15 +96,18 @@ export default (theme) => ({
             }
         },
         body2: {
-            fontSize: '1.4rem',
+            fontSize: '3rem',
+            [theme.breakpoints.down('lg')]: {
+                fontSize: '2.5rem',
+            },
             [theme.breakpoints.down('md')]: {
-                fontSize: '1.2rem',
+                fontSize: '2.25rem',
             },
             [theme.breakpoints.down('sm')]: {
-                fontSize: '0.9rem',
+                fontSize: '2rem',
             },
             [theme.breakpoints.down('xs')]: {
-                fontSize: '0.8rem',
+                fontSize: '1.5rem',
             },
             color: theme.palette.tertiaryColor,
             textTransform: 'uppercase',

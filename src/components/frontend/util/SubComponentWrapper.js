@@ -27,14 +27,18 @@ const useStyles = makeStyles(theme => ({
     },
     title: {
         [theme.breakpoints.up('1350')]: {
-            fontSize: '4rem',
-        }
+            fontSize: '7rem',
+        },
+        fontSize: '5.5rem',
+        [theme.breakpoints.down('824')]: {
+            fontSize: '3rem',
+        },
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '2.2rem',
+        },
     },
     subTitle: {
-        [theme.breakpoints.up('1350')]: {
-            fontSize: '4rem',
-        },
-        paddingLeft: theme.spacing(15),
+        paddingLeft: theme.spacing(10),
         [theme.breakpoints.down('xs')]: {
             paddingLeft: theme.spacing(2),
         }
@@ -68,7 +72,7 @@ export default (props) => {
                 >
                     <Title
                         title={subTitle}
-                        className={classes.subTitle}
+                        className={`${classes.title} ${classes.subTitle}`}
                         variant='h1'
                     />
                 </div>}

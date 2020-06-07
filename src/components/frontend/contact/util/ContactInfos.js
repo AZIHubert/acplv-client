@@ -58,12 +58,8 @@ export default ({
                     className={classes.contactContainer}
                 >
                     <Title
-                        variant='body2'
-                        title='Email'
-                    />
-                    <Title
                         variant='body1'
-                        title={email}
+                        title='Email'
                         href={`mailto:${email}`}
                     />
                 </Box>

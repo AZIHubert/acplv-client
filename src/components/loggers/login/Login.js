@@ -1,6 +1,12 @@
 import React, {
-    useState
+    useState,
+    useContext
 } from 'react';
+
+import { AuthContext } from '../../../context/AuthContext';
+
+import { useMutation } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
 import {
     NavLink
@@ -13,18 +19,19 @@ import {
     Typography
 } from '@material-ui/core';
 
+import FormWrapper from '../util/FormWrapper';
+
 import {
     makeStyles
-} from '@material-ui/core/styles'
-
-import FormWrapper from '../util/FormWrapper';
+} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     submitButton: {
-        margin: theme.spacing(2, 0)
+        margin: theme.spacing(4, 0)
     },
     signupText: {
-        fontSize: '0.8rem'
+        fontSize: '0.8rem',
+        paddingTop: theme.spacing(1)
     },
     signupLink: {
         color: theme.palette.tertiaryColor,
@@ -32,25 +39,20 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({theme}) => {
+export default ({history, theme}) => {
     const classes = useStyles(theme);
-    const [loginInfo, setLoginInfo] = useState({
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        registerConfirmation: ''
+    const context = useContext(AuthContext);
+    const [signupInfo, setSignupIngo] = useState({
+        emailOrUsername: '',
+        password: ''
     });
     const [errors, setErrors] = useState({
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        registerConfirmation: ''
+        emailOrUsername: '',
+        password: ''
     });
     const handleChange = e => {
-        setLoginInfo({
-            ...loginInfo,
+        setSignupIngo({
+            ...signupInfo,
             [e.target.name]: e.target.value
         });
         setErrors({
@@ -58,15 +60,20 @@ export default ({theme}) => {
             [e.target.name]: ''
         });
     };
+    const [loginUser, {loading}] = useMutation(LOGIN_USER, {
+        update(_, {data: {login: userData}}){
+            context.login(userData);
+            history.push('/');
+        },
+        onError(err){
+            console.log(err.graphQLErrors[0])
+            setErrors(err.graphQLErrors[0].extensions.exception.errors);
+        },
+        variables: signupInfo
+    });
     const handleSubmit = e => {
         e.preventDefault();
-        setLoginInfo({
-            username: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            registerConfirmation: ''
-        });
+        loginUser()
     };
     return (
         <FormWrapper
@@ -75,48 +82,22 @@ export default ({theme}) => {
         >
             <TextField
                 fullWidth
-                label='Username'
-                value={loginInfo.username}
+                label='Username or Email'
+                value={signupInfo.emailOrUsername}
                 onChange={handleChange}
-                name='username'
-                error={!!errors.username}
-                helperText={errors.username}
-            />
-            <TextField
-                fullWidth
-                label='Email'
-                value={loginInfo.email}
-                onChange={handleChange}
-                name='email'
-                error={!!errors.email}
-                helperText={errors.email}
+                name='emailOrUsername'
+                error={!!errors.emailOrUsername}
+                helperText={errors.emailOrUsername}
             />
             <TextField
                 fullWidth
                 label='Password'
-                value={loginInfo.password}
+                value={signupInfo.password}
                 onChange={handleChange}
                 name='password'
+                type="password"
                 error={!!errors.password}
                 helperText={errors.password}
-            />
-            <TextField
-                fullWidth
-                label='Confirm Password'
-                value={loginInfo.confirmPassword}
-                onChange={handleChange}
-                name='confirmPassword'
-                error={!!errors.confirmPassword}
-                helperText={errors.confirmPassword}
-            />
-            <TextField
-                fullWidth
-                label='Register Confirmation'
-                value={loginInfo.registerConfirmation}
-                onChange={handleChange}
-                name='registerConfirmation'
-                error={!!errors.registerConfirmation}
-                helperText={errors.registerConfirmation}
             />
             <Button
                 variant="contained"
@@ -124,7 +105,7 @@ export default ({theme}) => {
                 type="submit"
                 className={classes.submitButton}
             >
-                login
+                {loading ? 'loading' : 'login'}
             </Button>
             <Box>
                 <Typography
@@ -142,4 +123,22 @@ export default ({theme}) => {
             </Box>
         </FormWrapper>
     );
-;}
+};
+
+const LOGIN_USER = gql`
+    mutation signup(
+        $emailOrUsername: String!
+        $password: String!
+    ) {
+        login(
+            emailOrUsername: $emailOrUsername
+            password: $password
+        ){
+            _id
+            email
+            token
+            username
+            createdAt
+        }
+    }
+`;
