@@ -52,8 +52,7 @@ const useStyles = makeStyles(theme => ({
 export default ({theme}) => {
     const classes = useStyles(theme);
     const {loading, data} = useQuery(FETCH_CONTACT_GENERAL_QUERY);
-    const isVerticalMobile = useMediaQuery({query: '(max-width: 600px)'});
-    if(!loading) console.log(data);
+    const isVerticalMobile = useMediaQuery({query: '(max-width: 959.95px)'});
     return (
         !loading ? (
             <ComponentWrapper
@@ -70,7 +69,7 @@ export default ({theme}) => {
                     >
                         <Grid
                             item
-                            xs={12} sm={6}
+                            xs={12} md={6}
                             className={classes.paddingRight}
                         >
                             <ContactInfo
@@ -78,15 +77,15 @@ export default ({theme}) => {
                                 phone={data.getGeneral.phone}
                                 adressStreet={data.getGeneral.adressStreet}
                                 adressCity={data.getGeneral.adressCity}
-                                facebook={data.getGeneral.facebook}
-                                linkedin={data.getGeneral.linkedin}
-                                instagram={data.getGeneral.instagram}   
+                                facebookLink={data.getGeneral.facebookLink}
+                                linkedinLink={data.getGeneral.linkedinLink}
+                                instagramLink={data.getGeneral.instagramLink}   
                             />
                         </Grid>
                         {!!data.getGeneral.email && (
                             <Grid
                                 item
-                                xs={12} sm={6}
+                                xs={12} md={6}
                                 className={classes.paddingLeft}
                             >
                                 <ContactForm />

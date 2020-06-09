@@ -32,9 +32,9 @@ export default ({
     phone,
     adressStreet,
     adressCity,
-    facebook,
-    linkedin,
-    instagram,
+    facebookLink,
+    linkedinLink,
+    instagramLink,
     theme}) => {
     const classes = useStyles(theme)
     return (
@@ -81,35 +81,35 @@ export default ({
                 </Box>
             )}
             {(
-                facebook.isActive ||
-                instagram.isActive ||
-                linkedin.isActive
+                facebookLink ||
+                instagramLink ||
+                linkedinLink
             ) && (
                 <Box
                     className={classes.socialMediaContainer}
                 >
-                    {facebook.isActive && (
+                    {facebookLink && (
                         <Title
                             variant='body2'
                             customClass={classes.socialMedia}
                             title='Facebook'
-                            href={facebook.link}
+                            href={facebookLink}
                         />
                     )}
-                    {linkedin.isActive && (
+                    {linkedinLink && (
                         <Title
                             variant='body2'
                             customClass={classes.socialMedia}
                             title='Linkedin'
-                            href={linkedin.link}
+                            href={linkedinLink}
                         />
                     )}
-                    {instagram.isActive && (
+                    {instagramLink && (
                         <Title
                             variant='body2'
                             customClass={classes.socialMedia}
                             title='Instagram'
-                            href={instagram.link}
+                            href={instagramLink}
                         />
                     )}
                 </Box>

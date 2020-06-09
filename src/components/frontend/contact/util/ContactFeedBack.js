@@ -19,8 +19,6 @@ const AnimatedBox = animated(Box)
 const useStyles = makeStyles(theme => ({
     container: {
         zIndex: 99,
-        
-        
         width: '100%',
     },
     crossContainer: {
@@ -40,7 +38,14 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.primaryColor,
     },
     text: {
-        color: theme.palette.tertiaryColor
+        color: theme.palette.tertiaryColor,
+        fontSize: '2rem',
+        [theme.breakpoints.down('lg')]: {
+            fontSize: '1.75rem',
+        },
+        [theme.breakpoints.down('md')]: {
+            fontSize: '1.5rem',
+        }
     }
 }));
 

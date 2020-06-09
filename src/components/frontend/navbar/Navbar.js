@@ -8,10 +8,7 @@ import {
 import HMenu from './util/HMenu'
 import RMenu from './util/RMenu'
 
-import {
-    Box,
-    Typography
-} from '@material-ui/core'
+import { Box } from '@material-ui/core'
 
 import {
     makeStyles
@@ -49,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 
 export default (theme) => {
     const classes = useStyles(theme)
-    const isVerticalMobile = useMediaQuery({ query: '(max-width: 600px)' })
+    const isVerticalMobile = useMediaQuery({ query: '(max-width: 741px)' })
     return (
         <div className={classes.fixedContainer}>
             <Box

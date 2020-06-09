@@ -66,7 +66,6 @@ export default ({history, theme}) => {
             history.push('/');
         },
         onError(err){
-            console.log(err.graphQLErrors[0])
             setErrors(err.graphQLErrors[0].extensions.exception.errors);
         },
         variables: signupInfo

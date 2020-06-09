@@ -1,7 +1,10 @@
 import React, {
     useState,
     useEffect
-} from 'react'
+} from 'react';
+
+import { useMutation } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
 import CustomTextField from './CustomTextfield';
 import CustomMultilinesField from './CustomMultilinesField';
@@ -15,22 +18,49 @@ import Typography from '@material-ui/core/Typography'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
-    title: {
+    form: {
+        [theme.breakpoints.up('lg')]: {
+            paddingLeft: theme.spacing(8)
+        }
+    },
+    titleContainer: {
         paddingBottom: theme.spacing(1),
         marginBottom: theme.spacing(2),
         borderBottom: `1px solid ${theme.palette.tertiaryColor}`
+    },
+    title: {
+        [theme.breakpoints.down('lg')]: {
+            fontSize: '3rem'
+        },
+        [theme.breakpoints.down('md')]: {
+            fontSize: '2.75rem'
+        },
+        [theme.breakpoints.down('sm')]: {
+            fontSize: '2.5rem'
+        },
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '2.25rem'
+        }
     }
 }))
 
 export default ({theme}) => {
     const classes = useStyles(theme);
-    const [loading, setLoading] = useState(false);
     const [feedbackMessage, setFeedbackMesage] = useState('');
-    const [message, setMessage] = useState({
+    const [errors, setErrors] = useState({
         email: '',
-        object: '',
+        subject: '',
         firstName: '',
         lastName: '',
+        body: ''
+    })
+    const [message, setMessage] = useState({
+        email: '',
+        firstName: '',
+        lastName: '',
+        company: '',
+        phone: '',
+        subject: '',
         body: ''
     });
     const [sending, setSending] = useState(false);
@@ -41,29 +71,43 @@ export default ({theme}) => {
         }, 5000);
     }
     let timerSubmitVar;
-    const timerSubmit = () => {
-        timerSubmitVar = setTimeout(() => {
-            setLoading(false);
-            setMessage({
-                email: '',
-                object: '',
-                firstName: '',
-                lastName: '',
-                body: ''
-            });
+    const [sendEmail, {loading}] = useMutation(SEND_EMAIL, {
+        update(_, {data: {register: userData}}){
             setFeedbackMesage('Votre message à bien été envoyé');
             setSending(true);
-            timerSending()
-        }, 2000);
-    }
+            timerSending();
+            setMessage({
+                email: '',
+                company: '',
+                subject: '',
+                firstName: '',
+                lastName: '',
+                body: '',
+                phone: ''
+            });
+        },
+        onError(err){
+            const userError = err.graphQLErrors[0].extensions.exception.errors
+            setErrors(userError);
+            if(!userError){
+                setFeedbackMesage('Désolé, il y a eu un problème, votre message n\'a pas été envoyé correctement.');
+                setSending(true);
+            }
+        },
+        variables: message
+    });
     const handleSubmit = e => {
         e.preventDefault();
-        if(!loading){
-            setLoading(true);
-            timerSubmit()
-        }
+        console.log(message);
+        if(!loading) sendEmail();
     }
     const handleChange = e => {
+        if(!!errors[e.target.name]){
+            setErrors(prevState => ({
+                ...prevState,
+                [e.target.name]: ''
+            }))
+        }
         if(!loading){
             setMessage({
                 ...message,
@@ -81,16 +125,18 @@ export default ({theme}) => {
         <>
             <Box>
                 <Box
-                    className={classes.title}
+                    className={classes.titleContainer}
                 >
                     <Typography
                         variant="h2"
+                        className={classes.title}
                     >
                         Send us an email
                     </Typography>
                 </Box>
                 <form
                     noValidate
+                    className={classes.form}
                     onSubmit={handleSubmit}
                 >
                     <CustomTextField
@@ -98,6 +144,15 @@ export default ({theme}) => {
                         value={message.email}
                         handleChange={handleChange}
                         name="email"
+                        loading={loading}
+                        error={!!errors.email}
+                        helperText={errors.email}
+                    />
+                    <CustomTextField
+                        label="company"
+                        value={message.company}
+                        handleChange={handleChange}
+                        name="company"
                         loading={loading}
                     />
                     <Grid
@@ -114,6 +169,8 @@ export default ({theme}) => {
                                 handleChange={handleChange}
                                 name="firstName"
                                 loading={loading}
+                                error={!!errors.firstName}
+                                helperText={errors.firstName}
                             />
                         </Grid>
                         <Grid
@@ -126,15 +183,26 @@ export default ({theme}) => {
                                 handleChange={handleChange}
                                 name="lastName"
                                 loading={loading}
+                                error={!!errors.lastName}
+                                helperText={errors.lastName}
                             />
                         </Grid>
                     </Grid>
                     <CustomTextField
-                        label="objet"
-                        value={message.object}
+                        label="phone"
+                        value={message.phone}
                         handleChange={handleChange}
-                        name="object"
+                        name="phone"
                         loading={loading}
+                    />
+                    <CustomTextField
+                        label="objet"
+                        value={message.subject}
+                        handleChange={handleChange}
+                        name="subject"
+                        loading={loading}
+                        error={!!errors.subject}
+                        helperText={errors.subject}
                     />
                     <CustomMultilinesField
                         label="message"
@@ -142,6 +210,8 @@ export default ({theme}) => {
                         handleChange={handleChange}
                         name="body"
                         loading={loading}
+                        error={!!errors.body}
+                        helperText={errors.body}
                     />
                     <CustomButton
                         text="envoyer"
@@ -156,4 +226,29 @@ export default ({theme}) => {
             />
         </>
     )
-}
+};
+
+const SEND_EMAIL = gql`
+    mutation sendEmail(
+        $email: String!
+        $firstName: String!
+        $lastName: String!
+        $company: String!
+        $phone: String!
+        $subject: String!
+        $body: String!
+
+    ) {
+        sendEmail(
+            emailInput: {
+                email: $email
+                firstName: $firstName
+                lastName: $lastName
+                company: $company
+                phone: $phone
+                subject: $subject
+                body: $body
+            }
+        )
+    }
+`;

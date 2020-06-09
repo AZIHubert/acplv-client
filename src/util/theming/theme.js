@@ -83,7 +83,8 @@ export default () => {
     custom: {
       clientsAnimationSpeed: 35,
       navbarHeight: 70,
-      footerHeight: 50
+      footerHeight: 50,
+      drawerWidth: 240
     },
     typography: {
       fontFamily: 'GillSans, Arial'

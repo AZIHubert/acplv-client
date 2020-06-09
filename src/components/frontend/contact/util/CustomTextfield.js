@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default props => {
-    const {label, value, handleChange, name} = props;
+    const {label, value, handleChange, name, error, helperText} = props;
     const classes = useStyles(props)
     return (
         <Box
@@ -38,6 +38,8 @@ export default props => {
                 onChange={handleChange}
                 name={name}
                 className={classes.textField}
+                error={error}
+                helperText={helperText}
             />
         </Box>
     )

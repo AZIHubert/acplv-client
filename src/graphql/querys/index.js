@@ -44,18 +44,9 @@ export const FETCH_ABOUT_GENERAL_QUERY = gql`
 export const FETCH_FOOTER_GENERAL_QUERY = gql`
     {
         getGeneral {
-            instagram {
-                isActive
-                link
-            }
-            facebook {
-                isActive
-                link
-            }
-            linkedin {
-                isActive
-                link
-            }
+            instagramLink 
+            facebookLink
+            linkedinLink
         }
     }
 `;
@@ -66,18 +57,9 @@ export const FETCH_CONTACT_GENERAL_QUERY = gql`
             email
             adressCity
             adressStreet
-            instagram {
-                isActive
-                link
-            }
-            facebook {
-                isActive
-                link
-            }
-            linkedin {
-                isActive
-                link
-            }
+            instagramLink
+            facebookLink
+            linkedinLink
         }
     }
 `;

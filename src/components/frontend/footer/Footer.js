@@ -81,13 +81,13 @@ export default ({theme}) => {
                         <Box
                             display="flex"
                         >
-                            {data.getGeneral.facebook.isActive && (
+                            {data.getGeneral.facebookLink && (
                                 <Typography
                                     variant="body1"
                                     className={`${classes.footerText} ${classes.socialMedia}`}
                                 >
                                     <Link
-                                        href={`${data.getGeneral.facebook.link}`}
+                                        href={`${data.getGeneral.facebookLink}`}
                                         target="_blank"
                                         rel="noreferrer"
                                     >
@@ -95,13 +95,13 @@ export default ({theme}) => {
                                     </Link>
                                 </Typography>
                             )}
-                            {data.getGeneral.linkedin.isActive && (
+                            {data.getGeneral.linkedinLink && (
                                 <Typography
                                     variant="body1"
                                     className={`${classes.footerText} ${classes.socialMedia}`}
                                 >
                                     <Link
-                                        href={`${data.getGeneral.linkedin.link}`}
+                                        href={`${data.getGeneral.linkedinLink}`}
                                         target="_blank"
                                         rel="noreferrer"
                                     >
@@ -109,13 +109,13 @@ export default ({theme}) => {
                                     </Link>
                                 </Typography>
                             )}
-                            {data.getGeneral.instagram.isActive && (
+                            {data.getGeneral.instagramLink && (
                                 <Typography
                                     variant="body1"
                                     className={classes.footerText}
                                 >
                                     <Link
-                                        href={`${data.getGeneral.instagram.link}`}
+                                        href={`${data.getGeneral.instagramLink}`}
                                         target="_blank"
                                         rel="noreferrer"
                                     >

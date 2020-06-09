@@ -30,7 +30,7 @@ export default (theme) => ({
         h3: {
             textTransform: 'uppercase',
             [theme.breakpoints.up('lg')]: {
-                fontSize: '4rem',
+                fontSize: '3.75rem',
             },
             fontSize: '2.4rem',
             [theme.breakpoints.down('824')]: {
