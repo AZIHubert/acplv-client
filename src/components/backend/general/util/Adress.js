@@ -5,12 +5,17 @@ import CustomTextField from '../../util/CustomTextField';
 
 export default () => {
     return (
-        <SubComponentWrapper title="About Us">
+        <SubComponentWrapper title="Adress" borderbottom>
             <CustomTextField
-                name="about"
+                paddingBottom
+                label="Street"
+                name="adressStreet"
                 focused
-                textArea
+            />
+            <CustomTextField
+                label="City"
+                name="adressCity"
             />
         </SubComponentWrapper>
     );
-}
+};

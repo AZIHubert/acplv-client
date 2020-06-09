@@ -7,9 +7,9 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
     textFieldContainer: {
         paddingBottom: props => props.paddingBottom ? theme.spacing(3) : '',
-        width: '50%',
+        width: props => props.fullWidth ?  '100%' : '50%',
         [theme.breakpoints.down('md')]: {
-            width: '100%'
+            width: props => props.fullWidth ?  '100%' : '100%',
         }
     },
     formLabelContainer: {
@@ -23,7 +23,6 @@ const useStyles = makeStyles(theme => ({
 export default (props) => {
     const classes = useStyles(props);
     const {label, name, focused, textArea} = props;
-    console.log(textArea)
     return (
         <Box className={classes.textFieldContainer}>
             {label && <Box className={classes.formLabelContainer}>
