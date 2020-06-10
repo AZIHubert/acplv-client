@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import DeleteProjectsModal from './DeleteProjectsModal';
+import AddProjectsModal from './AddProjectsModal';
 
 import {
     Box,
@@ -18,7 +21,7 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(1, 4),
         marginBottom: theme.spacing(2),
         border: `1px solid ${theme.palette.tertiaryColor}`,
-        borderRadius: 5
+        borderRadius: 25
     },
     editButton: {
         border: `1px solid ${theme.palette.tertiaryColor}`,
@@ -60,7 +63,13 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({title, display}) => {
+export default ({project}) => {
+    const [openDelete, setOpenDelete] = useState(false);
+    const handleOpenDelete = () => setOpenDelete(true);
+    const handleCloseDelete = () => setOpenDelete(false);
+    const [openEdit, setOpenEdit] = useState(false);
+    const handleOpenEdit = () => setOpenEdit(true);
+    const handleCloseEdit = () => setOpenEdit(false);
     const theme = useTheme();
     const classes = useStyles(theme);
     return (
@@ -69,9 +78,11 @@ export default ({title, display}) => {
         >
             <Box display="flex" alignItems="center">
                 <Typography variant="body2">
-                    {title}
+                    {project.title}
                 </Typography>
-                <Button disableRipple className={classes.editButton}>
+                <Button disableRipple className={classes.editButton}
+                    onClick={handleOpenEdit}
+                >
                     <Typography variant="body2" className={classes.editButtonText}>
                         Edit
                     </Typography>
@@ -80,18 +91,28 @@ export default ({title, display}) => {
             <Box display="flex" alignItems="center">
                 <FormControlLabel
                     value="start"
-                    control={<Checkbox color="primary" checked={display} />}
+                    control={<Checkbox color="primary" checked={project.display} />}
                     label="display"
                     labelPlacement="start"
                     className={classes.formControlLabel}
                 />
-                <Box className={classes.iconContainer}>
+                <Box className={classes.iconContainer}
+                    onClick={handleOpenDelete}
+                >
                     <DeleteOutlineIcon className={classes.icon} />
                 </Box>
                 <Box className={classes.iconContainer}>
                     <SwapVertIcon className={classes.icon} />
                 </Box>
             </Box>
+            <DeleteProjectsModal
+                open={openDelete} handleClose={handleCloseDelete}
+                title={project.title} _id={project._id}
+            />
+            <AddProjectsModal
+                open={openEdit} handleClose={handleCloseEdit}
+                project={project}
+            />
         </Box>
     )
 }

@@ -31,8 +31,8 @@ export default () => {
                 className={classes.typesContainer}
             >
                 {!loading ? (
-                    data.getTypes.map(types => (
-                        <SingleTypes id={types._id} title={types.title} key={types._id} />
+                    data.getTypes.map(type => (
+                        <SingleTypes type={type} id={type._id} title={type.title} key={type._id} />
                     ))
                 ) : null}
             </Box>

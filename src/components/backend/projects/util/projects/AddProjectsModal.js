@@ -74,19 +74,58 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({open, handleClose}) => {
+export default ({open, handleClose, project}) => {
     const theme = useTheme();
     const classes = useStyles(theme);
     const {loading, data} = useQuery(FETCH_TYPES_QUERY);
+    const projectId = project ? project._id :  '';
     const [droperText, setDroperText] = useState('Drag \'n\' drop the thumbnail here, or click to select file');
-    const [previewThumbnail, setPreviewThumbnail] = useState('');
+    const [thumbnailChange, setThumbnailChange] = useState(false)
+    const [thumbnail, setThumbnail] = useState({});
+    const [previewThumbnail, setPreviewThumbnail] = useState(
+        project ? project.thumbnailUrl : ''
+    );
+    const [newProject, setNewProject] = useState({
+        title: project ? project.title : '',
+        display: project ? project.display : true,
+        type: project ? project.type._id : ''
+    });
     const onDrop = useCallback(([file]) => {
         if(file.type === 'image/jpeg' || file.type === 'image/png'){
+            setThumbnailChange(true);
+            setThumbnail(file);
             setPreviewThumbnail(URL.createObjectURL(file));
         } else {
             setDroperText('Your file is not an image')
         }
     }, []);
+    const handleChange = e => {
+        e.persist();
+        setNewProject(prevState => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }));
+    };
+    const handleSubmit = e => {
+        e.preventDefault();
+        if(thumbnailChange){
+            console.log(thumbnail);
+        }
+        if(projectId){
+            console.log('Edit Project');
+            console.log(newProject);
+        } else {
+            console.log('Add Project');
+            console.log(newProject);
+        }
+    }
+    const handleChangeDisplay = e => {
+        e.persist();
+        setNewProject(prevState => ({
+            ...prevState,
+            display: e.target.checked
+        }));
+    }
     const {getRootProps, getInputProps} = useDropzone({onDrop});
     return (
         !loading && <CustomModal open={open} handleClose={handleClose}>
@@ -95,16 +134,25 @@ export default ({open, handleClose}) => {
                     New Project
                 </Typography>
             </Box>
-            <Form>
+            <Form handleSubmit={handleSubmit}>
                 <CustomTextField
                     paddingBottom
                     fullWidth
                     label="Title"
                     name="title"
+                    value={newProject.title}
+                    handleChange={handleChange}
                 />
                 <FormControlLabel
                     value="start"
-                    control={<Checkbox color='primary' />}
+                    control={
+                        <Checkbox
+                            color='primary' disableRipple
+                            value={newProject.display}
+                            checked={newProject.display}
+                            onChange={handleChangeDisplay}
+                        />
+                    }
                     label="display"
                     labelPlacement="start"
                     className={classes.formControlLabel}
@@ -121,6 +169,9 @@ export default ({open, handleClose}) => {
                             style={{input: {
                                 fontSize: 'inherit'
                             }}}
+                            name="type"
+                            defaultValue={newProject.type}
+                            onChange={handleChange}
                         >
                             <option aria-label="None" value="" />
                             {data.getTypes.map(type => (
@@ -135,7 +186,9 @@ export default ({open, handleClose}) => {
                     <div {...getRootProps()} className={classes.droper}>
                         <input {...getInputProps()} />
                         {
-                            <Typography variant="body1" className={classes.droperText}>{droperText}</Typography>
+                            <Typography variant="body1" className={classes.droperText}>
+                                {droperText}
+                            </Typography>
                         }
                     </div>
                     <Box className={classes.thumbnailPreviewContainer}

@@ -2,12 +2,12 @@ import React from 'react';
 
 import CustomButton from './CustomButton';
 
-export default ({children}) => {
+export default ({children, handleSubmit}) => {
     
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             {children}
-            <CustomButton>
+            <CustomButton onClick={handleSubmit}>
                 save
             </CustomButton>
         </form>

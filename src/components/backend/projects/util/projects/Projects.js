@@ -42,8 +42,7 @@ export default () => {
                 data.getProjects.map(project => (
                     <SingleProject
                         key={project._id}
-                        title={project.title}
-                        display={project.display}
+                        project={project}
                     />
                 ))
             ): null}
@@ -59,6 +58,9 @@ const GET_PROJECTS_QUERY = gql`
             display
             title
             index
+            type {
+                _id
+            }
         }
     }
 `;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import CustomModal from '../../../util/CustomModal';
 import Form from '../../../util/Form';
@@ -14,9 +14,29 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default ({open, handleClose}) => {
+export default ({open, handleClose, type}) => {
     const theme = useTheme();
     const classes = useStyles(theme);
+    const typeId = type ? type._id : '';
+    const [title, setTitle] = useState({
+        title: type ? type.title :  ''
+    });
+    const handleChange = e => {
+        e.persist();
+        setTitle({
+            [e.target.name]: e.target.value
+        });
+    }
+    const handleSubmit = e => {
+        e.preventDefault();
+        if(typeId){
+            console.log('edite type');
+            console.log(title);
+        } else {
+            console.log('add type');
+            console.log(title);
+        }
+    }
     return (
         <CustomModal open={open} handleClose={handleClose}>
             <Box className={classes.titleContainer}>
@@ -24,12 +44,14 @@ export default ({open, handleClose}) => {
                     New Types
                 </Typography>
             </Box>
-            <Form>
+            <Form handleSubmit={handleSubmit}>
                 <CustomTextField
                     paddingBottom
                     fullWidth
                     label="Title"
                     name="title"
+                    value={title.title}
+                    handleChange={handleChange}
                 />
             </Form>
         </CustomModal>

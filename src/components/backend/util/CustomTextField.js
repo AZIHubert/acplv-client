@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 
 export default (props) => {
     const classes = useStyles(props);
-    const {label, name, focused, textArea} = props;
+    const {label, name, value, focused, textArea, handleChange} = props;
     return (
         <Box className={classes.textFieldContainer}>
             {label && <Box className={classes.formLabelContainer}>
@@ -37,6 +37,8 @@ export default (props) => {
                 multiline={textArea}
                 rows={textArea && 15}
                 focused={focused}
+                value={value}
+                onChange={handleChange}
             ></TextField>
         </Box>
     );
