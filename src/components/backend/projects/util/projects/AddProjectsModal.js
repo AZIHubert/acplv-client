@@ -140,6 +140,7 @@ export default ({open, handleClose, project}) => {
                     fullWidth
                     label="Title"
                     name="title"
+                    autoFocus
                     value={newProject.title}
                     handleChange={handleChange}
                 />

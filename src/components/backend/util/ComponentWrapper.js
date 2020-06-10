@@ -14,11 +14,11 @@ const useStyles = makeStyles(theme => ({
         paddingBottom: theme.spacing(5)
     },
     titleContainer: {
-        padding: theme.spacing(0, 8, 10, 8)
+        padding: theme.spacing(0, 4, 10, 4)
     }
 }))
 
-export default ({title, isForm, children}) => {
+export default ({title, isForm, handleSubmit, children}) => {
     const theme = useTheme()
     const classes = useStyles(theme);
     return (
@@ -29,7 +29,7 @@ export default ({title, isForm, children}) => {
                 </Typography>
             </Box>
             {isForm ? (
-                <Form>
+                <Form handleSubmit={handleSubmit} paddingButton>
                     {children}
                 </Form>
             ) : (

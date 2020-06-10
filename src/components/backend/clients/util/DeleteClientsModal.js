@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import CustomModal from '../../../util/CustomModal';
+import CustomModal from '../../util/CustomModal';
 
 import { Box, Typography, Button } from '@material-ui/core';
 
@@ -46,14 +46,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default ({open, handleClose, title, _id}) => {
+
     const theme = useTheme();
     const classes = useStyles(theme);
+
     return (
         <CustomModal open={open} handleClose={handleClose}>
             <Box>
                 <Box className={classes.titleContainer}>
                     <Typography variant="body1">
-                        Are you sure you want to delete type "{title}"?
+                        Are you sure you want to delete client "{title}"?
                     </Typography>
                 </Box>
                 <Box display="flex" justifyContent="space-between">

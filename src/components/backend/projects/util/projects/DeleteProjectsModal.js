@@ -53,7 +53,7 @@ export default ({open, handleClose, title, _id}) => {
             <Box>
                 <Box className={classes.titleContainer}>
                     <Typography variant="body1">
-                        Are you sure you want to delete project {title}?
+                        Are you sure you want to delete project "{title}"?
                     </Typography>
                 </Box>
                 <Box display="flex" justifyContent="space-between">

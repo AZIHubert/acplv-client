@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 
-import DeleteProjectsModal from './DeleteProjectsModal';
-import AddProjectsModal from './AddProjectsModal';
+import DeleteClientsModal from './DeleteClientsModal';
+import AddClientsModal from './AddClientsModal';
 
 import {
     Box,
     Typography,
-    Checkbox,
-    FormControlLabel,
     Button
 } from '@material-ui/core';
 
@@ -66,7 +64,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({project, index}) => {
+export default ({client, index}) => {
 
     const [openDelete, setOpenDelete] = useState(false);
     const handleOpenDelete = () => setOpenDelete(true);
@@ -78,10 +76,10 @@ export default ({project, index}) => {
 
     const theme = useTheme();
     const classes = useStyles(theme);
-    
+
     return (
-        <Draggable draggableId={project._id} index={index}>
-            {(provided) => (
+        <Draggable draggableId={client._id} index={index}>
+            {provided => (
                 <Box className={classes.container}
                     display="flex" justifyContent="space-between" alignItems="center"
                     {...provided.draggableProps}
@@ -90,7 +88,7 @@ export default ({project, index}) => {
                 >
                     <Box display="flex" alignItems="center">
                         <Typography variant="body2">
-                            {project.title}
+                            {client.title}
                         </Typography>
                         <Button disableRipple className={classes.editButton}
                             onClick={handleOpenEdit}
@@ -101,13 +99,7 @@ export default ({project, index}) => {
                         </Button>
                     </Box>
                     <Box display="flex" alignItems="center">
-                        <FormControlLabel
-                            value="start"
-                            control={<Checkbox color="primary" checked={project.display} />}
-                            label="display"
-                            labelPlacement="start"
-                            className={classes.formControlLabel}
-                        />
+                        
                         <Box className={classes.iconContainer}
                             onClick={handleOpenDelete}
                         >
@@ -117,13 +109,13 @@ export default ({project, index}) => {
                             <SwapVertIcon className={classes.icon} />
                         </Box>
                     </Box>
-                    <DeleteProjectsModal
+                    <DeleteClientsModal
                         open={openDelete} handleClose={handleCloseDelete}
-                        title={project.title} _id={project._id}
+                        title={client.title} _id={client._id}
                     />
-                    <AddProjectsModal
+                    <AddClientsModal
                         open={openEdit} handleClose={handleCloseEdit}
-                        project={project}
+                        client={client}
                     />
                 </Box>
             )}

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import CustomModal from '../../../util/CustomModal';
-import Form from '../../../util/Form';
-import CustomTextField from '../../../util/CustomTextField';
+import CustomModal from '../../util/CustomModal';
+import Form from '../../util/Form';
+import CustomTextField from '../../util/CustomTextField';
 
 import { Typography, Box } from '@material-ui/core';
 
@@ -14,12 +14,12 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default ({open, handleClose, type}) => {
+export default ({open, handleClose, client}) => {
     const theme = useTheme();
     const classes = useStyles(theme);
-    const typeId = type ? type._id : '';
+    const typeId = client ? client._id : '';
     const [title, setTitle] = useState({
-        title: type ? type.title :  ''
+        title: client ? client.title :  ''
     });
     const handleChange = e => {
         e.persist();
@@ -41,7 +41,7 @@ export default ({open, handleClose, type}) => {
         <CustomModal open={open} handleClose={handleClose}>
             <Box className={classes.titleContainer}>
                 <Typography variant="h2">
-                    New Types
+                    New Clients
                 </Typography>
             </Box>
             <Form handleSubmit={handleSubmit}>

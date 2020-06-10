@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Modal, Fade } from '@material-ui/core';
+import { Modal, Fade, Box, Typography } from '@material-ui/core';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -15,18 +15,27 @@ const useStyles = makeStyles((theme) => ({
             outline: 'none'
         },
         border: `2px solid ${theme.palette.tertiaryColor}`,
-        padding: theme.spacing(3, 5, 4),
+        borderRadius: 25
     },
     modal: {
         overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        border: 'none'
+        border: 'none',
     },
     paper: {
-        width: '100%'
+        padding: theme.spacing(3, 5, 4),
     },
+    crossContainer: {
+        padding: theme.spacing(1, 2),
+        borderBottom: `1px solid ${theme.palette.tertiaryColor}`,
+        width: '100%',
+    },
+    cross: {
+        fontSize: '1.3rem',
+        cursor: 'pointer'
+    }
 }));
 
 export default ({open, handleClose, children}) => {
@@ -40,8 +49,21 @@ export default ({open, handleClose, children}) => {
             closeAfterTransition
         >
             <Fade in={open} className={classes.fade}>
-                <div className={classes.paper}>
-                    {children}
+                <div>
+                    <Box textAlign="right" className={classes.crossContainer}>
+                        <Box display='inline-block'>
+                            <Typography variant="body2" className={classes.cross}
+                                onClick={handleClose}
+                            >
+                                x
+                            </Typography>
+                        </Box>
+                    </Box>
+                    <Box>
+                        <Box className={classes.paper}>
+                            {children}
+                        </Box>
+                    </Box>
                 </div>
             </Fade>
         </Modal>
