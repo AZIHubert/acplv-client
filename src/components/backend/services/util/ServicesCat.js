@@ -54,6 +54,10 @@ export default () => {
         const sourceIndex = source.index;
         const destIndex = destination.index;
         if (r.type === "droppableItem") {
+            if(
+                destination.droppableId === source.droppableId &&
+                destination.index === source.index
+            ) return;
             const changedServiceCat = serviceCats.find(serviceCat => draggableId === serviceCat._id);
             const newServiceCatsId = Array.from(serviceCats);
             newServiceCatsId.splice(sourceIndex, 1);
@@ -62,6 +66,10 @@ export default () => {
                 ...newServiceCatsId
             ])
         } else if (r.type === "droppableSubItem") {
+            if(
+                destination.droppableId === source.droppableId &&
+                destination.index === source.index
+            ) return;
             const sourceParentId = r.source.droppableId;
             const destParentId = r.destination.droppableId;
             const sourceSubItems = [...services[sourceParentId]];

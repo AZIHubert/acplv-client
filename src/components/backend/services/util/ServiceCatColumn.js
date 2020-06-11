@@ -4,7 +4,7 @@ import Service from './Service';
 
 import { Box, Typography, Button } from '@material-ui/core';
 
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import SwapVertIcon from '@material-ui/icons/SwapVert';
@@ -103,8 +103,6 @@ export default ({serviceCat, index, services}) => {
     const [openAdd, setOpenAdd] = useState(false);
     const handleOpenAdd = () => setOpenAdd(true);
     const handleCloseAdd = () => setOpenAdd(false);
-
-    // const [services, setServices] = useState([...serviceCat.services]);
 
     return (
         <Draggable draggableId={serviceCat._id} index={index}>
