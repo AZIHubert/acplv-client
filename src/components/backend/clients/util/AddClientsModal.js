@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 export default ({open, handleClose, client}) => {
     const theme = useTheme();
     const classes = useStyles(theme);
-    const typeId = client ? client._id : '';
+    const clientId = client ? client._id : '';
     const [title, setTitle] = useState({
         title: client ? client.title :  ''
     });
@@ -29,7 +29,7 @@ export default ({open, handleClose, client}) => {
     }
     const handleSubmit = e => {
         e.preventDefault();
-        if(typeId){
+        if(clientId){
             console.log('edite type');
             console.log(title);
         } else {
@@ -41,7 +41,7 @@ export default ({open, handleClose, client}) => {
         <CustomModal open={open} handleClose={handleClose}>
             <Box className={classes.titleContainer}>
                 <Typography variant="h2">
-                    New Clients
+                    {clientId ? 'Edit' : 'New'} Clients
                 </Typography>
             </Box>
             <Form handleSubmit={handleSubmit}>

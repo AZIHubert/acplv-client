@@ -38,6 +38,14 @@ const useStyles = makeStyles(theme => ({
             color: theme.palette.tertiaryColor
         }
     },
+    typeSelector: {
+        width: '50%',
+        [theme.breakpoints.down('sm')]: {
+            width: '100%'
+        },
+        fontSize: '1.5rem',
+        padding: '1px 10px'
+    },
     formLabelContainer: {
         paddingBottom: theme.spacing(1)
     },
@@ -131,7 +139,7 @@ export default ({open, handleClose, project}) => {
         !loading && <CustomModal open={open} handleClose={handleClose}>
             <Box className={classes.titleContainer}>
                 <Typography variant="h2">
-                    New Project
+                    {projectId ? 'Edit' : 'New'} Project
                 </Typography>
             </Box>
             <Form handleSubmit={handleSubmit}>
@@ -171,6 +179,7 @@ export default ({open, handleClose, project}) => {
                                 fontSize: 'inherit'
                             }}}
                             name="type"
+                            className={classes.typeSelector}
                             defaultValue={newProject.type}
                             onChange={handleChange}
                         >

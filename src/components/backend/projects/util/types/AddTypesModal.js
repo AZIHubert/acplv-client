@@ -41,7 +41,7 @@ export default ({open, handleClose, type}) => {
         <CustomModal open={open} handleClose={handleClose}>
             <Box className={classes.titleContainer}>
                 <Typography variant="h2">
-                    New Types
+                    {typeId ? 'Edit' : 'New'} Types
                 </Typography>
             </Box>
             <Form handleSubmit={handleSubmit}>
