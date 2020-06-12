@@ -36,7 +36,6 @@ const useStyles = makeStyles(theme => ({
         position: 'relative',
         width: '100%',
         overflow: 'hidden',
-        background: 'red',
         marginBottom: theme.spacing(1),
         '&:before': {
             content: '""',
@@ -55,12 +54,11 @@ const useStyles = makeStyles(theme => ({
         left: 0,
         width: '100%',
         height: '100%',
-        background: 'red'
     },
     thumbnailContainer: {
         width: '100%',
         height: '100%',
-        backgroundColor: theme.palette.secondaryColor,
+        // backgroundColor: theme.palette.secondaryColor,
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
         backgroundImage: props => `url('${props.project.thumbnail ? props.project.thumbnail.url : ''}')`

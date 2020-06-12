@@ -65,7 +65,6 @@ export default withRouter(({history, open, handleClose, type, setTypes, errors, 
     const [editClient] = useMutation(EDIT_TYPE_MUTATION, {
         variables: {typeId, ...title},
         update(){
-            title.title = '';
             handleClose();
         },
         onError(err){

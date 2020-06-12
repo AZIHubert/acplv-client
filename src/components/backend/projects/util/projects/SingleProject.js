@@ -177,6 +177,7 @@ export default ({history, project, setProjects, index}) => {
                         open={openEdit} handleClose={handleCloseEdit}
                         project={project}
                         errors={errors} setErrors={setErrors}
+                        setSingleProject={setNewProject}
                     />
                 </Box>
             )}

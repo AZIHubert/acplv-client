@@ -80,13 +80,19 @@ const useStyles = makeStyles(theme => ({
     },
     removeButton: {
         backgroundColor: theme.palette.tertiaryColor,
-        border: `1px dotted ${theme.palette.tertiaryColor}`,
+        border: `1px solid ${theme.palette.tertiaryColor}`,
         borderRadius: 5,
-        padding: theme.spacing(1, 2)
+        padding: theme.spacing(1, 2),
+        '&:hover span': {
+            color: theme.palette.tertiaryColor
+        }
+    },
+    undoButton: {
+        marginLeft: theme.spacing(1)
     }
 }));
 
-export default withRouter(({history, open, handleClose, project, setProjects, errors, setErrors}) => {
+export default withRouter(({history, open, handleClose, project, setProjects, errors, setErrors, setSingleProject}) => {
     const theme = useTheme();
     const classes = useStyles(theme);
     const {logout} = useContext(AuthContext);
@@ -102,7 +108,7 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
 
     const hasThumbnail = (project && !!project.thumbnail);
     const [thumbnailChange, setThumbnailChange] = useState(false);
-    const [thumbnail, setThumbnail] = useState(hasThumbnail ? project.thumbnail : {});
+    const [thumbnail, setThumbnail] = useState(hasThumbnail ? project.thumbnail : {})
     const [droperText, setDroperText] = useState('Drag \'n\' drop the thumbnail here, or click to select file');
     const [previewThumbnail, setPreviewThumbnail] = useState(
         hasThumbnail ? project.thumbnail.url : ''
@@ -112,7 +118,9 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
     
     const onDrop = useCallback(([file]) => {
         if(file.type === 'image/jpeg' || file.type === 'image/png'){
-            setThumbnailChange(true);
+            if(hasThumbnail){
+                setThumbnailChange(true);
+            }
             setThumbnail(file);
             setPreviewThumbnail(URL.createObjectURL(file));
         } else {
@@ -133,7 +141,6 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
             if(Object.keys(thumbnail).length){
                 setProjectId(result.data.createProject._id);
                 setProjectResult(result.data.createProject);
-                console.log('uploadThumbnail')
                 setProjectSaved(true);
             } else {
                 const data = proxy.readQuery({
@@ -164,11 +171,34 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
             }
         }
     });
+    const [editProject] = useMutation(EDIT_PROJECT_MUTATION, {
+        variables: {projectId, projectInput: newProject},
+        update(_, result){
+            setSingleProject(result.data.editProject);
+            if(hasThumbnail && thumbnailChange){
+                deleteImage()
+            }
+            if((!hasThumbnail && !!Object.keys(thumbnail).length) || (!!Object.keys(thumbnail).length && thumbnailChange)){
+                uploadImageOnExistedProject()
+            }
+            handleClose();
+        },
+        onError(err){
+            console.log(err)
+            const error = err.graphQLErrors[0];
+            if(error.extensions.code === "BAD_USER_INPUT"){
+                setErrors(error.extensions.exception.errors);
+            }
+            if(error.message === "Authorization header must be provided" ||
+               error.message === 'Authentication token must be \'Bearer [token]\''){
+                    logout();
+                    history.push('/login');
+            }
+        }
+    });
     const [uploadImage] = useMutation(UPLOAD_THUMBNAIL, {
         variables: {imageFile: thumbnail, projectId},
         update(proxy, result){
-            console.log('Upload proxy');
-            console.log('projectResult: ', projectResult)
             const projectWithThumbnail = {
                 ...projectResult,
                 thumbnail: result.data.uploadImage
@@ -178,7 +208,6 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
             });
             data.getProjects = [projectWithThumbnail, ...data.getProjects];
             proxy.writeQuery({ query: FETCH_PROJECTS_QUERY, data });
-            console.log('done, reset everything')
             setProjects([...data.getProjects]);
             setNewProject({
                 title:  '',
@@ -202,17 +231,45 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
             handleClose();
         }
     });
+    const [uploadImageOnExistedProject] = useMutation(UPLOAD_THUMBNAIL, {
+        variables: {imageFile: thumbnail, projectId},
+        update(proxy, result){
+            setThumbnailChange(false)
+        },
+        onError(err){
+            setNewProject({
+                title:  '',
+                display:  true,
+                typeId:  ''
+            });
+            setThumbnail({});
+            setPreviewThumbnail('');
+            setProjectResult({});
+            handleClose();
+        }
+    });
+
+    const [deleteImage] = useMutation(DELETE_IMAGE_MUTATION, {
+        variables: {imageId: (project && project.thumbnail) ? project.thumbnail._id : ''},
+        update(proxy, result){},
+        onError(err){
+            const error = err.graphQLErrors[0];
+            if(error.message === "Authorization header must be provided" ||
+               error.message === 'Authentication token must be \'Bearer [token]\''){
+                    logout();
+                    history.push('/login');
+            } else {
+                handleClose();
+                console.log(err);
+            }
+        }
+    });
 
     const handleSubmit = e => {
         e.preventDefault();
-        if(projectId.projectId){
-            console.log('Edit Project');
-            console.log(newProject);
-        } else {
-            createProject();
-        }
+        if(projectId) editProject();
+        else createProject();
     }
-
     useEffect(() => {
         if(projectSaved){
             uploadImage();
@@ -280,7 +337,7 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
                                 defaultValue={newProject.typeId}
                                 onChange={handleChange}
                             >
-                                <option aria-label="None" value="" />
+                                <option aria-label="None" value='' />
                                 {data.getTypes.map(type => (
                                     <option value={type._id} key={type._id}>{type.title}</option>
                                 ))}
@@ -309,13 +366,23 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
                     >
                     </Box>
                 </Box>
-                <Box textAlign="right">
+                <Box display="flex" justifyContent="flex-end">
                     {previewThumbnail && (
                         <Button className={classes.removeButton} onClick={() => {
                             setPreviewThumbnail('');
+                            setThumbnailChange(true);
                             setThumbnail({});
                         }}>
                             Remove thumbnail
+                        </Button>
+                    )}
+                    {thumbnailChange && (
+                        <Button className={`${classes.removeButton} ${classes.undoButton}`} onClick={() => {
+                            setPreviewThumbnail(project.thumbnail.url);
+                            setThumbnailChange(false);
+                            setThumbnail(project.thumbnail);
+                        }}>
+                            undo thumbnail
                         </Button>
                     )}
                 </Box>
@@ -361,6 +428,10 @@ const EDIT_PROJECT_MUTATION = gql`
             title
             type {
                 _id
+            },
+            thumbnail {
+                _id
+                url
             }
         }
     }
@@ -375,5 +446,13 @@ const UPLOAD_THUMBNAIL = gql`
             _id
             url
         }
+    }
+`;
+
+const DELETE_IMAGE_MUTATION = gql`
+    mutation deleteImage(
+        $imageId: ID!
+    ) {
+        deleteImage(imageId: $imageId)
     }
 `;
