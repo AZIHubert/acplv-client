@@ -64,7 +64,11 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({client, index}) => {
+export default ({client, index, setClients}) => {
+
+    const [errors, setErrors] = useState({
+        title: ''
+    });
 
     const [openDelete, setOpenDelete] = useState(false);
     const handleOpenDelete = () => setOpenDelete(true);
@@ -72,7 +76,9 @@ export default ({client, index}) => {
 
     const [openEdit, setOpenEdit] = useState(false);
     const handleOpenEdit = () => setOpenEdit(true);
-    const handleCloseEdit = () => setOpenEdit(false);
+    const handleCloseEdit = () => {
+        setOpenEdit(false);
+    };
 
     const theme = useTheme();
     const classes = useStyles(theme);
@@ -112,10 +118,13 @@ export default ({client, index}) => {
                     <DeleteClientsModal
                         open={openDelete} handleClose={handleCloseDelete}
                         title={client.title} _id={client._id}
+                        setClients={setClients}
                     />
                     <AddClientsModal
                         open={openEdit} handleClose={handleCloseEdit}
                         client={client}
+                        setErrors={setErrors}
+                        errors={errors}
                     />
                 </Box>
             )}

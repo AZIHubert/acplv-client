@@ -130,20 +130,22 @@ export default props => {
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid
-                        item
-                        xs={12} lg={6}
-                    >
-                        <Box
-                            className={classes.projectTypeContainer}
+                    {project.type &&
+                        <Grid
+                            item
+                            xs={12} lg={6}
                         >
-                            <Typography
-                                variant="body1"
+                            <Box
+                                className={classes.projectTypeContainer}
                             >
-                                {project.type.title}
-                            </Typography>
-                        </Box>
-                    </Grid>
+                                <Typography
+                                    variant="body1"
+                                >
+                                    {project.type.title}
+                                </Typography>
+                            </Box>
+                        </Grid>
+                    }
                 </Grid>
                 <Box
                     display="flex"

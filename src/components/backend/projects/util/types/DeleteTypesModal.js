@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import CustomModal from '../../../util/CustomModal';
 
 import { Box, Typography, Button } from '@material-ui/core';
 
+import { AuthContext } from '../../../../../context/AuthContext';
+
+import {withRouter} from 'react-router-dom';
+
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/react-hooks';
+import { FETCH_TYPES_QUERY } from '../../../../../graphql/querys/index';
 
 const useStyles = makeStyles(theme => ({
     titleContainer: {
@@ -45,9 +53,36 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({open, handleClose, title, _id}) => {
+export default withRouter(({history, open, handleClose, title, _id, setTypes}) => {
+
     const theme = useTheme();
     const classes = useStyles(theme);
+
+    const {logout} = useContext(AuthContext);
+
+    const [deleteType] = useMutation(DELETE_TYPE_MUTATION, {
+        variables: {typeId: _id},
+        update(proxy, result){
+            const data = proxy.readQuery({
+                query: FETCH_TYPES_QUERY
+            });
+            data.getTypes = data.getTypes.filter(type => type._id !== _id);
+            proxy.writeQuery({ query: FETCH_TYPES_QUERY, data });
+            setTypes([...data.getTypes]);
+        },
+        onError(err){
+            const error = err.graphQLErrors[0];
+            if(error.message === "Authorization header must be provided" ||
+               error.message === 'Authentication token must be \'Bearer [token]\''){
+                    logout();
+                    history.push('/login');
+            } else {
+                handleClose();
+                console.log(err);
+            }
+        }
+    });
+
     return (
         <CustomModal open={open} handleClose={handleClose}>
             <Box>
@@ -58,7 +93,12 @@ export default ({open, handleClose, title, _id}) => {
                 </Box>
                 <Box display="flex" justifyContent="space-between">
                     <Button className={classes.deleteButton}>
-                        <Typography variant="body2" className={classes.buttonText}>
+                        <Typography variant="body2" className={classes.buttonText}
+                            onClick={() => {
+                                handleClose();
+                                deleteType();
+                            }}
+                        >
                             delete
                         </Typography>
                     </Button>
@@ -71,4 +111,12 @@ export default ({open, handleClose, title, _id}) => {
             </Box>
         </CustomModal>
     );
-};
+});
+
+const DELETE_TYPE_MUTATION = gql`
+    mutation deleteType(
+        $typeId: ID!
+    ) {
+        deleteType(typeId: $typeId)
+    }
+`;

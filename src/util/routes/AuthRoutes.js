@@ -9,7 +9,7 @@ export default ({component: Component, ...rest}) => {
         <Route
             {...rest}
             render={ props => 
-                user ? <Redirect to="/backend" /> : <Component {...props} />
+                !!user ? <Redirect to="/backend" /> : <Component {...props} />
             }
         />
     )

@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import DeleteProjectsModal from './DeleteProjectsModal';
 import AddProjectsModal from './AddProjectsModal';
+
+import { AuthContext } from '../../../../../context/AuthContext';
 
 import {
     Box,
@@ -17,6 +19,9 @@ import SwapVertIcon from '@material-ui/icons/SwapVert';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 import { makeStyles, useTheme } from '@material-ui/core';
+
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/react-hooks';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -66,7 +71,9 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({project, index}) => {
+export default ({history, project, index}) => {
+
+    const {logout} = useContext(AuthContext);
 
     const [openDelete, setOpenDelete] = useState(false);
     const handleOpenDelete = () => setOpenDelete(true);
@@ -75,6 +82,42 @@ export default ({project, index}) => {
     const [openEdit, setOpenEdit] = useState(false);
     const handleOpenEdit = () => setOpenEdit(true);
     const handleCloseEdit = () => setOpenEdit(false);
+
+    const [newProject, setNewProject] = useState(project);
+
+    const [editProject] = useMutation(DISPLAY_PROJECT_MUTATION, {
+        variables: {
+            projectId: project._id,
+            projectInput: {
+                title: newProject.title,
+                display: newProject.display,
+                typeId: newProject.typeId,
+                thumbnailId: newProject.thumbnailId
+            }
+        },
+        update(proxy, result){
+            console.log(result)
+        },
+        onError(err){
+            const error = err.graphQLErrors[0];
+            if(error.message === "Authorization header must be provided" ||
+               error.message === 'Authentication token must be \'Bearer [token]\''){
+                logout();
+                history.push('/login');
+            }
+        }
+    });
+
+    const handleClick = e => {
+        setNewProject(prevState => ({
+            ...prevState,
+            display: e.target.checked
+        }));
+    };
+
+    useEffect(() => {
+        editProject();
+    }, [newProject, editProject])
 
     const theme = useTheme();
     const classes = useStyles(theme);
@@ -103,7 +146,7 @@ export default ({project, index}) => {
                     <Box display="flex" alignItems="center">
                         <FormControlLabel
                             value="start"
-                            control={<Checkbox color="primary" checked={project.display} />}
+                            control={<Checkbox color="primary" checked={newProject.display} onClick={handleClick} />}
                             label="display"
                             labelPlacement="start"
                             className={classes.formControlLabel}
@@ -129,4 +172,16 @@ export default ({project, index}) => {
             )}
         </Draggable>
     )
-}
+};
+
+const DISPLAY_PROJECT_MUTATION = gql`
+    mutation editProject(
+        $projectId: ID!
+        $projectInput: ProjectInput!
+    ) {
+        editProject(projectId: $projectId, projectInput: $projectInput){
+            _id
+            display
+        }
+    }
+`;

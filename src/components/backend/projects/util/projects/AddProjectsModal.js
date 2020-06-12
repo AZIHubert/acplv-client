@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import CustomModal from '../../../util/CustomModal';
 import Form from '../../../util/Form';
@@ -96,7 +96,7 @@ export default ({open, handleClose, project}) => {
     const [newProject, setNewProject] = useState({
         title: project ? project.title : '',
         display: project ? project.display : true,
-        type: project ? project.type._id : ''
+        type: (project && project.type) ? project.type._id : ''
     });
     const onDrop = useCallback(([file]) => {
         if(file.type === 'image/jpeg' || file.type === 'image/png'){
@@ -107,6 +107,7 @@ export default ({open, handleClose, project}) => {
             setDroperText('Your file is not an image')
         }
     }, []);
+    console.log(thumbnail)
     const handleChange = e => {
         e.persist();
         setNewProject(prevState => ({
@@ -114,8 +115,23 @@ export default ({open, handleClose, project}) => {
             [e.target.name]: e.target.value
         }));
     };
+
+    const [uploadImage] = useMutation(UPLOAD_THUMBNAIL, {
+        variables: {imageFile: thumbnail},
+        update(proxy, result){
+            console.log(result)
+        },
+        onError(err){
+            console.log(err);
+            console.log(err.graphQLErrors[0])
+        }
+    });
+
+
+
     const handleSubmit = e => {
         e.preventDefault();
+        uploadImage();
         if(thumbnailChange){
             console.log(thumbnail);
         }
@@ -127,6 +143,10 @@ export default ({open, handleClose, project}) => {
             console.log(newProject);
         }
     }
+
+    
+
+
     const handleChangeDisplay = e => {
         e.persist();
         setNewProject(prevState => ({
@@ -166,30 +186,32 @@ export default ({open, handleClose, project}) => {
                     labelPlacement="start"
                     className={classes.formControlLabel}
                 />
-                <Box display="flex" flexDirection="column" className={classes.selectTypeContainer}>
-                    <Box className={classes.formLabelContainer}>
-                        <FormLabel className={classes.formLabel}>
-                            Type
-                        </FormLabel>
+                {!!data.getTypes.length &&
+                    <Box display="flex" flexDirection="column" className={classes.selectTypeContainer}>
+                        <Box className={classes.formLabelContainer}>
+                            <FormLabel className={classes.formLabel}>
+                                Type
+                            </FormLabel>
+                        </Box>
+                        <FormControl variant="outlined" className={classes.formControl}>
+                            <Select
+                                native
+                                style={{input: {
+                                    fontSize: 'inherit'
+                                }}}
+                                name="type"
+                                className={classes.typeSelector}
+                                defaultValue={newProject.type}
+                                onChange={handleChange}
+                            >
+                                <option aria-label="None" value="" />
+                                {data.getTypes.map(type => (
+                                    <option value={type._id} key={type._id}>{type.title}</option>
+                                ))}
+                            </Select>
+                        </FormControl>
                     </Box>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                        <Select
-                            native
-                            style={{input: {
-                                fontSize: 'inherit'
-                            }}}
-                            name="type"
-                            className={classes.typeSelector}
-                            defaultValue={newProject.type}
-                            onChange={handleChange}
-                        >
-                            <option aria-label="None" value="" />
-                            {data.getTypes.map(type => (
-                                <option value={type._id} key={type._id}>{type.title}</option>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </Box>
+                }
                 <Box className={classes.droperContainer}
                     display="flex" alignItems="stretch"
                 >
@@ -229,5 +251,42 @@ const FETCH_TYPES_QUERY = gql`
             _id
             title
         }
+    }
+`;
+
+const CREATE_PROJECT_MUTATION = gql`
+    mutation createProject($projectInput: ProjectInput!){
+        createProject(projectInput: $projectInput){
+            _id
+            display
+            title
+            type {
+                _id
+            }
+        }
+    }
+`;
+
+const EDIT_PROJECT_MUTATION = gql`
+    mutation editProject(
+        $projectId: ID!
+        $projectInput: ProjectInput!
+    ) {
+        editProject(projectId: $projectId, projectInput: $projectInput){
+            _id
+            display
+            title
+            type {
+                _id
+            }
+        }
+    }
+`;
+
+const UPLOAD_THUMBNAIL = gql`
+    mutation uploadImage(
+        $imageFile: Upload!
+    ) {
+        uploadImage(imageFile: $imageFile)
     }
 `;

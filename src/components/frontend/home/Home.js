@@ -26,6 +26,7 @@ export default () => {
     const {loading: loadingClient, data: dataClients} = useQuery(FETCH_FRONT_CLIENT_QUERY);
     const {loading: loadingProject, data: dataProjects} = useQuery(FETCH_FRONT_PROJECTS_QUERY);
     const {loading: loadingServiceCats, data: dataProjectCats} = useQuery(FETCH_FRONT_SERVICE_CATS);
+    if(loadingServiceCats) console.log(dataProjectCats)
     return (
         (!loadingClient &&
          !loadingProject &&

@@ -93,3 +93,21 @@ export const FETCH_SERVICE_CATS_WITH_SERVICES = gql`
         }
     }
 `;
+
+export const FETCH_CLIENTS_QUERY = gql`
+    {
+        getClients {
+            _id
+            title
+        }
+    }
+`;
+
+export const FETCH_TYPES_QUERY = gql` 
+    {
+        getTypes {
+            _id
+            title
+        }
+    }
+`;

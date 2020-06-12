@@ -42,7 +42,7 @@ const authReducer = (state, action) => {
 };
 
 const AuthProvider = (props) => {
-    const [state, dispatch] = useReducer(authReducer, { user: initalState });
+    const [state, dispatch] = useReducer(authReducer, initalState);
     const login = (userData) => {
         localStorage.setItem('jwtToken', userData.token);
         dispatch({

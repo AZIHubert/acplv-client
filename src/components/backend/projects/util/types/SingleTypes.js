@@ -29,7 +29,12 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({type}) => {
+export default ({type, setTypes}) => {
+
+    const [errors, setErrors] = useState({
+        title: ''
+    });
+
     const theme = useTheme();
     const classes = useStyles(theme);
     const [openEdit, setOpenEdit] = useState(false);
@@ -52,9 +57,11 @@ export default ({type}) => {
             >
                 <DeleteOutlineIcon className={classes.deleteIcon} />
             </Box>
-            <AddTypesModal type={type} open={openEdit} handleClose={handleCloseEdit} />
+            <AddTypesModal type={type} open={openEdit} handleClose={handleCloseEdit}
+                errors={errors} setErrors={setErrors}
+            />
             <DeleteTypesModal open={openDelete} handleClose={handleCloseDelete}
-                title={type.title} _id={type._id}
+                title={type.title} _id={type._id} setTypes={setTypes}
             />
         </Box>
     )

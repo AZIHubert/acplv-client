@@ -10,6 +10,9 @@ const useStyles = makeStyles(theme => ({
         width: props => props.fullWidth ?  '100%' : '50%',
         [theme.breakpoints.down('md')]: {
             width: props => props.fullWidth ?  '100%' : '100%',
+        },
+        '& .MuiFormHelperText-root': {
+            fontSize: '1.5rem'
         }
     },
     formLabelContainer: {
@@ -22,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 
 export default (props) => {
     const classes = useStyles(props);
-    const {label, name, value, autoFocus, textArea, handleChange} = props;
+    const {label, name, value, autoFocus, textArea, handleChange, error, helperText} = props;
     return (
         <Box className={classes.textFieldContainer}>
             {label && <Box className={classes.formLabelContainer}>
@@ -39,6 +42,8 @@ export default (props) => {
                 autoFocus={autoFocus}
                 value={value}
                 onChange={handleChange}
+                error={error}
+                helperText={helperText}
             ></TextField>
         </Box>
     );

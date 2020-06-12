@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { FETCH_CLIENTS_QUERY } from '../../../../graphql/querys/index';
 
 import SubComponentWrapper from '../../util/SubComponentWrapper';
 import CustomButton from '../../util/CustomButton';
@@ -25,12 +26,24 @@ export default () => {
     const theme = useTheme();
     const classes = useStyles(theme);
 
+    const [errors, setErrors] = useState({
+        title: ''
+    });
+    const [moving, setMoving] = useState({
+        index: '',
+        clientId: ''
+    });
+
     const [openAdd, setOpenAdd] = useState(false);
     const handleOpenAdd = () => setOpenAdd(true);
-    const handleCloseAdd = () => setOpenAdd(false);
+    const handleCloseAdd = () => {
+        setOpenAdd(false);
+        setErrors({
+            title: ''
+        })
+    };
 
     const [saving, setSaving] = useState(false);
-
     const [clients, setClients] = useState([]);
 
     const {loading, error, data} = useQuery(FETCH_CLIENTS_QUERY);
@@ -46,6 +59,20 @@ export default () => {
         }
     }, [loading, data, error]);
 
+    const [moveClient] = useMutation(MOVE_CLIENT_MUTATION, {
+        variables: { clientId: moving.clientId, index: moving.index },
+        update(proxy, result){
+            setSaving(false);
+        },
+        onError(err){
+            setSaving(false);
+        }
+    });
+
+    useEffect(() => {
+        moveClient();
+    }, [moving, moveClient]);
+
     const onDragEnd = r => {
         const { destination, source, draggableId } = r;
         if(!destination) return;
@@ -60,6 +87,10 @@ export default () => {
         setClients([
             ...newProjectsId
         ]);
+        setMoving({
+            clientId: draggableId,
+            index: destination.index
+        });
         setSaving(true);
     };
 
@@ -85,6 +116,7 @@ export default () => {
                                             key={client._id}
                                             client={client}
                                             index={index}
+                                            setClients={setClients}
                                         />
                                     ))}
                                     {provided.placeholder}
@@ -93,18 +125,19 @@ export default () => {
                         </Droppable>
                     ): null}
                 </DragDropContext>
-                <AddClientsModal open={openAdd} handleClose={handleCloseAdd} />
+                <AddClientsModal open={openAdd} handleClose={handleCloseAdd} setClients={setClients}
+                    errors={errors} setErrors={setErrors}
+                />
                 <WaitModal open={saving} />
         </SubComponentWrapper>
     );
 };
 
-const FETCH_CLIENTS_QUERY = gql`
-    {
-        getClients {
-            _id
-            title
-        }
+const MOVE_CLIENT_MUTATION = gql`
+    mutation moveClient(
+        $clientId: ID!
+        $index: Int!
+    ) {
+        moveClient(clientId: $clientId, index: $index)
     }
-
-`;
+`; 
