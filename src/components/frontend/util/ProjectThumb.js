@@ -63,7 +63,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.secondaryColor,
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
-        backgroundImage: props => `url('${props.project.thumbnailUrl}')`
+        backgroundImage: props => `url('${props.project.thumbnail ? props.project.thumbnail.url : ''}')`
     },
     projectTypeContainer: {
         [theme.breakpoints.up('lg')]: {

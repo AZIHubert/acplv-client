@@ -45,13 +45,17 @@ export default ({theme}) => {
         }
       }, [dataProjects, loadingProjects])
     const filterProjects = _id => {
+        console.log(_id);
         if(_id === 'all'){
             setFilteredProjects([
                 ...dataProjects.getProjects
             ]);
         } else {
+            console.log(dataProjects.getProjects.filter(project => project._id !== _id))
             setFilteredProjects([
-                ...dataProjects.getProjects.filter(project => project._id !== _id)
+                ...dataProjects.getProjects
+                    .filter(project => project.type)
+                    .filter(project => project.type._id === _id)
             ]);
         }
     };
@@ -69,7 +73,7 @@ export default ({theme}) => {
                     <Box
                         className={classes.wrapper}
                     >
-                        {(dataTypes.getUsedTypes > 1) && (
+                        {(dataTypes.getUsedTypes.length > 1) && (
                             <Types
                                 filterProjects={filterProjects}
                                 usedTypes={dataTypes.getUsedTypes}

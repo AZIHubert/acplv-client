@@ -71,7 +71,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({history, project, index}) => {
+export default ({history, project, setProjects, index}) => {
 
     const {logout} = useContext(AuthContext);
 
@@ -84,6 +84,11 @@ export default ({history, project, index}) => {
     const handleCloseEdit = () => setOpenEdit(false);
 
     const [newProject, setNewProject] = useState(project);
+    const [saved, setSaved] = useState(false);
+
+    const [errors, setErrors] = useState({
+        title: ''
+    });
 
     const [editProject] = useMutation(DISPLAY_PROJECT_MUTATION, {
         variables: {
@@ -95,9 +100,7 @@ export default ({history, project, index}) => {
                 thumbnailId: newProject.thumbnailId
             }
         },
-        update(proxy, result){
-            console.log(result)
-        },
+        update(){},
         onError(err){
             const error = err.graphQLErrors[0];
             if(error.message === "Authorization header must be provided" ||
@@ -113,11 +116,15 @@ export default ({history, project, index}) => {
             ...prevState,
             display: e.target.checked
         }));
+        setSaved(true);
     };
 
     useEffect(() => {
-        editProject();
-    }, [newProject, editProject])
+        if(saved){
+            editProject();
+            setSaved(false);
+        }
+    }, [saved, editProject])
 
     const theme = useTheme();
     const classes = useStyles(theme);
@@ -133,7 +140,7 @@ export default ({history, project, index}) => {
                 >
                     <Box display="flex" alignItems="center">
                         <Typography variant="body2">
-                            {project.title}
+                            {project.title.length > 23 ? `${project.title.substring(0, 20)}...` : project.title}
                         </Typography>
                         <Button disableRipple className={classes.editButton}
                             onClick={handleOpenEdit}
@@ -162,11 +169,14 @@ export default ({history, project, index}) => {
                     </Box>
                     <DeleteProjectsModal
                         open={openDelete} handleClose={handleCloseDelete}
-                        title={project.title} _id={project._id}
+                        title={project.title} projectId={project._id}
+                        imageId={project.thumbnail ? project.thumbnail._id : null}
+                        setProjects={setProjects}
                     />
                     <AddProjectsModal
                         open={openEdit} handleClose={handleCloseEdit}
                         project={project}
+                        errors={errors} setErrors={setErrors}
                     />
                 </Box>
             )}

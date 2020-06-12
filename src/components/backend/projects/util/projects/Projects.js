@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
+import { FETCH_PROJECTS_QUERY } from '../../../../../graphql/querys/index';
 
 import SubComponentWrapper from '../../../util/SubComponentWrapper';
 import CustomButton from '../../../util/CustomButton';
@@ -32,8 +32,12 @@ export default () => {
     const [saving, setSaving] = useState(false);
 
     const [projects, setProjects] = useState([]);
+
+    const [errors, setErrors] = useState({
+        title: ''
+    });
     
-    const {loading, error, data} = useQuery(GET_PROJECTS_QUERY);
+    const {loading, error, data} = useQuery(FETCH_PROJECTS_QUERY);
 
     useEffect(() => {
         const onCompleted = data => {
@@ -62,7 +66,6 @@ export default () => {
         ]);
         setSaving(true);
     };
-
     return (
         <SubComponentWrapper title='Add/Remove Projects'>
             <DragDropContext
@@ -85,6 +88,7 @@ export default () => {
                                         key={project._id}
                                         project={project}
                                         index={index}
+                                        setProjects={setProjects}
                                     />
                                 ))}
                                 {provided.placeholder}
@@ -93,21 +97,10 @@ export default () => {
                     </Droppable>
                 ): null}
             </DragDropContext>
-            <AddProjectsModal open={openAdd} handleClose={handleCloseAdd} />
+            <AddProjectsModal open={openAdd} handleClose={handleCloseAdd}
+                errors={errors} setErrors={setErrors} setProjects={setProjects}
+            />
             <WaitModal open={saving} />
         </SubComponentWrapper>
     )
 };
-
-const GET_PROJECTS_QUERY = gql`
-    {
-        getProjects {
-            _id
-            display
-            title
-            type {
-                _id
-            }
-        }
-    }
-`;

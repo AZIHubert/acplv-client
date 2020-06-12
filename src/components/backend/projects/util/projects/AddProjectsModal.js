@@ -1,7 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useContext, useEffect } from 'react';
 
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import { FETCH_PROJECTS_QUERY } from '../../../../../graphql/querys/index';
+
+import { AuthContext } from '../../../../../context/AuthContext';
+import {withRouter} from 'react-router-dom';
 
 import CustomModal from '../../../util/CustomModal';
 import Form from '../../../util/Form';
@@ -82,22 +86,30 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({open, handleClose, project}) => {
+export default withRouter(({history, open, handleClose, project, setProjects, errors, setErrors}) => {
     const theme = useTheme();
     const classes = useStyles(theme);
+    const {logout} = useContext(AuthContext);
+
+    const [projectId, setProjectId] = useState(project ? project._id :  '');
     const {loading, data} = useQuery(FETCH_TYPES_QUERY);
-    const projectId = project ? project._id :  '';
-    const [droperText, setDroperText] = useState('Drag \'n\' drop the thumbnail here, or click to select file');
-    const [thumbnailChange, setThumbnailChange] = useState(false)
-    const [thumbnail, setThumbnail] = useState({});
-    const [previewThumbnail, setPreviewThumbnail] = useState(
-        project ? project.thumbnailUrl : ''
-    );
     const [newProject, setNewProject] = useState({
         title: project ? project.title : '',
         display: project ? project.display : true,
-        type: (project && project.type) ? project.type._id : ''
+        typeId: (project && project.type) ? project.type._id : ''
     });
+    const [projectSaved, setProjectSaved] = useState(false);
+
+    const hasThumbnail = (project && !!project.thumbnail);
+    const [thumbnailChange, setThumbnailChange] = useState(false);
+    const [thumbnail, setThumbnail] = useState(hasThumbnail ? project.thumbnail : {});
+    const [droperText, setDroperText] = useState('Drag \'n\' drop the thumbnail here, or click to select file');
+    const [previewThumbnail, setPreviewThumbnail] = useState(
+        hasThumbnail ? project.thumbnail.url : ''
+    );
+
+    const [projectResult, setProjectResult] = useState({});
+    
     const onDrop = useCallback(([file]) => {
         if(file.type === 'image/jpeg' || file.type === 'image/png'){
             setThumbnailChange(true);
@@ -107,7 +119,6 @@ export default ({open, handleClose, project}) => {
             setDroperText('Your file is not an image')
         }
     }, []);
-    console.log(thumbnail)
     const handleChange = e => {
         e.persist();
         setNewProject(prevState => ({
@@ -116,36 +127,99 @@ export default ({open, handleClose, project}) => {
         }));
     };
 
-    const [uploadImage] = useMutation(UPLOAD_THUMBNAIL, {
-        variables: {imageFile: thumbnail},
+    const [createProject] = useMutation(CREATE_PROJECT_MUTATION, {
+        variables: {projectInput: newProject},
         update(proxy, result){
-            console.log(result)
+            if(Object.keys(thumbnail).length){
+                setProjectId(result.data.createProject._id);
+                setProjectResult(result.data.createProject);
+                console.log('uploadThumbnail')
+                setProjectSaved(true);
+            } else {
+                const data = proxy.readQuery({
+                    query: FETCH_PROJECTS_QUERY
+                });
+                data.getProjects = [result.data.createProject, ...data.getProjects];
+                proxy.writeQuery({ query: FETCH_PROJECTS_QUERY, data });
+                setProjects([...data.getProjects]);
+                setNewProject({
+                    title:  '',
+                    display:  true,
+                    typeId:  ''
+                });
+                setProjectId('');
+                setProjectResult({});
+                handleClose();
+            }
         },
         onError(err){
-            console.log(err);
-            console.log(err.graphQLErrors[0])
+            const error = err.graphQLErrors[0];
+            if(error.extensions.code === "BAD_USER_INPUT"){
+                setErrors(error.extensions.exception.errors);
+            }
+            if(error.message === "Authorization header must be provided" ||
+               error.message === 'Authentication token must be \'Bearer [token]\''){
+                    logout();
+                    history.push('/login');
+            }
+        }
+    });
+    const [uploadImage] = useMutation(UPLOAD_THUMBNAIL, {
+        variables: {imageFile: thumbnail, projectId},
+        update(proxy, result){
+            console.log('Upload proxy');
+            console.log('projectResult: ', projectResult)
+            const projectWithThumbnail = {
+                ...projectResult,
+                thumbnail: result.data.uploadImage
+            };
+            const data = proxy.readQuery({
+                query: FETCH_PROJECTS_QUERY
+            });
+            data.getProjects = [projectWithThumbnail, ...data.getProjects];
+            proxy.writeQuery({ query: FETCH_PROJECTS_QUERY, data });
+            console.log('done, reset everything')
+            setProjects([...data.getProjects]);
+            setNewProject({
+                title:  '',
+                display:  true,
+                typeId:  ''
+            });
+            setThumbnail({});
+            setPreviewThumbnail('');
+            setProjectResult({});
+            handleClose();
+        },
+        onError(err){
+            setNewProject({
+                title:  '',
+                display:  true,
+                typeId:  ''
+            });
+            setThumbnail({});
+            setPreviewThumbnail('');
+            setProjectResult({});
+            handleClose();
         }
     });
 
-
-
     const handleSubmit = e => {
         e.preventDefault();
-        uploadImage();
-        if(thumbnailChange){
-            console.log(thumbnail);
-        }
-        if(projectId){
+        if(projectId.projectId){
             console.log('Edit Project');
             console.log(newProject);
         } else {
-            console.log('Add Project');
-            console.log(newProject);
+            createProject();
         }
     }
 
-    
-
+    useEffect(() => {
+        if(projectSaved){
+            uploadImage();
+            setProjectId('');
+            setProjectSaved(false);
+        }
+    }, [projectSaved, uploadImage]);
 
     const handleChangeDisplay = e => {
         e.persist();
@@ -171,6 +245,8 @@ export default ({open, handleClose, project}) => {
                     autoFocus
                     value={newProject.title}
                     handleChange={handleChange}
+                    error={!!errors.title}
+                    helperText={errors.title}
                 />
                 <FormControlLabel
                     value="start"
@@ -199,9 +275,9 @@ export default ({open, handleClose, project}) => {
                                 style={{input: {
                                     fontSize: 'inherit'
                                 }}}
-                                name="type"
+                                name="typeId"
                                 className={classes.typeSelector}
-                                defaultValue={newProject.type}
+                                defaultValue={newProject.typeId}
                                 onChange={handleChange}
                             >
                                 <option aria-label="None" value="" />
@@ -235,7 +311,10 @@ export default ({open, handleClose, project}) => {
                 </Box>
                 <Box textAlign="right">
                     {previewThumbnail && (
-                        <Button className={classes.removeButton} onClick={() => setPreviewThumbnail('')}>
+                        <Button className={classes.removeButton} onClick={() => {
+                            setPreviewThumbnail('');
+                            setThumbnail({});
+                        }}>
                             Remove thumbnail
                         </Button>
                     )}
@@ -243,7 +322,7 @@ export default ({open, handleClose, project}) => {
             </Form>
         </CustomModal>
     );
-};
+});
 
 const FETCH_TYPES_QUERY = gql` 
     {
@@ -262,6 +341,10 @@ const CREATE_PROJECT_MUTATION = gql`
             title
             type {
                 _id
+            },
+            thumbnail {
+                _id
+                url
             }
         }
     }
@@ -286,7 +369,11 @@ const EDIT_PROJECT_MUTATION = gql`
 const UPLOAD_THUMBNAIL = gql`
     mutation uploadImage(
         $imageFile: Upload!
+        $projectId: ID!
     ) {
-        uploadImage(imageFile: $imageFile)
+        uploadImage(imageFile: $imageFile, projectId: $projectId){
+            _id
+            url
+        }
     }
 `;

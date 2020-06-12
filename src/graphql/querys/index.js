@@ -7,9 +7,10 @@ export const FETCH_FRONT_PROJECTS_QUERY = gql`
             index
             title
             type {
+                _id
                 title
             }
-            thumbnailUrl {
+            thumbnail {
                 url
             }
         }
@@ -110,4 +111,21 @@ export const FETCH_TYPES_QUERY = gql`
             title
         }
     }
+`;
+
+export const FETCH_PROJECTS_QUERY = gql`
+{
+    getProjects {
+        _id
+        display
+        title
+        type {
+            _id
+        },
+        thumbnail {
+            _id
+            url
+        }
+    }
+}
 `;

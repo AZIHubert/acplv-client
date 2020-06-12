@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import CustomModal from '../../../util/CustomModal';
 
 import { Box, Typography, Button } from '@material-ui/core';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/react-hooks';
+import { FETCH_PROJECTS_QUERY } from '../../../../../graphql/querys/index';
+
+import {withRouter} from 'react-router-dom';
+
+import { AuthContext } from '../../../../../context/AuthContext';
 
 const useStyles = makeStyles(theme => ({
     titleContainer: {
@@ -45,7 +53,60 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({open, handleClose, title, _id}) => {
+export default withRouter(({history, open, handleClose, setProjects, title, projectId, imageId}) => {
+
+    const logout = useContext(AuthContext);
+
+    const [deleteProject] = useMutation(DELETE_PROJECT_MUTATION, {
+        variables: {projectId},
+        update(proxy, result){
+            handleClose();
+            const data = proxy.readQuery({
+                query: FETCH_PROJECTS_QUERY
+            });
+            data.getProjects = data.getProjects.filter(project => project._id !== projectId);
+            proxy.writeQuery({ query: FETCH_PROJECTS_QUERY, data });
+            setProjects([...data.getProjects]);
+        },
+        onError(err){
+            const error = err.graphQLErrors[0];
+            if(error.message === "Authorization header must be provided" ||
+               error.message === 'Authentication token must be \'Bearer [token]\''){
+                    logout();
+                    history.push('/login');
+            } else {
+                handleClose();
+                console.log(err);
+            }
+        }
+    });
+
+    const [deleteImage] = useMutation(DELETE_IMAGE_MUTATION, {
+        variables: {imageId},
+        update(proxy, result){
+            deleteProject();
+        },
+        onError(err){
+            const error = err.graphQLErrors[0];
+            if(error.message === "Authorization header must be provided" ||
+               error.message === 'Authentication token must be \'Bearer [token]\''){
+                    logout();
+                    history.push('/login');
+            } else {
+                handleClose();
+                console.log(err);
+            }
+        }
+    });
+
+    const handleDelete = () => {
+        if(imageId) deleteImage()
+        else {
+            console.log('project')
+            deleteProject();
+        }
+    }
+
     const theme = useTheme();
     const classes = useStyles(theme);
     return (
@@ -57,7 +118,7 @@ export default ({open, handleClose, title, _id}) => {
                     </Typography>
                 </Box>
                 <Box display="flex" justifyContent="space-between">
-                    <Button className={classes.deleteButton}>
+                    <Button className={classes.deleteButton} onClick={handleDelete}>
                         <Typography variant="body2" className={classes.buttonText}>
                             delete
                         </Typography>
@@ -71,4 +132,20 @@ export default ({open, handleClose, title, _id}) => {
             </Box>
         </CustomModal>
     );
-};
+});
+
+const DELETE_PROJECT_MUTATION = gql`
+    mutation deleteProject(
+        $projectId: ID!
+    ) {
+        deleteProject(projectId: $projectId)
+    }
+`;
+
+const DELETE_IMAGE_MUTATION = gql`
+    mutation deleteImage(
+        $imageId: ID!
+    ) {
+        deleteImage(imageId: $imageId)
+    }
+`;

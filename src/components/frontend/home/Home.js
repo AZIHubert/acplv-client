@@ -37,22 +37,22 @@ export default () => {
                 <Header
                     whoAreWeExist={(!!dataGeneral.getGeneral.whoAreWeFirst || !!dataGeneral.getGeneral.whoAreWeSecond)}
                 />
-                {(!!dataGeneral.getGeneral.whoAreWeFirst || !!dataGeneral.getGeneral.whoAreWeSecond) &&
+                {(!!dataGeneral && (!!dataGeneral.getGeneral.whoAreWeFirst || !!dataGeneral.getGeneral.whoAreWeSecond)) &&
                     <About
                         whoAreWeFirst={dataGeneral.getGeneral.whoAreWeFirst}
                         whoAreWeSecond={dataGeneral.getGeneral.whoAreWeSecond}
                     />
                 }
-                {(!!dataProjectCats.getServiceCats.length) && (
+                {(!!dataProjectCats && !!dataProjectCats.getServiceCats.length) && (
                     <Service serviceCats={dataProjectCats.getServiceCats} />
                 )}
-                {(!!dataProjects.getProjects.length) && (
-                    <Project projects={dataProjects.getProjects} />
+                {(!!dataProjects && !!dataProjects.getProjects.length) && (
+                    <Project projects={dataProjects.getProjects.slice(0, 6)} />
                 )}
-                {(!!dataClients.getClients.length) && (
+                {(!!dataClients && !!dataClients.getClients.length) && (
                     <Clients clients={dataClients.getClients} />
                 )}
-                {(!!dataGeneral.getGeneral.email) && (
+                {(!!dataGeneral && !!dataGeneral.getGeneral.email) && (
                     <Footer email={dataGeneral.getGeneral.email} />
                 )}
             </ComponentWrapper>

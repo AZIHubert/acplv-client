@@ -54,7 +54,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default withRouter(({history, open, handleClose, title, _id, setTypes}) => {
-
     const theme = useTheme();
     const classes = useStyles(theme);
 
