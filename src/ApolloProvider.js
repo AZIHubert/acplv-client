@@ -8,12 +8,8 @@ import { setContext } from 'apollo-link-context';
 import { createUploadLink } from "apollo-upload-client";
 
 const link = createUploadLink({
-    uri: 'http://localhost:5000/graphql'
+    uri: 'https://serene-shelf-09715.herokuapp.com/graphql'
 });
-
-// const httpLink = createHttpLink({
-//     uri: 'http://localhost:5000/graphql'
-// });
 
 const authLink = setContext(() => {
     const token = localStorage.getItem('jwtToken');
@@ -26,6 +22,9 @@ const authLink = setContext(() => {
 
 const client = new ApolloClient({
     link: authLink.concat(link),
+    fetchOptions: {
+        mode: 'no-cors'
+    },
     cache: new InMemoryCache()
 });
 

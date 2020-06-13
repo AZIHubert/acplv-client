@@ -70,7 +70,7 @@ export default () => {
     });
 
     useEffect(() => {
-        moveClient();
+        if(moving.clientId) moveClient();
     }, [moving, moveClient]);
 
     const onDragEnd = r => {

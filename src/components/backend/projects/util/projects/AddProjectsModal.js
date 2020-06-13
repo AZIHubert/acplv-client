@@ -126,7 +126,7 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
         } else {
             setDroperText('Your file is not an image')
         }
-    }, []);
+    }, [hasThumbnail]);
     const handleChange = e => {
         e.persist();
         setNewProject(prevState => ({

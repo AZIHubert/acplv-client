@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({service, index}) => {
+export default ({service, index, setServices, serviceCatId}) => {
 
     const theme = useTheme();
     const classes = useStyles(theme);
@@ -96,6 +96,7 @@ export default ({service, index}) => {
                     <AddServiceModal open={openEdit} handleClose={handleCloseEdit} service={service} />
                     <RemoveServiceModal open={openDelete} handleClose={handleCloseDelete}
                         title={service.title} _id={service._id}
+                        setServices={setServices} serviceCatId={serviceCatId}
                     />
                 </Box>
             )}

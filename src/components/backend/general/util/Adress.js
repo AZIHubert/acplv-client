@@ -10,12 +10,14 @@ export default ({adressCity, adressStreet, handleChange}) => {
                 paddingBottom
                 label="Street"
                 name="adressStreet"
+                value={adressStreet}
                 handleChange={handleChange}
                 focused
             />
             <CustomTextField
                 label="City"
                 name="adressCity"
+                value={adressCity}
                 handleChange={handleChange}
             />
         </SubComponentWrapper>

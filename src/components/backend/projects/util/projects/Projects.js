@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { FETCH_PROJECTS_QUERY } from '../../../../../graphql/querys/index';
 
 import SubComponentWrapper from '../../../util/SubComponentWrapper';
@@ -36,6 +37,10 @@ export default () => {
     const [errors, setErrors] = useState({
         title: ''
     });
+    const [moving, setMoving] = useState({
+        projectId: '',
+        index: ''
+    });
     
     const {loading, error, data} = useQuery(FETCH_PROJECTS_QUERY);
 
@@ -49,6 +54,23 @@ export default () => {
             }
         }
     }, [loading, data, error]);
+
+    const [moveProject] = useMutation(MOVE_PROJECT_MUTATION, {
+        variables: { projectId: moving.projectId, index: moving.index },
+        update(proxy, result){
+            setSaving(false);
+        },
+        onError(err){
+            console.log(err)
+            setSaving(false);
+        }
+    });
+
+    useEffect(() => {
+        if(moving.projectId){
+            moveProject();
+        }
+    }, [moving, moveProject]);
 
     const onDragEnd = r => {
         const { destination, source, draggableId } = r;
@@ -64,6 +86,10 @@ export default () => {
         setProjects([
             ...newProjectsId
         ]);
+        setMoving({
+            projectId: draggableId,
+            index: destination.index
+        });
         setSaving(true);
     };
     return (
@@ -104,3 +130,12 @@ export default () => {
         </SubComponentWrapper>
     )
 };
+
+const MOVE_PROJECT_MUTATION = gql`
+    mutation moveProject(
+        $projectId: ID!
+        $index: Int!
+    ) {
+        moveProject(projectId: $projectId, index: $index)
+    }
+`; 

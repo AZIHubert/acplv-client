@@ -40,7 +40,7 @@ export default ({theme}) => {
         if(!loadingProjects) {
             const {getProjects} = dataProjects
             setFilteredProjects([
-                ...getProjects
+                ...getProjects.filter(project => project.display)
             ]);
         }
       }, [dataProjects, loadingProjects])

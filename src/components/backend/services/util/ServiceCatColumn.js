@@ -88,9 +88,13 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default ({serviceCat, index, services}) => {
+export default ({serviceCat, index, services, setServices, setServiceCats}) => {
     const theme = useTheme();
     const classes = useStyles(theme);
+
+    const [errors, setErrors] = useState({
+        title: ''
+    });
 
     const [openEdit, setOpenEdit] = useState(false);
     const handleOpenEdit = () => setOpenEdit(true);
@@ -103,7 +107,6 @@ export default ({serviceCat, index, services}) => {
     const [openAdd, setOpenAdd] = useState(false);
     const handleOpenAdd = () => setOpenAdd(true);
     const handleCloseAdd = () => setOpenAdd(false);
-
     return (
         <Draggable draggableId={serviceCat._id} index={index}>
             {provided => (
@@ -150,9 +153,9 @@ export default ({serviceCat, index, services}) => {
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}
                             >
-                                {services.map((service, index) => (
-                                    <Service service={service} key={service._id} index={index}>
-                                        {service.title}
+                                {services.sort((a, b) => a.index - b.index).map((service, index) => (
+                                    <Service service={service} key={service._id} index={index} setServices={setServices} serviceCatId={serviceCat._id}>
+                                        {service.title} 
                                     </Service>
                                 ))}
                                 {provided.placeholder}
@@ -166,11 +169,17 @@ export default ({serviceCat, index, services}) => {
                             </Typography>
                         </Button>
                     </Box>
-                    <AddServiceCatModal open={openEdit} handleClose={handleCloseEdit} serviceCat={serviceCat} />
-                    <RemoveServiceCatModal open={openDelete} handleClose={handleCloseDelete}
-                        title={serviceCat.title} _id={serviceCat._id}
+                    <AddServiceCatModal open={openEdit} handleClose={handleCloseEdit} serviceCat={serviceCat}
+                        setServices={setServices} errors={errors} setErrors={setErrors}
+                        serviceCatId={serviceCat._id}
                     />
-                    <AddServiceModal open={openAdd} handleClose={handleCloseAdd} />
+                    <RemoveServiceCatModal open={openDelete} handleClose={handleCloseDelete}
+                        title={serviceCat.title} _id={serviceCat._id} setServiceCats={setServiceCats}
+                    />
+                    <AddServiceModal open={openAdd} handleClose={handleCloseAdd}
+                        setServices={setServices} errors={errors} setErrors={setErrors}
+                        serviceCatId={serviceCat._id}
+                    />
                 </Box>
             )}
         </Draggable>

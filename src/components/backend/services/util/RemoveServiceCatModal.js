@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import CustomModal from '../../util/CustomModal';
 
 import { Box, Typography, Button } from '@material-ui/core';
+
+import { AuthContext } from '../../../../context/AuthContext';
+
+import {withRouter} from 'react-router-dom';
+
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/react-hooks';
+import { FETCH_SERVICE_CAT_QUERY } from '../../../../graphql/querys/index';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -45,9 +53,35 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default ({open, handleClose, title, _id}) => {
+export default withRouter(({history, open, handleClose, title, _id, setServiceCats}) => {
     const theme = useTheme();
     const classes = useStyles(theme);
+
+    const {logout} = useContext(AuthContext);
+
+    const [deleteServiceCat] = useMutation(DELETE_SERVICECAT_MUTATION, {
+        variables: {serviceCatId: _id},
+        update(proxy, result){
+            const data = proxy.readQuery({
+                query: FETCH_SERVICE_CAT_QUERY
+            });
+            data.getServiceCats = data.getServiceCats.filter(serviceCat => serviceCat._id !== _id);
+            proxy.writeQuery({ query: FETCH_SERVICE_CAT_QUERY, data });
+            setServiceCats([...data.getServiceCats]);
+        },
+        onError(err){
+            const error = err.graphQLErrors[0];
+            if(error.message === "Authorization header must be provided" ||
+               error.message === 'Authentication token must be \'Bearer [token]\''){
+                    logout();
+                    history.push('/login');
+            } else {
+                handleClose();
+                console.log(err);
+            }
+        }
+    });
+
     return (
         <CustomModal open={open} handleClose={handleClose}>
             <Box>
@@ -57,7 +91,7 @@ export default ({open, handleClose, title, _id}) => {
                     </Typography>
                 </Box>
                 <Box display="flex" justifyContent="space-between">
-                    <Button className={classes.deleteButton}>
+                    <Button className={classes.deleteButton} onClick={() => deleteServiceCat()}>
                         <Typography variant="body2" className={classes.buttonText}>
                             delete
                         </Typography>
@@ -71,4 +105,12 @@ export default ({open, handleClose, title, _id}) => {
             </Box>
         </CustomModal>
     );
-};
+});
+
+const DELETE_SERVICECAT_MUTATION = gql`
+    mutation deleteServiceCat(
+        $serviceCatId: ID!
+    ) {
+        deleteServiceCat(serviceCatId: $serviceCatId)
+    }
+`;

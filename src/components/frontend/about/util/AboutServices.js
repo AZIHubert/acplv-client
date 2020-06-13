@@ -16,7 +16,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default ({theme, serviceCats}) => {
-    console.log(serviceCats);
     const classes = useStyles(theme);
     return (
         <SubComponentWrapper

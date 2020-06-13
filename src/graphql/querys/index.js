@@ -6,6 +6,7 @@ export const FETCH_FRONT_PROJECTS_QUERY = gql`
             _id
             index
             title
+            display
             type {
                 _id
                 title
@@ -125,6 +126,20 @@ export const FETCH_PROJECTS_QUERY = gql`
         thumbnail {
             _id
             url
+        }
+    }
+}
+`;
+
+export const FETCH_SERVICE_CAT_QUERY = gql`
+{
+    getServiceCats {
+        _id
+        title
+        services {
+            _id
+            title
+            index
         }
     }
 }

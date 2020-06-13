@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import ComponentWrapper from '../util/ComponentWrapper';
 
@@ -10,6 +10,7 @@ import Email from './util/Email';
 import Phone from './util/Phone';
 import Adress from './util/Adress';
 import SocialMedias from './util/SocialMedias';
+import WaitModal from '../util/WaitModal';
 
 export default () => {
     const {loading, error, data} = useQuery(FETCH_GENERAL_QUERY);
@@ -25,6 +26,7 @@ export default () => {
         instagramLink: '',
         linkedinLink: ''
     });
+    const [saving, setSaving] = useState(false);
     useEffect(() => {
         const onCompleted = data => {
             setGeneral({
@@ -46,6 +48,16 @@ export default () => {
             }
         }
     }, [loading, data, error]);
+
+    const [editGeneral] = useMutation(EDIT_GENERAL_QUERY, {
+        variables: { generalInput: general },
+        update(proxy, result){setSaving(false);},
+        onError(err){
+            console.log(err);
+            setSaving(false);
+        }
+    });
+
     const handleChange = e => {
         e.persist();
         setGeneral(prevState => ({
@@ -55,7 +67,8 @@ export default () => {
     };
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(general);
+        setSaving(true);
+        editGeneral();
     }
     return (
         <ComponentWrapper title="general" isForm handleSubmit={handleSubmit}>
@@ -72,7 +85,7 @@ export default () => {
                         handleChange={handleChange}
                     />
                     <Phone
-                        Phone={general.Phone}
+                        phone={general.phone}
                         handleChange={handleChange}
                     />
                     <Adress
@@ -88,6 +101,7 @@ export default () => {
                     />
                 </>
             )}
+            <WaitModal open={saving} />
         </ComponentWrapper>
     );
 };
@@ -95,6 +109,27 @@ export default () => {
 const FETCH_GENERAL_QUERY = gql`
     {
         getGeneral{
+            adressCity
+            adressStreet
+            email
+            facebookLink
+            linkedinLink
+            instagramLink
+            phone
+            primaryColor
+            secondaryColor
+            tertiaryColor
+        }
+    }
+`;
+
+const EDIT_GENERAL_QUERY = gql`
+    mutation editGeneral(
+        $generalInput: GeneralInput
+    ) {
+        editGeneral(
+            generalInput: $generalInput
+        ){
             adressCity
             adressStreet
             email

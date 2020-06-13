@@ -26,7 +26,7 @@ export default () => {
     const {loading: loadingClient, data: dataClients} = useQuery(FETCH_FRONT_CLIENT_QUERY);
     const {loading: loadingProject, data: dataProjects} = useQuery(FETCH_FRONT_PROJECTS_QUERY);
     const {loading: loadingServiceCats, data: dataProjectCats} = useQuery(FETCH_FRONT_SERVICE_CATS);
-    if(loadingServiceCats) console.log(dataProjectCats)
+    if(!loadingProject) console.log(dataProjects.getProjects)
     return (
         (!loadingClient &&
          !loadingProject &&
@@ -46,8 +46,9 @@ export default () => {
                 {(!!dataProjectCats && !!dataProjectCats.getServiceCats.length) && (
                     <Service serviceCats={dataProjectCats.getServiceCats} />
                 )}
+                
                 {(!!dataProjects && !!dataProjects.getProjects.length) && (
-                    <Project projects={dataProjects.getProjects.slice(0, 6)} />
+                    <Project projects={dataProjects.getProjects.filter(project => project.display).slice(0, 6)} />
                 )}
                 {(!!dataClients && !!dataClients.getClients.length) && (
                     <Clients clients={dataClients.getClients} />

@@ -25,7 +25,9 @@ const useStyles = makeStyles(theme => ({
 export default withRouter(({history, open, handleClose, client, setClients, errors, setErrors}) => {
     const theme = useTheme();
     const classes = useStyles(theme);
+
     const {logout} = useContext(AuthContext);
+    
     const clientId = client ? client._id : '';
     const [title, setTitle] = useState({
         title: client ? client.title :  ''
