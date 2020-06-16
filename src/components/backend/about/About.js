@@ -11,12 +11,15 @@ import WaitModal from '../util/WaitModal';
 
 export default () => {
     const {loading, error, data} = useQuery(FETCH_GENERAL_QUERY);
+
     const [general, setGeneral] = useState({
         about: '',
         whoAreWeFirst: '',
         whoAreWeSecond: ''
     });
+
     const [saving, setSaving] = useState(false);
+
     useEffect(() => {
         const onCompleted = data => {
             setGeneral({
@@ -34,7 +37,20 @@ export default () => {
 
     const [editGeneral] = useMutation(EDIT_GENERAL_QUERY, {
         variables: { generalInput: general },
-        update(){setSaving(false)},
+        update(proxy, result){
+            const data = proxy.readQuery({
+                query: FETCH_GENERAL_QUERY
+            });
+            const newGeneral = result.data.editGeneral;
+            proxy.writeQuery({
+                query: FETCH_GENERAL_QUERY,
+                data: {getGeneral: {
+                    ...data.getGeneral,
+                    ...newGeneral
+                }}
+            });
+            setSaving(false);
+        },
         onError(err){
             console.log(err);
             setSaving(false);
@@ -51,7 +67,6 @@ export default () => {
     const handleSubmit = e => {
         e.preventDefault();
         setSaving(true);
-        console.log(general)
         editGeneral();
     }
     return (

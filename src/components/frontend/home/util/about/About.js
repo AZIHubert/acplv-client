@@ -14,7 +14,10 @@ import {
 
 const useStyles = makeStyles(theme => ({
     text: {
-        textIndent: theme.spacing(5)
+        textIndent: theme.spacing(5),
+        [theme.breakpoints.down('sm')]: {
+            textIndent: theme.spacing(2),
+        }
     }
 }));
 

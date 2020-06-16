@@ -51,7 +51,20 @@ export default () => {
 
     const [editGeneral] = useMutation(EDIT_GENERAL_QUERY, {
         variables: { generalInput: general },
-        update(proxy, result){setSaving(false);},
+        update(proxy, result){
+            const data = proxy.readQuery({
+                query: FETCH_GENERAL_QUERY
+            });
+            const newGeneral = result.data.editGeneral;
+            proxy.writeQuery({
+                query: FETCH_GENERAL_QUERY,
+                data: {getGeneral: {
+                    ...data.getGeneral,
+                    ...newGeneral
+                }}
+            });
+            setSaving(false);
+        },
         onError(err){
             console.log(err);
             setSaving(false);

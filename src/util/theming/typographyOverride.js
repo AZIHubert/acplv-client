@@ -76,18 +76,18 @@ export default (theme) => ({
             },
         },
         body1: {
-            fontSize: '3rem',
+            fontSize: '2.25rem',
             [theme.breakpoints.down('lg')]: {
-                fontSize: '2.5rem',
-            },
-            [theme.breakpoints.down('md')]: {
-                fontSize: '2.25rem',
-            },
-            [theme.breakpoints.down('sm')]: {
                 fontSize: '2rem',
             },
+            [theme.breakpoints.down('md')]: {
+                fontSize: '1.75rem',
+            },
+            [theme.breakpoints.down('sm')]: {
+                fontSize: '1.375rem',
+            },
             [theme.breakpoints.down('xs')]: {
-                fontSize: '1.5rem',
+                fontSize: '1rem',
             },
             textTransform: 'uppercase',
             '&::selection': {
@@ -96,18 +96,18 @@ export default (theme) => ({
             }
         },
         body2: {
-            fontSize: '3rem',
+            fontSize: '2.25rem',
             [theme.breakpoints.down('lg')]: {
-                fontSize: '2.5rem',
-            },
-            [theme.breakpoints.down('md')]: {
-                fontSize: '2.25rem',
-            },
-            [theme.breakpoints.down('sm')]: {
                 fontSize: '2rem',
             },
+            [theme.breakpoints.down('md')]: {
+                fontSize: '1.75rem',
+            },
+            [theme.breakpoints.down('sm')]: {
+                fontSize: '1.375rem',
+            },
             [theme.breakpoints.down('xs')]: {
-                fontSize: '1.5rem',
+                fontSize: '1rem',
             },
             color: theme.palette.tertiaryColor,
             textTransform: 'uppercase',
