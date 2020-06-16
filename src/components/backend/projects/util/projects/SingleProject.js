@@ -112,6 +112,7 @@ export default ({history, project, setProjects, index}) => {
     });
 
     const handleClick = e => {
+        e.persist();
         setNewProject(prevState => ({
             ...prevState,
             display: e.target.checked
@@ -153,7 +154,7 @@ export default ({history, project, setProjects, index}) => {
                     <Box display="flex" alignItems="center">
                         <FormControlLabel
                             value="start"
-                            control={<Checkbox color="primary" checked={newProject.display} onClick={handleClick} />}
+                            control={<Checkbox color="primary" disableRipple checked={newProject.display} onClick={handleClick} />}
                             label="display"
                             labelPlacement="start"
                             className={classes.formControlLabel}
