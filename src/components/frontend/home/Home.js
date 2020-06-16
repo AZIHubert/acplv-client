@@ -58,16 +58,14 @@ export default () => {
     }, [loadingProject, dataProjects, errorProjects]);
 
     useEffect(() => {
-        const onCompleted = data => setProjects(data.serviceCats);
+        const onCompleted = data => setServiceCats(data.serviceCats);
         if (onCompleted && !loadingServiceCats && !errorServiceCats) onCompleted(dataServiceCats);
     }, [loadingServiceCats, dataServiceCats, errorServiceCats]);
 
     return (
         (!loadingClients && !loadingProject && !loadingGeneral && !loadingServiceCats) ? (
             <ComponentWrapper>
-                <Header
-                    whoAreWeExist={(!!general.whoAreWeFirst || !!general.whoAreWeSecond)}
-                />
+                <Header whoAreWeExist={(!!general.whoAreWeFirst || !!general.whoAreWeSecond)} />
                 {(!!general.whoAreWeFirst || !!general.whoAreWeSecond) &&
                     <About
                         whoAreWeFirst={general.whoAreWeFirst}
