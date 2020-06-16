@@ -12,7 +12,16 @@ const useStyles = makeStyles(theme => ({
     },
     title: {
         paddingBottom: theme.spacing(3),
-        fontSize: '3rem'
+        fontSize: '5.5rem',
+        [theme.breakpoints.down('md')]: {
+            fontSize: '4rem',
+        },
+        [theme.breakpoints.down('824')]: {
+            fontSize: '3rem'
+        },
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '2rem',
+        },
     }
 }))
 

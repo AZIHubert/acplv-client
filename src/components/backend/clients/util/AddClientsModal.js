@@ -15,6 +15,7 @@ import CustomTextField from '../../util/CustomTextField';
 import { Typography, Box } from '@material-ui/core';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import WaitModal from '../../util/WaitModal';
 
 const useStyles = makeStyles(theme => ({
     titleContainer: {
@@ -25,6 +26,7 @@ const useStyles = makeStyles(theme => ({
 export default withRouter(({history, open, handleClose, client, setClients, errors, setErrors}) => {
     const theme = useTheme();
     const classes = useStyles(theme);
+    const [save, setSave] = useState(false);
 
     const {logout} = useContext(AuthContext);
     
@@ -39,14 +41,20 @@ export default withRouter(({history, open, handleClose, client, setClients, erro
             const data = proxy.readQuery({
                 query: FETCH_CLIENTS_QUERY
             });
-            data.getClients = [result.data.createClient, ...data.getClients];
-            proxy.writeQuery({ query: FETCH_CLIENTS_QUERY, data });
-            setClients([...data.getClients]);
+            proxy.writeQuery({
+                query: FETCH_CLIENTS_QUERY,
+                data: {getClients: [
+                    result.data.createClient,
+                    ...data.getClients,
+                ]}
+            });
             title.title = '';
+            setSave(false);
             handleClose();
         },
         onError(err){
             const error = err.graphQLErrors[0];
+            setSave(false);
             console.log(error.message === "Authorization header must be provided")
             if(error.extensions.code === "BAD_USER_INPUT"){
                 setErrors(error.extensions.exception.errors);
@@ -60,12 +68,14 @@ export default withRouter(({history, open, handleClose, client, setClients, erro
     });
     const [editClient] = useMutation(EDIT_CLIENT_MUTATION, {
         variables: {clientId, ...title},
-        update(_, result){
+        update(){
             title.title = '';
             handleClose();
+            setSave(false);
         },
         onError(err){
             const error = err.graphQLErrors[0];
+            setSave(false);
             console.log(error.message === "Authorization header must be provided")
             if(error.extensions.code === "BAD_USER_INPUT"){
                 setErrors(error.extensions.exception.errors);
@@ -89,6 +99,7 @@ export default withRouter(({history, open, handleClose, client, setClients, erro
     }
     const handleSubmit = e => {
         e.preventDefault();
+        setSave(true);
         if(clientId){
             editClient();
         } else {
@@ -115,6 +126,7 @@ export default withRouter(({history, open, handleClose, client, setClients, erro
                     helperText={errors.title}
                 />
             </Form>
+            <WaitModal open={save} />
         </CustomModal>
     )
 });

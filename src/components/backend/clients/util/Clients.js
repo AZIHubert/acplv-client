@@ -62,9 +62,16 @@ export default () => {
     const [moveClient] = useMutation(MOVE_CLIENT_MUTATION, {
         variables: { clientId: moving.clientId, index: moving.index },
         update(proxy, result){
+            proxy.writeQuery({
+                query: FETCH_CLIENTS_QUERY,
+                data: {getClients: [
+                    ...result.data.moveClient
+                ]}
+            });
             setSaving(false);
         },
         onError(err){
+            console.log(err);
             setSaving(false);
         }
     });
@@ -138,6 +145,9 @@ const MOVE_CLIENT_MUTATION = gql`
         $clientId: ID!
         $index: Int!
     ) {
-        moveClient(clientId: $clientId, index: $index)
+        moveClient(clientId: $clientId, index: $index){
+            _id
+            title
+        }
     }
 `; 

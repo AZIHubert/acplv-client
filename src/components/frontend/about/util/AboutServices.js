@@ -15,11 +15,11 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default ({theme, serviceCats}) => {
+export default ({theme, serviceCats, isFirst}) => {
     const classes = useStyles(theme);
     return (
         <SubComponentWrapper
-            hasBorder
+            hasBorder={!isFirst}
             paddingTop
             paddingBottom
         >

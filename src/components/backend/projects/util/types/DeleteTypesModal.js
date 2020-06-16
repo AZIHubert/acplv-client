@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import CustomModal from '../../../util/CustomModal';
 
@@ -13,6 +13,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import { FETCH_TYPES_QUERY } from '../../../../../graphql/querys/index';
+import WaitModal from '../../../util/WaitModal';
 
 const useStyles = makeStyles(theme => ({
     titleContainer: {
@@ -57,6 +58,8 @@ export default withRouter(({history, open, handleClose, title, _id, setTypes}) =
     const theme = useTheme();
     const classes = useStyles(theme);
 
+    const [save, setSave] = useState(false);
+
     const {logout} = useContext(AuthContext);
 
     const [deleteType] = useMutation(DELETE_TYPE_MUTATION, {
@@ -65,9 +68,14 @@ export default withRouter(({history, open, handleClose, title, _id, setTypes}) =
             const data = proxy.readQuery({
                 query: FETCH_TYPES_QUERY
             });
-            data.getTypes = data.getTypes.filter(type => type._id !== _id);
-            proxy.writeQuery({ query: FETCH_TYPES_QUERY, data });
-            setTypes([...data.getTypes]);
+            const newData = data.getTypes.filter(type => type._id !== _id);
+            proxy.writeQuery({
+                query: FETCH_TYPES_QUERY,
+                data: {getTypes: [
+                    ...newData
+                ]}
+            });
+            setSave(false);
         },
         onError(err){
             const error = err.graphQLErrors[0];
@@ -94,6 +102,7 @@ export default withRouter(({history, open, handleClose, title, _id, setTypes}) =
                     <Button className={classes.deleteButton}>
                         <Typography variant="body2" className={classes.buttonText}
                             onClick={() => {
+                                setSave(true);
                                 handleClose();
                                 deleteType();
                             }}
@@ -108,6 +117,7 @@ export default withRouter(({history, open, handleClose, title, _id, setTypes}) =
                     </Button>
                 </Box>
             </Box>
+            <WaitModal open={save} />
         </CustomModal>
     );
 });

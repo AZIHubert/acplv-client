@@ -9,6 +9,7 @@ import { AuthContext } from '../../../../../context/AuthContext';
 import CustomModal from '../../../util/CustomModal';
 import Form from '../../../util/Form';
 import CustomTextField from '../../../util/CustomTextField';
+import WaitModal from '../../../util/WaitModal';
 
 import {withRouter} from 'react-router-dom';
 
@@ -22,14 +23,17 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default withRouter(({history, open, handleClose, type, setTypes, errors, setErrors}) => {
+export default withRouter(({history, open, handleClose, type, errors, setErrors}) => {
     const theme = useTheme();
     const classes = useStyles(theme);
+
     const {logout} = useContext(AuthContext);
+
     const typeId = type ? type._id : '';
     const [title, setTitle] = useState({
         title: type ? type.title :  ''
     });
+    const [save, setSave] = useState(false)
     const handleChange = e => {
         e.persist();
         setTitle({
@@ -43,14 +47,20 @@ export default withRouter(({history, open, handleClose, type, setTypes, errors, 
             const data = proxy.readQuery({
                 query: FETCH_TYPES_QUERY
             });
-            data.getTypes = [result.data.createType, ...data.getTypes];
-            proxy.writeQuery({ query: FETCH_TYPES_QUERY, data });
-            setTypes([...data.getTypes]);
+            proxy.writeQuery({
+                query: FETCH_TYPES_QUERY,
+                data: {getTypes: [
+                    ...data.getTypes,
+                    result.data.createType,
+                ]}
+            });
             title.title = '';
+            setSave(false);
             handleClose();
         },
         onError(err){
             const error = err.graphQLErrors[0];
+            setSave(false);
             console.log(error.message === "Authorization header must be provided")
             if(error.extensions.code === "BAD_USER_INPUT"){
                 setErrors(error.extensions.exception.errors);
@@ -65,10 +75,12 @@ export default withRouter(({history, open, handleClose, type, setTypes, errors, 
     const [editClient] = useMutation(EDIT_TYPE_MUTATION, {
         variables: {typeId, ...title},
         update(){
+            setSave(false);
             handleClose();
         },
         onError(err){
             const error = err.graphQLErrors[0];
+            setSave(false);
             console.log(error.message === "Authorization header must be provided")
             if(error.extensions.code === "BAD_USER_INPUT"){
                 setErrors(error.extensions.exception.errors);
@@ -82,6 +94,7 @@ export default withRouter(({history, open, handleClose, type, setTypes, errors, 
     });
 
     const handleSubmit = e => {
+        setSave(true);
         e.preventDefault();
         if(typeId){
             editClient();
@@ -109,6 +122,7 @@ export default withRouter(({history, open, handleClose, type, setTypes, errors, 
                     helperText={errors.title}
                 />
             </Form>
+            <WaitModal open={save} />
         </CustomModal>
     );
 });

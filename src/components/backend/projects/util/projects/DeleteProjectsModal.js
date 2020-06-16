@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import CustomModal from '../../../util/CustomModal';
 
@@ -13,6 +13,7 @@ import { FETCH_PROJECTS_QUERY } from '../../../../../graphql/querys/index';
 import {withRouter} from 'react-router-dom';
 
 import { AuthContext } from '../../../../../context/AuthContext';
+import WaitModal from '../../../util/WaitModal';
 
 const useStyles = makeStyles(theme => ({
     titleContainer: {
@@ -53,20 +54,27 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default withRouter(({history, open, handleClose, setProjects, title, projectId, imageId}) => {
+export default withRouter(({history, open, handleClose, title, projectId, imageId}) => {
 
     const logout = useContext(AuthContext);
+    const [save, setSave] = useState(false);
 
     const [deleteProject] = useMutation(DELETE_PROJECT_MUTATION, {
         variables: {projectId},
         update(proxy, result){
-            handleClose();
             const data = proxy.readQuery({
                 query: FETCH_PROJECTS_QUERY
             });
-            data.getProjects = data.getProjects.filter(project => project._id !== projectId);
-            proxy.writeQuery({ query: FETCH_PROJECTS_QUERY, data });
-            setProjects([...data.getProjects]);
+            const newData = data.getProjects.filter(project => project._id !== projectId);
+            proxy.writeQuery({
+                query: FETCH_PROJECTS_QUERY,
+                data: {getProjects: [
+                    ...newData
+                ]}
+            });
+            setSave(false);
+            handleClose();
+
         },
         onError(err){
             const error = err.graphQLErrors[0];
@@ -100,7 +108,8 @@ export default withRouter(({history, open, handleClose, setProjects, title, proj
     });
 
     const handleDelete = () => {
-        if(imageId) deleteImage()
+        setSave(true);
+        if(imageId) deleteImage();
         else {
             console.log('project')
             deleteProject();
@@ -130,6 +139,7 @@ export default withRouter(({history, open, handleClose, setProjects, title, proj
                     </Button>
                 </Box>
             </Box>
+            <WaitModal open={save} />
         </CustomModal>
     );
 });
