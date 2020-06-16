@@ -14,20 +14,22 @@ import Project from './projects/Projects';
 import Contact from './contact/Contact';
 import NotFound from '../notFound/NotFound';
 
-import {
-    makeStyles
-} from '@material-ui/core/styles';
+// import {
+//     makeStyles
+// } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(() => ({
-    container: {
-        overflowX: 'hidden'
-    }
-}))
+// const useStyles = makeStyles(() => ({
+//     container: {
+//         overflowX: 'hidden'
+//     }
+// }))
 
 export default () => {
-    const classes = useStyles();
+    // const classes = useStyles();
     return (
-        <div className={classes.container}>
+        <div
+            // className={classes.container}
+        >
             <Navbar />
             <Mouse />
             <Switch>
