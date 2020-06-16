@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
         borderBottom: `2px solid ${theme.palette.tertiaryColor}`
     },
     logotype: {
-        height: 50,
+        height: 35,
         width: 'auto'
     }
 }))
