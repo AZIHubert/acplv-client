@@ -15,6 +15,9 @@ import {
 import { useMediaQuery } from 'react-responsive'
 
 const useStyles = makeStyles(theme => ({
+    container: {
+        overflow: 'visible'
+    },
     evenGrid: {
         [theme.breakpoints.down('xs')]: {
             paddingRight: theme.spacing(2.5),
@@ -41,6 +44,7 @@ export default ({projects, theme}) => {
     const isVerticalMobile = useMediaQuery({ query: '(max-width: 600px)' })
     return (
         <Grid
+            className={classes.container}
             container
         >
              {isVerticalMobile ? (

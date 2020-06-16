@@ -24,7 +24,7 @@ export default App;
 
 
 // TODO:
-// Create context with reducer for every model, to deal with change
-// Create better parent component to deal with errors and redirection (when token is expired)
-// Add waitModal for every changes
-// Create better file for export queries and mutations
+// Check errors on backend forms
+// Redesign contact (specially when almost empty)
+// Write usedTypes when a project is edited
+// activate/desactivate routes and navbar link when is empty/not empty
