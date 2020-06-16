@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 
 import DeleteProjectsModal from './DeleteProjectsModal';
 import AddProjectsModal from './AddProjectsModal';
+import WaitModal from '../../../util/WaitModal';
 
 import { AuthContext } from '../../../../../context/AuthContext';
 
@@ -100,8 +101,11 @@ export default ({history, project, setProjects, index}) => {
                 thumbnailId: newProject.thumbnailId
             }
         },
-        update(){},
+        update(){
+            setSaved(false);
+        },
         onError(err){
+            setSaved(false);
             const error = err.graphQLErrors[0];
             if(error.message === "Authorization header must be provided" ||
                error.message === 'Authentication token must be \'Bearer [token]\''){
@@ -123,7 +127,6 @@ export default ({history, project, setProjects, index}) => {
     useEffect(() => {
         if(saved){
             editProject();
-            setSaved(false);
         }
     }, [saved, editProject])
 
@@ -154,7 +157,12 @@ export default ({history, project, setProjects, index}) => {
                     <Box display="flex" alignItems="center">
                         <FormControlLabel
                             value="start"
-                            control={<Checkbox color="primary" disableRipple checked={newProject.display} onClick={handleClick} />}
+                            control={
+                                <Checkbox color="primary"
+                                    disableRipple checked={newProject.display}
+                                    onClick={handleClick}
+                                />
+                            }
                             label="display"
                             labelPlacement="start"
                             className={classes.formControlLabel}
@@ -180,6 +188,7 @@ export default ({history, project, setProjects, index}) => {
                         errors={errors} setErrors={setErrors}
                         setSingleProject={setNewProject}
                     />
+                    <WaitModal open={saved} />
                 </Box>
             )}
         </Draggable>

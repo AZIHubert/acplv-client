@@ -10,6 +10,7 @@ import {withRouter} from 'react-router-dom';
 import CustomModal from '../../../util/CustomModal';
 import Form from '../../../util/Form';
 import CustomTextField from '../../../util/CustomTextField';
+import WaitModal from '../../../util/WaitModal';
 
 import { useDropzone } from 'react-dropzone';
 
@@ -104,13 +105,14 @@ export default withRouter(({history, open, handleClose, project, errors, setErro
         typeId: (project && project.type) ? project.type._id : ''
     });
     const [projectSaved, setProjectSaved] = useState(false);
+    const [save, setSave] = useState(false);
 
-    const hasThumbnail = (project && !!project.thumbnail);
+    const [hasThumbnail, setHasThumbnail] = useState(project && !!project.thumbnail);
     const [thumbnailChange, setThumbnailChange] = useState(false);
-    const [thumbnail, setThumbnail] = useState(hasThumbnail ? project.thumbnail : {})
+    const [thumbnail, setThumbnail] = useState((project && !!project.thumbnail) ? project.thumbnail : {})
     const [droperText, setDroperText] = useState('Drag \'n\' drop the thumbnail here, or click to select file');
     const [previewThumbnail, setPreviewThumbnail] = useState(
-        hasThumbnail ? project.thumbnail.url : ''
+        (project && !!project.thumbnail) ? project.thumbnail.url : ''
     );
 
     const [projectResult, setProjectResult] = useState({});
@@ -166,12 +168,14 @@ export default withRouter(({history, open, handleClose, project, errors, setErro
                     display:  true,
                     typeId:  ''
                 });
+                setSave(false);
                 setProjectId('');
                 handleClose();
             }
         },
         onError(err){
-            console.log(err)
+            console.log(err);
+            setSave(false);
             const error = err.graphQLErrors[0];
             if(error.extensions.code === "BAD_USER_INPUT"){
                 setErrors(error.extensions.exception.errors);
@@ -186,17 +190,25 @@ export default withRouter(({history, open, handleClose, project, errors, setErro
     });
     const [editProject] = useMutation(EDIT_PROJECT_MUTATION, {
         variables: {projectId, projectInput: newProject},
-        update(_, result){
+        update(){
+            let d = false;
+            let a = false;
             if(hasThumbnail && thumbnailChange){
-                deleteImage()
+                d = true;
+                deleteImage();
             }
             if((!hasThumbnail && !!Object.keys(thumbnail).length) || (!!Object.keys(thumbnail).length && thumbnailChange)){
+                a = true;
                 uploadImageOnExistedProject()
             }
-            handleClose();
+            if(!d && !a){
+                handleClose();
+                setSave(false);
+            }
         },
         onError(err){
-            console.log(err)
+            console.log(err);
+            setSave(false);
             const error = err.graphQLErrors[0];
             if(error.extensions.code === "BAD_USER_INPUT"){
                 setErrors(error.extensions.exception.errors);
@@ -236,13 +248,14 @@ export default withRouter(({history, open, handleClose, project, errors, setErro
                 display:  true,
                 typeId:  ''
             });
-            setThumbnail({});
-            setPreviewThumbnail('');
+            setHasThumbnail(true);
+            setSave(false);
             setProjectResult({});
             handleClose();
         },
         onError(err){
             console.log(err);
+            setSave(false);
             setNewProject({
                 title:  '',
                 display:  true,
@@ -275,24 +288,39 @@ export default withRouter(({history, open, handleClose, project, errors, setErro
                     ...newProjects
                 ]}
             });
+            setHasThumbnail(true);
+            setSave(false);
+            handleClose();
             setThumbnailChange(false);
         },
         onError(err){
+            console.log(err);
             setNewProject({
                 title:  '',
                 display:  true,
                 typeId:  ''
             });
+            setSave(false);
             setThumbnail({});
             setPreviewThumbnail('');
             setProjectResult({});
             handleClose();
+            setThumbnailChange(false);
         }
     });
 
     const [deleteImage] = useMutation(DELETE_IMAGE_MUTATION, {
         variables: {imageId: (project && project.thumbnail) ? project.thumbnail._id : ''},
-        update(proxy, result){},
+        update(proxy, result){
+            if(!Object.keys(thumbnail).length){
+                setSave(false);
+                setThumbnail({});
+                setHasThumbnail(false);
+                setPreviewThumbnail('');
+                setThumbnailChange(false);
+                handleClose();
+            }
+        },
         onError(err){
             const error = err.graphQLErrors[0];
             if(error.message === "Authorization header must be provided" ||
@@ -310,6 +338,7 @@ export default withRouter(({history, open, handleClose, project, errors, setErro
         e.preventDefault();
         if(projectId) editProject();
         else createProject();
+        setSave(true);
     }
     
     useEffect(() => {
@@ -429,6 +458,7 @@ export default withRouter(({history, open, handleClose, project, errors, setErro
                     )}
                 </Box>
             </Form>
+            <WaitModal open={save} />
         </CustomModal>
     );
 });
