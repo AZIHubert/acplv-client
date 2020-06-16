@@ -324,7 +324,8 @@ export default withRouter(({history, open, handleClose, project, errors, setErro
         onError(err){
             const error = err.graphQLErrors[0];
             if(error.message === "Authorization header must be provided" ||
-               error.message === 'Authentication token must be \'Bearer [token]\''){
+               error.message === 'Authentication token must be \'Bearer [token]\'' ||
+               error.message === 'Invalid/Expired token'){
                     logout();
                     history.push('/login');
             } else {

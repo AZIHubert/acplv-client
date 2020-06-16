@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default ({about, theme}) => {
-    const classes = useStyles(theme)
+    const classes = useStyles(theme);
     return (
         <SubComponentWrapper
             paddingTop

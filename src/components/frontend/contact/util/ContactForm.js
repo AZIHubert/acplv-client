@@ -19,14 +19,15 @@ import makeStyles from '@material-ui/core/styles/makeStyles'
 
 const useStyles = makeStyles(theme => ({
     form: {
-        [theme.breakpoints.up('lg')]: {
-            paddingLeft: theme.spacing(8)
+        border: `2px solid ${theme.palette.tertiaryColor}`,
+        padding: theme.spacing(6, 4),
+        [theme.breakpoints.down('xs')]: {
+            padding: theme.spacing(4, 2),
         }
     },
     titleContainer: {
         paddingBottom: theme.spacing(1),
-        marginBottom: theme.spacing(2),
-        borderBottom: `1px solid ${theme.palette.tertiaryColor}`
+        marginBottom: theme.spacing(2)
     },
     title: {
         [theme.breakpoints.down('lg')]: {

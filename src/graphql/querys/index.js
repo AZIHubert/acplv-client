@@ -90,6 +90,7 @@ export const FETCH_SERVICE_CATS_WITH_SERVICES = gql`
             title
             services{
                 _id
+                index
                 title
             }
         }

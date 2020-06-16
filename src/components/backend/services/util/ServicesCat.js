@@ -53,6 +53,12 @@ export default () => {
     const [moveServiceCat] = useMutation(MOVE_SERVICECAT_MUTATION, {
         variables: { serviceCatId: movingServiceCat.serviceCatId, index: movingServiceCat.index },
         update(proxy, result){
+            proxy.writeQuery({
+                query: FETCH_SERVICE_CAT_QUERY,
+                data: {getServiceCats: [
+                    ...result.data.moveServiceCat
+                ]}
+            });
             setSaving(false);
         },
         onError(err){
@@ -62,6 +68,12 @@ export default () => {
     const [moveService] = useMutation(MOVE_SERVICE_MUTATION, {
         variables: { serviceId: movingService.serviceId, index: movingService.index , serviceCatId: movingService.serviceCatId},
         update(proxy, result){
+            proxy.writeQuery({
+                query: FETCH_SERVICE_CAT_QUERY,
+                data: {getServiceCats: [
+                    ...result.data.moveService
+                ]}
+            });
             setSaving(false);
         },
         onError(err){
@@ -135,7 +147,6 @@ export default () => {
                     ...prevState,
                     [sourceParentId]: Array.from(sourceSubItems)
                 }));
-                console.log('same')
                 
             } else {
                 const changedService = sourceSubItems.find(service => draggableId === service._id);
@@ -198,7 +209,15 @@ const MOVE_SERVICECAT_MUTATION = gql`
         $serviceCatId: ID!
         $index: Int!
     ) {
-        moveServiceCat(serviceCatId: $serviceCatId, index: $index)
+        moveServiceCat(serviceCatId: $serviceCatId, index: $index){
+            _id
+            title
+            services {
+                _id
+                title
+                index
+            }
+        }
     }
 `; 
 
@@ -208,6 +227,14 @@ const MOVE_SERVICE_MUTATION = gql`
         $index: Int!
         $serviceCatId: ID!
     ) {
-        moveService(serviceId: $serviceId, index: $index, serviceCatId: $serviceCatId)
+        moveService(serviceId: $serviceId, index: $index, serviceCatId: $serviceCatId){
+            _id
+            title
+            services {
+                _id
+                title
+                index
+            }
+        }
     }
 `;

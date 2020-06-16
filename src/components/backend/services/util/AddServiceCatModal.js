@@ -15,6 +15,7 @@ import CustomTextField from '../../util/CustomTextField';
 import { Typography, Box } from '@material-ui/core';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import WaitModal from '../../util/WaitModal';
 
 const useStyles = makeStyles(theme => ({
     titleContainer: {
@@ -26,6 +27,7 @@ export default withRouter(({history, open, handleClose, serviceCat, setServiceCa
     const theme = useTheme();
     const classes = useStyles(theme);
     
+    const [save, setSave] = useState(false);
 
     const {logout} = useContext(AuthContext);
 
@@ -40,22 +42,20 @@ export default withRouter(({history, open, handleClose, serviceCat, setServiceCa
             const data = proxy.readQuery({
                 query: FETCH_SERVICE_CAT_QUERY
             });
-            console.log(result.data.createServiceCat)
-            console.log(data.getServiceCats)
-            data.getServiceCats = [result.data.createServiceCat, ...data.getServiceCats];
-            console.log(data.getServiceCats)
-            proxy.writeQuery({ query: FETCH_SERVICE_CAT_QUERY, data });
-            console.log('write query')
-            setServices(data.getServiceCats.reduce((acc, item) => {
-                acc[item._id] = item.services;
-                return acc;
-            }, {}));
-            setServiceCats([...data.getServiceCats]);
+            proxy.writeQuery({
+                query: FETCH_SERVICE_CAT_QUERY,
+                data: {getServiceCats: [
+                    result.data.createServiceCat,
+                    ...data.getServiceCats,
+                ]}
+            });
             title.title = '';
+            setSave(false);
             handleClose();
         },
         onError(err){
             const error = err.graphQLErrors[0];
+            setSave(false);
             console.log(error.message === "Authorization header must be provided")
             if(error.extensions.code === "BAD_USER_INPUT"){
                 setErrors(error.extensions.exception.errors);
@@ -70,12 +70,13 @@ export default withRouter(({history, open, handleClose, serviceCat, setServiceCa
     const [editServiceCat] = useMutation(EDIT_SERVICECAT_MUTATION, {
         variables: {serviceCatId, ...title},
         update(_, result){
-            console.log(result)
+            setSave(false);
             handleClose();
         },
         onError(err){
             console.log(err)
             const error = err.graphQLErrors[0];
+            setSave(false);
             if(error.extensions.code === "BAD_USER_INPUT"){
                 setErrors(error.extensions.exception.errors);
             }
@@ -92,12 +93,10 @@ export default withRouter(({history, open, handleClose, serviceCat, setServiceCa
         setTitle({
             [e.target.name]: e.target.value
         });
-        // setErrors({
-        //     title: ''
-        // });
     }
     const handleSubmit = e => {
         e.preventDefault();
+        setSave(true);
         if(serviceCatId){
             editServiceCat();
         } else {
@@ -122,6 +121,7 @@ export default withRouter(({history, open, handleClose, serviceCat, setServiceCa
                     handleChange={handleChange}
                 />
             </Form>
+            <WaitModal open={save} />
         </CustomModal>
     );
 });

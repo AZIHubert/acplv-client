@@ -32,26 +32,34 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default ({theme}) => {
-    const [filteredProjects, setFilteredProjects] = useState([]);
     const classes = useStyles(theme);
-    const {loading: loadingProjects, data: dataProjects} = useQuery(FETCH_FRONT_PROJECTS_QUERY);
-    const {loading: loadingTypes, data: dataTypes} = useQuery(FETCH_USED_TYPES);
+
+    const [filteredProjects, setFilteredProjects] = useState([]);
+    const [projects, setProjects] = useState([]);
+    const [usedTypes, setUsedTypes] = useState([]);
+
+    const {loading: loadingProjects, data: dataProjects, error: errorProjects} = useQuery(FETCH_FRONT_PROJECTS_QUERY);
+    const {loading: loadingTypes, data: dataTypes, error: errorTypes} = useQuery(FETCH_USED_TYPES);
+
     useEffect(() => {
-        if(!loadingProjects) {
-            const {getProjects} = dataProjects
-            setFilteredProjects([
-                ...getProjects.filter(project => project.display)
-            ]);
+        const onCompleted = data => {
+            setProjects(data.getProjects.filter(project => project.display));
+            setFilteredProjects([...data.getProjects.filter(project => project.display)]);
         }
-      }, [dataProjects, loadingProjects])
+        if (onCompleted && !loadingProjects && !errorProjects) onCompleted(dataProjects);
+    }, [loadingProjects, dataProjects, errorProjects]);
+
+    useEffect(() => {
+        const onCompleted = data => setUsedTypes(data.getUsedTypes);
+        if (onCompleted && !loadingTypes && !errorTypes) onCompleted(dataTypes);
+    }, [loadingTypes, dataTypes, errorTypes ]);
+    
     const filterProjects = _id => {
-        console.log(_id);
         if(_id === 'all'){
             setFilteredProjects([
                 ...dataProjects.getProjects
             ]);
         } else {
-            console.log(dataProjects.getProjects.filter(project => project._id !== _id))
             setFilteredProjects([
                 ...dataProjects.getProjects
                     .filter(project => project.type)
@@ -59,6 +67,7 @@ export default ({theme}) => {
             ]);
         }
     };
+
     return (
         (!loadingProjects &&
          !loadingTypes &&

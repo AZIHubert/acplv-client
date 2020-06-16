@@ -9,13 +9,16 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Title from '../../util/Title';
 
 const useStyles = makeStyles(theme => ({
+    infoContainer: {
+        paddingBottom: theme.spacing(6),
+    },
     contactContainer: {
         paddingBottom: theme.spacing(1),
         marginBottom: theme.spacing(1),
     },
     socialMediaContainer: {
-        paddingTop: theme.spacing(10),
-        textAlign: 'right',
+        paddingTop: theme.spacing(6),
+        borderTop: `2px solid ${theme.palette.tertiaryColor}`,
         [theme.breakpoints.down('sm')]: {
             textAlign: 'center'
         },
@@ -39,53 +42,57 @@ export default ({
     const classes = useStyles(theme)
     return (
         <>
-            {!!phone && (
-                <Box
-                    className={classes.contactContainer}
-                >
-                    <Title
-                        variant='body2'
-                        title='téléphone'
-                    />
-                    <Title
-                        variant='body1'
-                        title={phone}
-                    />
-                </Box>
-            )}
-            {!!email && (
-                <Box
-                    className={classes.contactContainer}
-                >
-                    <Title
-                        variant='body1'
-                        title='Email'
-                        href={`mailto:${email}`}
-                    />
-                </Box>
-            )}
-            {(!!adressStreet || !!adressCity) && (
-                <Box>
-                    <Title
-                        variant='body2'
-                        title='adresse'
-                    />
-                    <Title
-                        variant='body1'
-                        title={adressStreet}
-                    />
-                    <Title
-                        variant='body1'
-                        title={adressCity}
-                    />
-                </Box>
-            )}
+            <Box className={classes.infoContainer}>
+                {!!phone && (
+                    <Box
+                        // textAlign="center"
+                        className={classes.contactContainer}
+                    >
+                        <Title
+                            variant='body2'
+                            title='téléphone'
+                        />
+                        <Title
+                            variant='body1'
+                            title={phone}
+                        />
+                    </Box>
+                )}
+                {!!email && (
+                    <Box
+                        className={classes.contactContainer}
+                    >
+                        <Title
+                            variant='body1'
+                            title='Adresse Email'
+                            href={`mailto:${email}`}
+                        />
+                    </Box>
+                )}
+                {(!!adressStreet || !!adressCity) && (
+                    <Box >
+                        <Title
+                            variant='body2'
+                            title='adresse'
+                        />
+                        <Title
+                            variant='body1'
+                            title={adressStreet}
+                        />
+                        <Title
+                            variant='body1'
+                            title={adressCity}
+                        />
+                    </Box>
+                )}
+            </Box>
             {(
                 facebookLink ||
                 instagramLink ||
                 linkedinLink
             ) && (
                 <Box
+                    textAlign="center"
                     className={classes.socialMediaContainer}
                 >
                     {facebookLink && (

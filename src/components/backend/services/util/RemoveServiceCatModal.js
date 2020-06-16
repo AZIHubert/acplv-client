@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import CustomModal from '../../util/CustomModal';
 
@@ -11,6 +11,7 @@ import {withRouter} from 'react-router-dom';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import { FETCH_SERVICE_CAT_QUERY } from '../../../../graphql/querys/index';
+import WaitModal from '../../util/WaitModal';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -57,22 +58,31 @@ export default withRouter(({history, open, handleClose, title, _id, setServiceCa
     const theme = useTheme();
     const classes = useStyles(theme);
 
+    const [save, setSave] = useState(false);
+
     const {logout} = useContext(AuthContext);
 
     const [deleteServiceCat] = useMutation(DELETE_SERVICECAT_MUTATION, {
         variables: {serviceCatId: _id},
-        update(proxy, result){
+        update(proxy){
             const data = proxy.readQuery({
                 query: FETCH_SERVICE_CAT_QUERY
             });
-            data.getServiceCats = data.getServiceCats.filter(serviceCat => serviceCat._id !== _id);
-            proxy.writeQuery({ query: FETCH_SERVICE_CAT_QUERY, data });
-            setServiceCats([...data.getServiceCats]);
+            const newData = data.getServiceCats.filter(serviceCat => serviceCat._id !== _id);
+            proxy.writeQuery({
+                query: FETCH_SERVICE_CAT_QUERY,
+                data: {getServiceCats: [
+                    ...newData
+                ]}
+            });
+            setSave(false);
+            handleClose();
         },
         onError(err){
             const error = err.graphQLErrors[0];
             if(error.message === "Authorization header must be provided" ||
-               error.message === 'Authentication token must be \'Bearer [token]\''){
+               error.message === 'Authentication token must be \'Bearer [token]\'' ||
+               error.message === 'Invalid/Expired token'){
                     logout();
                     history.push('/login');
             } else {
@@ -91,7 +101,10 @@ export default withRouter(({history, open, handleClose, title, _id, setServiceCa
                     </Typography>
                 </Box>
                 <Box display="flex" justifyContent="space-between">
-                    <Button className={classes.deleteButton} onClick={() => deleteServiceCat()}>
+                    <Button className={classes.deleteButton} onClick={() => {
+                        setSave(true);
+                        deleteServiceCat();
+                    }}>
                         <Typography variant="body2" className={classes.buttonText}>
                             delete
                         </Typography>
@@ -103,6 +116,7 @@ export default withRouter(({history, open, handleClose, title, _id, setServiceCa
                     </Button>
                 </Box>
             </Box>
+            <WaitModal open={save} />
         </CustomModal>
     );
 });

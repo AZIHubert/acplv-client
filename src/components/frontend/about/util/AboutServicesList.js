@@ -36,7 +36,7 @@ export default (props) => {
             >
                 {serviceCat.title}
             </Typography>
-            {serviceCat.services.map((service, i) => (
+            {serviceCat.services.sort((a, b) => a.index - b.index).map((service, i) => (
                 <AboutServicesItem
                     title={service.title}
                     key={service._id}

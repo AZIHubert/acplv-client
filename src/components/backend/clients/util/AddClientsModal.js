@@ -69,7 +69,6 @@ export default withRouter(({history, open, handleClose, client, setClients, erro
     const [editClient] = useMutation(EDIT_CLIENT_MUTATION, {
         variables: {clientId, ...title},
         update(){
-            title.title = '';
             handleClose();
             setSave(false);
         },

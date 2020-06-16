@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import CustomModal from '../../util/CustomModal';
 
@@ -11,6 +11,7 @@ import {withRouter} from 'react-router-dom';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/react-hooks';
 import { FETCH_SERVICE_CAT_QUERY } from '../../../../graphql/querys/index';
+import WaitModal from '../../util/WaitModal';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -57,19 +58,38 @@ export default withRouter(({history, open, handleClose, title, _id, setServices,
     const theme = useTheme();
     const classes = useStyles(theme);
 
+    const [save, setSave] = useState(false);
+
     const {logout} = useContext(AuthContext);
 
     const [deleteService] = useMutation(DELETE_SERVICE_MUTATION, {
         variables: {serviceId: _id},
         update(proxy, result){
-            setServices(prevState => ({
-                ...prevState,
-                [serviceCatId]: prevState[serviceCatId].filter(service => service._id !== _id)
-            }));
+            const data = proxy.readQuery({
+                query: FETCH_SERVICE_CAT_QUERY
+            });
+            const newData = data.getServiceCats.map(serviceCat => {
+                if(serviceCatId === serviceCat._id){
+                    const services = serviceCat.services.filter(service => service._id !== _id);
+                    return {
+                        ...serviceCat,
+                        services
+                    }
+                }
+                return serviceCat;
+            })
+            proxy.writeQuery({
+                query: FETCH_SERVICE_CAT_QUERY,
+                data: {getServiceCats: [
+                    ...newData
+                ]}
+            });
+            setSave(false);
             handleClose();
         },
         onError(err){
             const error = err.graphQLErrors[0];
+            setSave(false);
             if(error.message === "Authorization header must be provided" ||
                error.message === 'Authentication token must be \'Bearer [token]\''){
                     logout();
@@ -90,7 +110,10 @@ export default withRouter(({history, open, handleClose, title, _id, setServices,
                     </Typography>
                 </Box>
                 <Box display="flex" justifyContent="space-between">
-                    <Button className={classes.deleteButton} onClick={() => deleteService()}>
+                    <Button className={classes.deleteButton} onClick={() => {
+                        setSave(true);
+                        deleteService()
+                    }}>
                         <Typography variant="body2" className={classes.buttonText}>
                             delete
                         </Typography>
@@ -102,6 +125,7 @@ export default withRouter(({history, open, handleClose, title, _id, setServices,
                     </Button>
                 </Box>
             </Box>
+            <WaitModal open={save} />
         </CustomModal>
     );
 });

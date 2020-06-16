@@ -15,6 +15,7 @@ import CustomTextField from '../../util/CustomTextField';
 import { Typography, Box } from '@material-ui/core';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import WaitModal from '../../util/WaitModal';
 
 const useStyles = makeStyles(theme => ({
     titleContainer: {
@@ -26,6 +27,8 @@ export default withRouter(({history, open, serviceCatId, handleClose, service, s
     const theme = useTheme();
     const classes = useStyles(theme);
     const {logout} = useContext(AuthContext);
+
+    const [save, setSave] = useState(false);
 
     const serviceId = service ? service._id : '';
     const [title, setTitle] = useState({
@@ -44,17 +47,29 @@ export default withRouter(({history, open, serviceCatId, handleClose, service, s
             const data = proxy.readQuery({
                 query: FETCH_SERVICE_CAT_QUERY
             });
-            proxy.writeQuery({ query: FETCH_SERVICE_CAT_QUERY, data });
-            setServices(prevState => ({
-                ...prevState,
-                [serviceCatId]: [result.data.createService, ...prevState[serviceCatId]]
-            }));
+            const newServiceCats = data.getServiceCats.map(serviceCat => {
+                if(serviceCatId === serviceCat._id){
+                    return {
+                        ...serviceCat,
+                        services: [result.data.createService, ...serviceCat.services]
+                    }
+                }
+                return serviceCat
+            });
+            proxy.writeQuery({
+                query: FETCH_SERVICE_CAT_QUERY,
+                data: {getServiceCats: [
+                    ...newServiceCats
+                ]}
+            });
             title.title = '';
+            setSave(false);
             handleClose();
         },
         onError(err){
             console.log(err);
             const error = err.graphQLErrors[0];
+            setSave(false);
             if(error.extensions.code === "BAD_USER_INPUT"){
                 setErrors(error.extensions.exception.errors);
             }
@@ -68,11 +83,13 @@ export default withRouter(({history, open, serviceCatId, handleClose, service, s
     const [editService] = useMutation(EDIT_SERVICE_MUTATION, {
         variables: {serviceId, ...title},
         update(_, result){
+            setSave(false);
             handleClose();
         },
         onError(err){
             console.log(err);
             const error = err.graphQLErrors[0];
+            setSave(false);
             if(error.extensions.code === "BAD_USER_INPUT"){
                 setErrors(error.extensions.exception.errors);
             }
@@ -86,6 +103,7 @@ export default withRouter(({history, open, serviceCatId, handleClose, service, s
 
     const handleSubmit = e => {
         e.preventDefault();
+        setSave(true);
         if(serviceId){
             editService();
         } else {
@@ -110,6 +128,7 @@ export default withRouter(({history, open, serviceCatId, handleClose, service, s
                     handleChange={handleChange}
                 />
             </Form>
+            <WaitModal open={save} />
         </CustomModal>
     );
 });

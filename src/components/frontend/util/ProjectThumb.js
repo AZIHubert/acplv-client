@@ -60,6 +60,7 @@ const useStyles = makeStyles(theme => ({
         height: '100%',
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
+        backgroundColor: theme.palette.tertiaryColor,
         backgroundImage: props => `url('${props.project.thumbnail ? props.project.thumbnail.url : ''}')`
     },
     projectTypeContainer: {

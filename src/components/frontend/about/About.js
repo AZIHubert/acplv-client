@@ -41,7 +41,7 @@ export default () => {
         (!loadingServiceCats &&
          !loadingGeneral) ? (
             <ComponentWrapper title="à propos" >
-                {!!general.about && <AboutText about={general.about.about} /> }
+                {!!general.about && <AboutText about={general.about} /> }
                 {!!serviceCats.length && (
                     <AboutServices serviceCats={serviceCats}
                         isFirst={!general.about}

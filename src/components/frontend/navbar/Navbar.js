@@ -45,8 +45,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default (theme) => {
-    const classes = useStyles(theme)
-    const isVerticalMobile = useMediaQuery({ query: '(max-width: 741px)' })
+    const classes = useStyles(theme);
+    const isVerticalMobile = useMediaQuery({ query: '(max-width: 741px)' });
     return (
         <div className={classes.fixedContainer}>
             <Box
