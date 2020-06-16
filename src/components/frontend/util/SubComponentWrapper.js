@@ -23,7 +23,13 @@ const useStyles = makeStyles(theme => ({
         },
     },
     titleContainer: {
-        paddingBottom: theme.spacing(5)
+        paddingBottom: theme.spacing(7),
+        [theme.breakpoints.down('lg')]: {
+            paddingBottom: theme.spacing(5),
+        },
+        [theme.breakpoints.down('xs')]: {
+            paddingBottom: theme.spacing(2),
+        },
     },
     title: {
         [theme.breakpoints.up('1350')]: {

@@ -12,7 +12,12 @@ import {
 const useStyles = makeStyles(theme => ({
     title: {
         fontFamily: 'GillSansBold',
-        fontSize: '4rem',
+        fontSize: '5rem',
+        [theme.breakpoints.down('md')]: {
+            fontSize: '3.5rem',
+            textStrokeWidth: 'unset',
+            color: theme.palette.secondaryColor
+        },
         [theme.breakpoints.down('824')]: {
             fontSize: '2.5rem',
             textStrokeWidth: 'unset',
@@ -29,7 +34,7 @@ const useStyles = makeStyles(theme => ({
 
 export default (props) => {
     const classes = useStyles(props)
-    const {service} = props;
+    const {service, isLast} = props;
     return (
         <Box
             className={classes.container}
@@ -38,7 +43,7 @@ export default (props) => {
                 variant="h2"
                 title={service.title}
                 customClass={classes.title}
-                lineBottom
+                lineBottom={!isLast}
             />
         </Box>
     )

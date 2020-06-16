@@ -4,12 +4,13 @@ import SubComponentWrapper from '../../../util/SubComponentWrapper';
 
 import Service from './util/Service';
 
-export default ({serviceCats}) => {
+export default ({serviceCats, isFirst, isLast}) => {
     return (
         <SubComponentWrapper
             title="nos services"
-            hasBorder
+            hasBorder={!isFirst}
             paddingTop
+            paddingBottom={isLast}
         >
             {serviceCats.map((service, i) => (
                 <Service

@@ -58,7 +58,6 @@ const useStyles = makeStyles(theme => ({
     thumbnailContainer: {
         width: '100%',
         height: '100%',
-        // backgroundColor: theme.palette.secondaryColor,
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
         backgroundImage: props => `url('${props.project.thumbnail ? props.project.thumbnail.url : ''}')`

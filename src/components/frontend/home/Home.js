@@ -72,7 +72,12 @@ export default () => {
                         whoAreWeSecond={general.whoAreWeSecond}
                     />
                 }
-                {!!serviceCats.length && <Service serviceCats={serviceCats} /> }
+                {!!serviceCats.length && (
+                    <Service serviceCats={serviceCats}
+                        isFirst={!general.whoAreWeFirst && !general.whoAreWeSecond}
+                        isLast={!projects.length && !clients.length && !general.email}
+                    />
+                )}
                 {!!projects.length && <Project projects={projects} /> }
                 {!!clients.length && <Clients clients={clients} /> }
                 {!!general.email && <Footer email={dataGeneral.getGeneral.email} /> }
@@ -80,5 +85,5 @@ export default () => {
         ) : (
             <Loader />
         )
-    )
-}
+    );
+};
