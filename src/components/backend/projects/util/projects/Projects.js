@@ -58,6 +58,12 @@ export default () => {
     const [moveProject] = useMutation(MOVE_PROJECT_MUTATION, {
         variables: { projectId: moving.projectId, index: moving.index },
         update(proxy, result){
+            proxy.writeQuery({
+                query: FETCH_PROJECTS_QUERY,
+                data: {getProjects: [
+                    ...result.data.moveProject
+                ]}
+            });
             setSaving(false);
         },
         onError(err){
@@ -136,6 +142,18 @@ const MOVE_PROJECT_MUTATION = gql`
         $projectId: ID!
         $index: Int!
     ) {
-        moveProject(projectId: $projectId, index: $index)
+        moveProject(projectId: $projectId, index: $index){
+            _id
+            display
+            title
+            index
+            type {
+                _id
+            },
+            thumbnail {
+                _id
+                url
+            }
+        }
     }
 `; 

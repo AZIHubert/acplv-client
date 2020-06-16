@@ -120,6 +120,7 @@ export const FETCH_PROJECTS_QUERY = gql`
         _id
         display
         title
+        index
         type {
             _id
         },

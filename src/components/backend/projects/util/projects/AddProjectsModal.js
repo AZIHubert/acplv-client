@@ -11,8 +11,7 @@ import CustomModal from '../../../util/CustomModal';
 import Form from '../../../util/Form';
 import CustomTextField from '../../../util/CustomTextField';
 
-
-import {useDropzone} from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
 
 import {
     Typography,
@@ -92,7 +91,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default withRouter(({history, open, handleClose, project, setProjects, errors, setErrors, setSingleProject}) => {
+export default withRouter(({history, open, handleClose, project, errors, setErrors}) => {
     const theme = useTheme();
     const classes = useStyles(theme);
     const {logout} = useContext(AuthContext);
@@ -127,6 +126,7 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
             setDroperText('Your file is not an image')
         }
     }, [hasThumbnail]);
+
     const handleChange = e => {
         e.persist();
         setNewProject(prevState => ({
@@ -138,7 +138,7 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
     const [createProject] = useMutation(CREATE_PROJECT_MUTATION, {
         variables: {projectInput: newProject},
         update(proxy, result){
-            if(Object.keys(thumbnail).length){
+            if(!!Object.keys(thumbnail).length){
                 setProjectId(result.data.createProject._id);
                 setProjectResult(result.data.createProject);
                 setProjectSaved(true);
@@ -146,26 +146,39 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
                 const data = proxy.readQuery({
                     query: FETCH_PROJECTS_QUERY
                 });
-                data.getProjects = [result.data.createProject, ...data.getProjects];
-                proxy.writeQuery({ query: FETCH_PROJECTS_QUERY, data });
-                setProjects([...data.getProjects]);
+                const newProject = {
+                    ...result.data.createProject,
+                    index: 0
+                };
+                data.getProjects.map(project => ({
+                    project,
+                    index: project.index++
+                }));
+                proxy.writeQuery({
+                    query: FETCH_PROJECTS_QUERY,
+                    data: {getProjects: [
+                        newProject,
+                        ...data.getProjects
+                    ]}
+                });
                 setNewProject({
                     title:  '',
                     display:  true,
                     typeId:  ''
                 });
                 setProjectId('');
-                setProjectResult({});
                 handleClose();
             }
         },
         onError(err){
+            console.log(err)
             const error = err.graphQLErrors[0];
             if(error.extensions.code === "BAD_USER_INPUT"){
                 setErrors(error.extensions.exception.errors);
             }
             if(error.message === "Authorization header must be provided" ||
-               error.message === 'Authentication token must be \'Bearer [token]\''){
+               error.message === 'Authentication token must be \'Bearer [token]\'' ||
+               error.message === 'Invalid/Expired token'){
                     logout();
                     history.push('/login');
             }
@@ -174,7 +187,6 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
     const [editProject] = useMutation(EDIT_PROJECT_MUTATION, {
         variables: {projectId, projectInput: newProject},
         update(_, result){
-            setSingleProject(result.data.editProject);
             if(hasThumbnail && thumbnailChange){
                 deleteImage()
             }
@@ -190,7 +202,8 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
                 setErrors(error.extensions.exception.errors);
             }
             if(error.message === "Authorization header must be provided" ||
-               error.message === 'Authentication token must be \'Bearer [token]\''){
+               error.message === 'Authentication token must be \'Bearer [token]\'' ||
+               error.message === 'Invalid/Expired token'){
                     logout();
                     history.push('/login');
             }
@@ -201,14 +214,23 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
         update(proxy, result){
             const projectWithThumbnail = {
                 ...projectResult,
-                thumbnail: result.data.uploadImage
+                thumbnail: result.data.uploadImage,
+                index: 0
             };
             const data = proxy.readQuery({
                 query: FETCH_PROJECTS_QUERY
             });
-            data.getProjects = [projectWithThumbnail, ...data.getProjects];
-            proxy.writeQuery({ query: FETCH_PROJECTS_QUERY, data });
-            setProjects([...data.getProjects]);
+            data.getProjects.map(project => ({
+                project,
+                index: project.index++
+            }));
+            proxy.writeQuery({
+                query: FETCH_PROJECTS_QUERY,
+                data: {getProjects: [
+                    projectWithThumbnail,
+                    ...data.getProjects
+                ]}
+            });
             setNewProject({
                 title:  '',
                 display:  true,
@@ -220,6 +242,7 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
             handleClose();
         },
         onError(err){
+            console.log(err);
             setNewProject({
                 title:  '',
                 display:  true,
@@ -234,7 +257,25 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
     const [uploadImageOnExistedProject] = useMutation(UPLOAD_THUMBNAIL, {
         variables: {imageFile: thumbnail, projectId},
         update(proxy, result){
-            setThumbnailChange(false)
+            const thumbnail = result.data.uploadImage;
+            const data = proxy.readQuery({
+                query: FETCH_PROJECTS_QUERY
+            });
+            const newProjects = data.getProjects.map(project => {
+                if(project._id === projectId){
+                    return {
+                        ...project,
+                        thumbnail
+                    }
+                } else return project;
+            });
+            proxy.writeQuery({
+                query: FETCH_PROJECTS_QUERY,
+                data: {getProjects: [
+                    ...newProjects
+                ]}
+            });
+            setThumbnailChange(false);
         },
         onError(err){
             setNewProject({
@@ -270,6 +311,7 @@ export default withRouter(({history, open, handleClose, project, setProjects, er
         if(projectId) editProject();
         else createProject();
     }
+    
     useEffect(() => {
         if(projectSaved){
             uploadImage();
