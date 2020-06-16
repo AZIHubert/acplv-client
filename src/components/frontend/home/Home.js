@@ -58,7 +58,7 @@ export default () => {
     }, [loadingProject, dataProjects, errorProjects]);
 
     useEffect(() => {
-        const onCompleted = data => setServiceCats(data.serviceCats);
+        const onCompleted = data => setServiceCats(data.getServiceCats);
         if (onCompleted && !loadingServiceCats && !errorServiceCats) onCompleted(dataServiceCats);
     }, [loadingServiceCats, dataServiceCats, errorServiceCats]);
 
@@ -72,9 +72,9 @@ export default () => {
                         whoAreWeSecond={general.whoAreWeSecond}
                     />
                 }
-                {serviceCats.length && <Service serviceCats={serviceCats} /> }
-                {projects.length && <Project projects={projects} /> }
-                {clients.length && <Clients clients={clients} /> }
+                {!!serviceCats.length && <Service serviceCats={serviceCats} /> }
+                {!!projects.length && <Project projects={projects} /> }
+                {!!clients.length && <Clients clients={clients} /> }
                 {!!general.email && <Footer email={dataGeneral.getGeneral.email} /> }
             </ComponentWrapper>
         ) : (
