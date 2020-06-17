@@ -22,6 +22,7 @@ import {
 } from '../../../graphql/querys/index';
 
 export default () => {
+
     const [general, setGeneral] = useState({
         whoAreWeFirst: '',
         whoAreWeSecond: '',
@@ -64,7 +65,7 @@ export default () => {
 
     return (
         (!loadingClients && !loadingProject && !loadingGeneral && !loadingServiceCats) ? (
-            <ComponentWrapper>
+            <ComponentWrapper hidden>
                 <Header whoAreWeExist={(!!general.whoAreWeFirst || !!general.whoAreWeSecond)} />
                 {(!!general.whoAreWeFirst || !!general.whoAreWeSecond) &&
                     <About

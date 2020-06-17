@@ -12,6 +12,7 @@ import {
 
 const useStyles = makeStyles(theme => ({
     container: {
+        overflowX: props => props.hidden ? 'hidden' : 'visible',
         marginTop: theme.custom.navbarHeight,
         paddingBottom: theme.custom.footerHeight,
         minHeight: '100vh',
@@ -25,8 +26,9 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default ({children, theme}) => {
-    const classes = useStyles(theme);
+export default (props) => {
+    const {children} = props
+    const classes = useStyles(props);
     return (
         <Box
             className={classes.container}

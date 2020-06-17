@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 export default props => {
-    const {label, handleChange, value, name} = props;
+    const {label, handleChange, value, name, error, helperText} = props;
     const classes = useStyles(props)
     return (
         <Box
@@ -49,7 +49,8 @@ export default props => {
                 value={value}
                 name={name}
                 className={classes.textField}
-                // disabled
+                error={error}
+                helperText={helperText}
             />
         </Box>
     )

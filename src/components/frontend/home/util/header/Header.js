@@ -17,7 +17,7 @@ import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     container: {
-        overflow: 'hidden',
+        // overflow: 'hidden',
         position: 'relative',
         backgroundSize: '40%',
         [theme.breakpoints.down('xs')]: {

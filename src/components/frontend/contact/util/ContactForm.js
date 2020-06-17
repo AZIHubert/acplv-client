@@ -121,7 +121,8 @@ export default ({theme}) => {
             clearTimeout(timerSubmitVar);
             clearTimeout(timerSendingVar);
         }
-    }, [timerSubmitVar, timerSendingVar])
+    }, [timerSubmitVar, timerSendingVar]);
+    console.log(errors)
     return (
         <>
             <Box>
@@ -141,7 +142,7 @@ export default ({theme}) => {
                     onSubmit={handleSubmit}
                 >
                     <CustomTextField
-                        label="email"
+                        label="email (obligatoire)"
                         value={message.email}
                         handleChange={handleChange}
                         name="email"
@@ -165,7 +166,7 @@ export default ({theme}) => {
                             xs={6}
                         >
                             <CustomTextField
-                                label="prénom"
+                                label="prénom (obligatoire)"
                                 value={message.firstName}
                                 handleChange={handleChange}
                                 name="firstName"
@@ -179,7 +180,7 @@ export default ({theme}) => {
                             xs={6}
                         >
                             <CustomTextField
-                                label="nom"
+                                label="nom (obligatoire)"
                                 value={message.lastName}
                                 handleChange={handleChange}
                                 name="lastName"
@@ -197,7 +198,7 @@ export default ({theme}) => {
                         loading={loading}
                     />
                     <CustomTextField
-                        label="objet"
+                        label="objet (obligatoire)"
                         value={message.subject}
                         handleChange={handleChange}
                         name="subject"
@@ -206,7 +207,7 @@ export default ({theme}) => {
                         helperText={errors.subject}
                     />
                     <CustomMultilinesField
-                        label="message"
+                        label="message (obligatoire)"
                         value={message.body}
                         handleChange={handleChange}
                         name="body"
