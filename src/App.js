@@ -28,3 +28,4 @@ export default App;
 // Redesign contact (specially when almost empty)
 // Write usedTypes when a project is edited
 // activate/desactivate routes and navbar link when is empty/not empty
+// Hover effect for contact email link
